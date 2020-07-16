@@ -8,6 +8,7 @@ import javax.ws.rs.Path;
 
 @Path("/pdf")
 public class RestPDF {
+
     @GET
     public String makeReport() throws JRException {
         ReportPDF reportPDF = new ReportPDF();

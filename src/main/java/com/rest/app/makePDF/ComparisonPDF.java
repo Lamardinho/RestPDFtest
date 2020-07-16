@@ -7,7 +7,7 @@ public class ComparisonPDF {
 
     public void compPDF() throws Exception {   // сравнение
         PDFUtil pdfUtil = new PDFUtil();      // читает PDF и переводит его в String
-        boolean comparison = pdfUtil.compare(MyPdfFiles.INSTANCE.getMyReport(), MyPdfFiles.INSTANCE.getMyReport2()); // INSTANCE дает ссылку на объект "object класса MyPdfFiles
+        boolean comparison = pdfUtil.compare(MyPdfFiles.INSTANCE.getMyReport(), MyPdfFiles.INSTANCE.getMyReport2());
         System.out.println("compPDF: myReport vs myReport2 = " + comparison);
     }
 

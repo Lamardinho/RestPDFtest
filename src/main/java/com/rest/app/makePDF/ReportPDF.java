@@ -1,7 +1,9 @@
 package com.rest.app.makePDF;
 
 import com.rest.app.dataBaseK.Employer;
+import com.rest.app.dataBaseK.MyPdfURLs;
 import net.sf.jasperreports.engine.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.HashMap;
@@ -12,53 +14,42 @@ public class ReportPDF {
     private final Employer employerEng = new Employer("Ilya Slezkin", "Developer", "8-963-01-65-023", "16.04.1987");
     private final Employer employerRus = new Employer("Илья Слезкин", "Разработчик", "8-963-01-65-023", "16.04.1987");
 
-    public void makeReport(Employer employer, String name) throws JRException {
-        Map<String, Object> parameters = new HashMap<String, Object>(); // Parameters for report
-        // Parameters for report // можно переписать параметры в методе, если переменная более в 2ух методах
+    public void makeReport(Employer employer, String reportName) throws JRException {
+        // DataSource. This is simple example, no database. Then using empty datasource
+        JRDataSource dataSource = new JREmptyDataSource();
+        // от куда берём jrxml файл
+        JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getMyReportJrxml());
+        // JasperPrint
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getFillMapParam(employer), dataSource);
+        // проверка и создание пути для экспорта PDF файла
+        File outDir = new File(MyPdfURLs.INSTANCE.getDirWay());
+        outDir.mkdirs();
+        // Export to PDF.  "путь/имя экспортируемого PDF файла"
+        JasperExportManager.exportReportToPdfFile(jasperPrint, MyPdfURLs.INSTANCE.getExportPDF(reportName));
+        //JasperExportManager.exportReportToPdfStream(jasperPrint,);
+        System.out.println("method makeReport is done! New file name: " + reportName);
+    }
+
+    public void makeTestReport() throws JRException {
+        JRDataSource dataSource = new JREmptyDataSource();
+        JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getMyReportJrxml());
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getFillMapParam(employerEng), dataSource);
+        File outDir = new File(MyPdfURLs.INSTANCE.getDirWay());
+        outDir.mkdirs();
+        JasperExportManager.exportReportToPdfFile(
+                jasperPrint, MyPdfURLs.INSTANCE.getExportPDF("test"));
+        System.out.println("method makeTestReport is done! New file name:" + MyPdfURLs.INSTANCE.getExportPDF("test"));
+    }
+
+    @NotNull // методе для заполнения Мапы и получения её parameters
+    private Map<String, Object> getFillMapParam(Employer employer) {
+        Map<String, Object> parameters = new HashMap<>(); // Parameters for report
+        // Parameters for report
         parameters.put("jr_name", employer.getJrName());
         parameters.put("jr_position", employer.getJrPosition());
         parameters.put("jr_phone_mobile", employer.getJrPhoneMobile());
         parameters.put("jr_data_birthday", employer.getJrDataBirthday());
-        // DataSource. This is simple example, no database. Then using empty datasource
-        JRDataSource dataSource = new JREmptyDataSource();
-        // от куда берём jrxml файл
-        JasperReport jrxmlFile = JasperCompileManager.compileReport("src/main/resources/templates/myReport.jrxml");
-        // JasperPrint
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, parameters, dataSource);
-        // Make sure the output directory exists
-        File outDir = new File("src/main/resources/PDFoutput"); // проверка и создание пути для экспорта PDF файла
-        outDir.mkdirs();
-        // Export to PDF.  "путь/имя экспортируемого PDF файла"
-        JasperExportManager.exportReportToPdfFile(jasperPrint, "src/main/resources/PDFoutput/" + name + ".pdf");
-        //JasperExportManager.exportReportToPdfStream(jasperPrint,);
-        System.out.println("Done!");
-    }
-    // $appPath/classes/templates/log4j_$profileName.xml")
-    public void makeTestReport() throws JRException {
-        Map<String, Object> parameters = new HashMap<String, Object>(); // Parameters for report
-        // Parameters for report // можно переписать параметры в методе, если переменная более в 2ух методах
-        parameters.put("jr_name", employerEng.getJrName());
-        parameters.put("jr_position", employerEng.getJrPosition());
-        parameters.put("jr_phone_mobile", employerEng.getJrPhoneMobile());
-        parameters.put("jr_data_birthday", employerEng.getJrDataBirthday());
-        // DataSource. This is simple example, no database. Then using empty datasource
-        JRDataSource dataSource = new JREmptyDataSource();
-        // от куда берём jrxml файл
-        //D:\JavaProjects\RestPDFtest\src\main\java\com\rest\app\web
-
-        // JasperReport jrxmlFile = JasperCompileManager.compileReport("src/main/resources/templates/myReport.jrxml");
-        // D:\JavaProjects\RestPDFtest\src\main\resources\templates
-        JasperReport jrxmlFile = JasperCompileManager.compileReport("D:/JavaProjects/RestPDFtest/src/main/resources/templates/myReport.jrxml");
-        // JasperPrint
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, parameters, dataSource);
-        // Make sure the output directory exists
-        File outDir = new File("D:/JavaProjects/RestPDFtest/src/main/resources/PDFoutput"); // проверка и создание пути для экспорта PDF файла
-        outDir.mkdirs();
-        // Export to PDF.  "путь/имя экспортируемого PDF файла"
-        JasperExportManager.exportReportToPdfFile(
-                jasperPrint, "D:/JavaProjects/RestPDFtest/src/main/resources/PDFoutput/Test.pdf");
-        //JasperExportManager.exportReportToPdfStream(jasperPrint,);
-        System.out.println("Done!");
+        return parameters;
     }
 
     public Employer getEmployerEng() {
