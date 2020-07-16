@@ -13,7 +13,6 @@ public class restTest {
         String user = System.getProperty("user.name"); // определяет имя пользователя системы
         return "Hello " + user;
     }
-
     /*
     http://localhost:8080/RestPDFtest_war_exploded/rest/test/23?name=Marcus
     */

@@ -12,4 +12,10 @@ public class TestReportPDF {
         reportPDF.makeReport(reportPDF.getEmployerEng(), "myReport");
         reportPDF.makeReport(reportPDF.getEmployerRus(), "myReport3");
     }
+
+    @Test
+    public void makeTestR() throws JRException {  // создаем файлы.pdf
+        ReportPDF reportPDF = new ReportPDF();
+        reportPDF.makeTestReport();
+    }
 }

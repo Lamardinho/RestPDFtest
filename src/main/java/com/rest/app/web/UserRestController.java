@@ -52,9 +52,8 @@ public class UserRestController {
         USERS.put(user.getId(), user);
     }
 
-    static { // выполняется во время загрузки класса, выполнятся блоки будут последовательно
-        System.out.println("123");
-    }
+    /*static { // выполняется во время загрузки класса, выполнятся блоки будут последовательно
+        System.out.println("123");    }*/
 
     @GET
     @Path("/{id}")

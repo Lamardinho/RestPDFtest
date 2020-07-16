@@ -12,7 +12,6 @@ public class ReportPDF {
     private final Employer employerEng = new Employer("Ilya Slezkin", "Developer", "8-963-01-65-023", "16.04.1987");
     private final Employer employerRus = new Employer("Илья Слезкин", "Разработчик", "8-963-01-65-023", "16.04.1987");
 
-
     public void makeReport(Employer employer, String name) throws JRException {
         Map<String, Object> parameters = new HashMap<String, Object>(); // Parameters for report
         // Parameters for report // можно переписать параметры в методе, если переменная более в 2ух методах
@@ -31,6 +30,31 @@ public class ReportPDF {
         outDir.mkdirs();
         // Export to PDF.  "путь/имя экспортируемого PDF файла"
         JasperExportManager.exportReportToPdfFile(jasperPrint, "src/main/resources/PDFoutput/" + name + ".pdf");
+        //JasperExportManager.exportReportToPdfStream(jasperPrint,);
+        System.out.println("Done!");
+    }
+
+    public void makeTestReport() throws JRException {
+        Map<String, Object> parameters = new HashMap<String, Object>(); // Parameters for report
+        // Parameters for report // можно переписать параметры в методе, если переменная более в 2ух методах
+        parameters.put("jr_name", employerEng.getJrName());
+        parameters.put("jr_position", employerEng.getJrPosition());
+        parameters.put("jr_phone_mobile", employerEng.getJrPhoneMobile());
+        parameters.put("jr_data_birthday", employerEng.getJrDataBirthday());
+        // DataSource. This is simple example, no database. Then using empty datasource
+        JRDataSource dataSource = new JREmptyDataSource();
+        // от куда берём jrxml файл
+        //D:\JavaProjects\RestPDFtest\src\main\java\com\rest\app\web
+
+        JasperReport jrxmlFile = JasperCompileManager.compileReport("src/main/resources/templates/myReport.jrxml");
+        // JasperPrint
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, parameters, dataSource);
+        // Make sure the output directory exists
+        File outDir = new File("src/main/resources/PDFoutput"); // проверка и создание пути для экспорта PDF файла
+        outDir.mkdirs();
+        // Export to PDF.  "путь/имя экспортируемого PDF файла"
+        JasperExportManager.exportReportToPdfFile(jasperPrint, "src/main/resources/PDFoutput/Test.pdf");
+        //JasperExportManager.exportReportToPdfStream(jasperPrint,);
         System.out.println("Done!");
     }
 
