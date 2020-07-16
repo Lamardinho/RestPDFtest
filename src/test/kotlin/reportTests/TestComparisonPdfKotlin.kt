@@ -1,7 +1,7 @@
 package reportTests
 
 import com.testautomationguru.utility.PDFUtil // добавляем библиотеку для работы с PDF
-import dataBaseK.MyPdfFiles
+import com.rest.app.dataBaseK.MyPdfFiles
 import makePDFk.ComparisonPdfKotlin
 import org.junit.Assert
 import org.junit.Test

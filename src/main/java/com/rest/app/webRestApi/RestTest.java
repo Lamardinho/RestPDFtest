@@ -1,10 +1,10 @@
-package com.rest.app.web;
+package com.rest.app.webRestApi;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 @Path("/test")
-public class restTest {
+public class RestTest {
     /*
     http://localhost:8080/RestPDFtest_war_exploded/rest/test
     */

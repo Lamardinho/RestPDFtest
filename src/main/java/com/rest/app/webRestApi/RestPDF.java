@@ -1,4 +1,4 @@
-package com.rest.app.web;
+package com.rest.app.webRestApi;
 
 import com.rest.app.makePDF.ReportPDF;
 import net.sf.jasperreports.engine.JRException;
@@ -7,7 +7,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
 @Path("/pdf")
-public class restPDF {
+public class RestPDF {
     @GET
     public String makeReport() throws JRException {
         ReportPDF reportPDF = new ReportPDF();

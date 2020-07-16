@@ -1,6 +1,6 @@
 package makePDFk
 
-import dataBaseK.Employer
+import com.rest.app.dataBaseK.Employer
 import net.sf.jasperreports.engine.*
 import java.io.File
 import java.util.HashMap
@@ -44,14 +44,14 @@ class ReportPdfKotlin {
         // DataSource. This is simple example, no database. Then using empty datasource
         val dataSource: JRDataSource = JREmptyDataSource()
         // от куда берём jrxml файл
-        val jrxmlFile = JasperCompileManager.compileReport("src/main/resources/templates/myReport.jrxml")
+        val jrxmlFile = JasperCompileManager.compileReport("D:/JavaProjects/RestPDFtest/src/main/resources/templates/myReport.jrxml")
         // JasperPrint
         val jasperPrint = JasperFillManager.fillReport(jrxmlFile, parameters, dataSource)
         // Make sure the output directory exists
-        val outDir = File("src/main/resources/PDFoutput") // проверка и создание пути для экспорта PDF файла
+        val outDir = File("D:/JavaProjects/RestPDFtest/src/main/resources/PDFoutput") // проверка и создание пути для экспорта PDF файла
         outDir.mkdirs()
         // Export to PDF.  "путь/имя экспортируемого PDF файла"
-        JasperExportManager.exportReportToPdfFile(jasperPrint, "src/main/resources/PDFoutput/testRestReport.pdf")
+        JasperExportManager.exportReportToPdfFile(jasperPrint, "D:/JavaProjects/RestPDFtest/src/main/resources/PDFoutput/testRestReport.pdf")
         println("Done!")
     }
 }

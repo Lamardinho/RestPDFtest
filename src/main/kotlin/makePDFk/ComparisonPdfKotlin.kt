@@ -1,7 +1,7 @@
 package makePDFk
 
 import com.testautomationguru.utility.PDFUtil
-import dataBaseK.MyPdfFiles
+import com.rest.app.dataBaseK.MyPdfFiles
 
 
 class ComparisonPdfKotlin {

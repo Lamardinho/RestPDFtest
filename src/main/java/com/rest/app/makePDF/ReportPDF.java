@@ -1,6 +1,6 @@
 package com.rest.app.makePDF;
 
-import dataBaseK.Employer;
+import com.rest.app.dataBaseK.Employer;
 import net.sf.jasperreports.engine.*;
 
 import java.io.File;
@@ -33,7 +33,7 @@ public class ReportPDF {
         //JasperExportManager.exportReportToPdfStream(jasperPrint,);
         System.out.println("Done!");
     }
-
+    // $appPath/classes/templates/log4j_$profileName.xml")
     public void makeTestReport() throws JRException {
         Map<String, Object> parameters = new HashMap<String, Object>(); // Parameters for report
         // Parameters for report // можно переписать параметры в методе, если переменная более в 2ух методах
@@ -46,14 +46,17 @@ public class ReportPDF {
         // от куда берём jrxml файл
         //D:\JavaProjects\RestPDFtest\src\main\java\com\rest\app\web
 
-        JasperReport jrxmlFile = JasperCompileManager.compileReport("src/main/resources/templates/myReport.jrxml");
+        // JasperReport jrxmlFile = JasperCompileManager.compileReport("src/main/resources/templates/myReport.jrxml");
+        // D:\JavaProjects\RestPDFtest\src\main\resources\templates
+        JasperReport jrxmlFile = JasperCompileManager.compileReport("D:/JavaProjects/RestPDFtest/src/main/resources/templates/myReport.jrxml");
         // JasperPrint
         JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, parameters, dataSource);
         // Make sure the output directory exists
-        File outDir = new File("src/main/resources/PDFoutput"); // проверка и создание пути для экспорта PDF файла
+        File outDir = new File("D:/JavaProjects/RestPDFtest/src/main/resources/PDFoutput"); // проверка и создание пути для экспорта PDF файла
         outDir.mkdirs();
         // Export to PDF.  "путь/имя экспортируемого PDF файла"
-        JasperExportManager.exportReportToPdfFile(jasperPrint, "src/main/resources/PDFoutput/Test.pdf");
+        JasperExportManager.exportReportToPdfFile(
+                jasperPrint, "D:/JavaProjects/RestPDFtest/src/main/resources/PDFoutput/Test.pdf");
         //JasperExportManager.exportReportToPdfStream(jasperPrint,);
         System.out.println("Done!");
     }

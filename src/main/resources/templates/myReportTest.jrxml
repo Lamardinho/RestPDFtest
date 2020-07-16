@@ -56,7 +56,7 @@
 			</textField>
 			<image>
 				<reportElement x="400" y="30" width="145" height="70" uuid="409c5277-e9a5-48e0-a17b-3a724ce516be"/>
-				<imageExpression><![CDATA["src/main/resources/images/rth.png"]]></imageExpression>
+				<imageExpression><![CDATA["D:/JavaProjects/RestPDFtest/src/main/resources/images/rth.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
