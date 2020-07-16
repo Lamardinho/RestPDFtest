@@ -7,7 +7,7 @@
     <!--редакт-->
     <groupId>org.example</groupId>
     <!--редакт-->
-    <artifactId>slezkinRestApp</artifactId>
+    <artifactId>RestPDFtest</artifactId>
     <version>1.0-SNAPSHOT</version>
     <!--упаковка-->
     <packaging>war</packaging>

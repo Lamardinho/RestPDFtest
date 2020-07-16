@@ -6,7 +6,7 @@
          version="3.1">
 
     <!--редакт-->
-    <display-name>slezkinRestApp</display-name>
+    <display-name>RestPDFtest</display-name>
 
     <servlet>
         <servlet-name>JerseyServlet</servlet-name>
