@@ -6,7 +6,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/test")
 public class restTest {
     /*
-    http://localhost:8080/slezkinRestApp_war_exploded/rest/test
+    http://localhost:8080/RestPDFtest_war_exploded/rest/test
     */
     @GET
     public String checkPerson() {
@@ -15,7 +15,7 @@ public class restTest {
     }
 
     /*
-    http://localhost:8080/slezkinRestApp_war_exploded/rest/test/23?name=Marcus
+    http://localhost:8080/RestPDFtest_war_exploded/rest/test/23?name=Marcus
     */
     @GET
     @Path("/{id}")

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MyBlank" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6c25d9af-8ff5-4a16-813c-d3c79bb7fdfc">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="Default" isDefault="true" pdfFontName="ARIAL.TTF" pdfEncoding="Cp1251"/>
+	<parameter name="jr_name" class="java.lang.String"/>
+	<parameter name="jr_position" class="java.lang.String"/>
+	<parameter name="jr_phone_mobile" class="java.lang.String"/>
+	<parameter name="Parameter1" class="java.lang.String"/>
+	<parameter name="jr_data_birthday" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="127" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="30" width="100" height="20" uuid="0f299d71-bbbb-4a50-8935-e20d5f33bf9f"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{jr_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="230" y="-10" width="100" height="30" uuid="ebcf78f9-e959-4a29-b067-c7bf471a0792"/>
+				<text><![CDATA[Employee card]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="30" width="30" height="20" uuid="dd337247-ec7d-4ec0-aa4c-8055784b85e0"/>
+				<text><![CDATA[name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="50" width="40" height="20" uuid="a4265600-dbb4-4681-b070-cab6e7657eac"/>
+				<text><![CDATA[position:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="70" width="70" height="19" uuid="05b3f726-690f-4611-8865-82d402327a6b"/>
+				<text><![CDATA[phone number:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="50" width="100" height="20" uuid="c3700ab4-2a99-4a3d-8ca4-3218ae9ba6ed"/>
+				<textFieldExpression><![CDATA[$P{jr_position}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="70" width="100" height="19" uuid="c6f9fb7c-1fbe-4df3-9074-9c37b59061ea"/>
+				<textFieldExpression><![CDATA[$P{jr_phone_mobile}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="90" width="71" height="21" uuid="89b19a21-d55e-4212-8e35-ef0776777687"/>
+				<text><![CDATA[data birthday:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="89" width="100" height="22" uuid="cd872dc2-05ac-4518-afdd-21338299a51d"/>
+				<textFieldExpression><![CDATA[$P{jr_data_birthday}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="400" y="30" width="145" height="70" uuid="409c5277-e9a5-48e0-a17b-3a724ce516be"/>
+				<imageExpression><![CDATA["src/main/resources/images/rth.png"]]></imageExpression>
+				<!--src/main/resources/images/rth.png-->
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

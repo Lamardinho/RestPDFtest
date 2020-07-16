@@ -20,21 +20,21 @@ import java.util.concurrent.atomic.AtomicInteger;
 //инфа с: https://youtu.be/P8JgvRZMjLY
 
 /* для использования:
-http://localhost:8080/slezkinRestApp_war_exploded/rest/user
-http://localhost:8080/slezkinRestApp_war_exploded/rest/user/1
+http://localhost:8080/RestPDFtest_war_exploded/rest/user
+http://localhost:8080/RestPDFtest_war_exploded/rest/user/1
 
 показать массив наших юзеров:
-curl -H "Content-Type: application/json" -X GET http://localhost:8080/slezkinRestApp_war_exploded/rest/user/
+curl -H "Content-Type: application/json" -X GET http://localhost:8080/RestPDFtest_war_exploded/rest/user/
 создать юзера:
-curl -H "Content-Type: application/json" -X POST -d '{"address":{"name":"New York"},"name":"Lamar Jabbar","id":1,"roles":[{"name":"ADMIN"},{"name":"USER"}]}' http://localhost:8080/slezkinRestApp_war_exploded/rest/user/
-curl -H "Content-Type: application/json" -X POST -d '{"address":{"name":"Chicago"},"name":"Michael Jordan","id":2,"roles":[{"name":"ADMIN"},{"name":"USER"}]}' http://localhost:8080/slezkinRestApp_war_exploded/rest/user/
+curl -H "Content-Type: application/json" -X POST -d '{"address":{"name":"New York"},"name":"Lamar Jabbar","id":1,"roles":[{"name":"ADMIN"},{"name":"USER"}]}' http://localhost:8080/RestPDFtest_war_exploded/rest/user/
+curl -H "Content-Type: application/json" -X POST -d '{"address":{"name":"Chicago"},"name":"Michael Jordan","id":2,"roles":[{"name":"ADMIN"},{"name":"USER"}]}' http://localhost:8080/RestPDFtest_war_exploded/rest/user/
                                                      {"address":{"name":"LA"},"id":3,"name":"Marcus Prince","roles":[{"name":"Admin"},{"name":"User"}]}
 создать нескольких юзеров: [{},{},{}] = 3 юзера
-curl -H "Content-Type: application/json" -X POST -d '[{},{},{}]' http://localhost:8080/slezkinRestApp_war_exploded/rest/user/multi
+curl -H "Content-Type: application/json" -X POST -d '[{},{},{}]' http://localhost:8080/RestPDFtest_war_exploded/rest/user/multi
 (не работает) вместо замены данных определенного ID, он создает новый:
-curl -H "Content-Type: application/json" -X POST -d '{"id":1,"address":{"name":"1"},"name":"1 1","roles":[{"name":"Admin"},{"name":"User"}]}' http://localhost:8080/slezkinRestApp_war_exploded/rest/user/
+curl -H "Content-Type: application/json" -X POST -d '{"id":1,"address":{"name":"1"},"name":"1 1","roles":[{"name":"Admin"},{"name":"User"}]}' http://localhost:8080/RestPDFtest_war_exploded/rest/user/
 удаляет определенного юзера:
-curl -H "Content-Type: application/json" -X DELETE http://localhost:8080/slezkinRestApp_war_exploded/rest/user/4
+curl -H "Content-Type: application/json" -X DELETE http://localhost:8080/RestPDFtest_war_exploded/rest/user/4
  */
 
 @Path("/user")
