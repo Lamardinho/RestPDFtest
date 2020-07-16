@@ -41,6 +41,16 @@ public class ReportPDF {
         System.out.println("method makeTestReport is done! New file name:" + MyPdfURLs.INSTANCE.getExportPDF("test"));
     }
 
+    public void makeRestReport(String userName) throws JRException {
+        JRDataSource dataSource = new JREmptyDataSource();
+        JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getMyReportJrxml());
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getFillMapParam(employerEng), dataSource);
+        File outDir = new File(MyPdfURLs.INSTANCE.getDirWay());
+        outDir.mkdirs();
+        JasperExportManager.exportReportToPdfFile(jasperPrint, MyPdfURLs.INSTANCE.getExportPDF(userName));
+        System.out.println("method makeTestReport is done! New file name:" + MyPdfURLs.INSTANCE.getExportPDF(userName));
+    }
+
     @NotNull // методе для заполнения Мапы и получения её parameters
     private Map<String, Object> getFillMapParam(Employer employer) {
         Map<String, Object> parameters = new HashMap<>(); // Parameters for report
