@@ -28,7 +28,7 @@ curl -H "Content-Type: application/json" -X GET http://localhost:8080/RestPDFtes
 создать юзера:
 curl -H "Content-Type: application/json" -X POST -d '{"address":{"name":"New York"},"name":"Lamar Jabbar","id":1,"roles":[{"name":"ADMIN"},{"name":"USER"}]}' http://localhost:8080/RestPDFtest_war_exploded/rest/user/
 curl -H "Content-Type: application/json" -X POST -d '{"address":{"name":"Chicago"},"name":"Michael Jordan","id":2,"roles":[{"name":"ADMIN"},{"name":"USER"}]}' http://localhost:8080/RestPDFtest_war_exploded/rest/user/
-                                                     {"address":{"name":"LA"},"id":3,"name":"Marcus Prince","roles":[{"name":"Admin"},{"name":"User"}]}
+curl -H "Content-Type: application/json" -X POST -d '{"address":{"name":"LA"},"id":3,"name":"Marcus Prince","roles":[{"name":"Admin"},{"name":"User"}]}' http://localhost:8080/RestPDFtest_war_exploded/rest/user/
 создать нескольких юзеров: [{},{},{}] = 3 юзера
 curl -H "Content-Type: application/json" -X POST -d '[{},{},{}]' http://localhost:8080/RestPDFtest_war_exploded/rest/user/multi
 (не работает) вместо замены данных определенного ID, он создает новый:
@@ -45,9 +45,9 @@ public class UserRestController {
     static { // выполняется во время загрузки класса
         User user = new User(
                 ID.incrementAndGet(),
-                "Marcus Prince",
-                new Address("LA"),
-                Arrays.asList(new Role("Admin"), new Role("User"))
+                "Default User",
+                new Address("Street"),
+                Arrays.asList(new Role("freedom"), new Role("User"))
         );
         USERS.put(user.getId(), user);
     }
