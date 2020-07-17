@@ -1,8 +1,8 @@
-package com.rest.app.java.webRest;
+package com.rest.app.webRest;
 
-import com.rest.app.dataBaseK.EmployerGet;
-import com.rest.app.dataBaseK.GetMap;
-import com.rest.app.dataBaseK.MyPdfURLs;
+import com.rest.app.dataBase.EmployerGet;
+import com.rest.app.dataBase.GetMap;
+import com.rest.app.dataBase.MyPdfURLs;
 import net.sf.jasperreports.engine.*;
 
 import javax.ws.rs.GET;
@@ -12,12 +12,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/pdfbuffer")
-public class RestPDFBuffer {
+@Path("/javabuffer")
+public class JavaRestPDFBuffer {
     private final EmployerGet employerGet = new EmployerGet(); // ссылка на сотрудника
     private final GetMap getMap = new GetMap();
 
-    //  http://localhost:8080/RestPDFtest_war_exploded/rest/pdfbuffer
+    //  http://localhost:8080/RestPDFtest_war_exploded/rest/javabuffer
     @GET
     public String hello() {
         String user = System.getProperty("user.name"); // определяет имя пользователя системы
@@ -25,12 +25,12 @@ public class RestPDFBuffer {
                 " Eg: http://localhost:8080/RestPDFtest_war_exploded/rest/pdfbuffer/Marcus";
     }
 
-    //  http://localhost:8080/RestPDFtest_war_exploded/rest/pdfbuffer/anyname
+    //  http://localhost:8080/RestPDFtest_war_exploded/rest/javabuffer/anyname
     // формирование PDFки в буфер и сохранение на стороне клиента:
     @GET
-    @Path("/{pdfbuffer}")
+    @Path("/{javabufname}")
     @Produces(MediaType.APPLICATION_JSON) // для передачи в формате JSON
-    public Response createPDFReport(@PathParam("pdfbuffer") String gPDFName) throws JRException {
+    public Response createPDFReport(@PathParam("javabufname") String gPDFName) throws JRException {
         JRDataSource dataSource = new JREmptyDataSource();  // обязательно использовать! без него будут пустые отчеты
         JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getMyReportJrxml());
         JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getMap.getFillMap(employerGet.getEnglish()), dataSource);

@@ -1,7 +1,7 @@
 package reportTests;
 
-import com.rest.app.dataBaseK.EmployerGet;
-import com.rest.app.java.makePDF.ReportPDF;
+import com.rest.app.dataBase.EmployerGet;
+import com.rest.app.zJava.makePDF.ReportPDF;
 import net.sf.jasperreports.engine.JRException;
 import org.junit.Test;
 

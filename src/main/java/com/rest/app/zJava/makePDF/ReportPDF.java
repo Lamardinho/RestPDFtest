@@ -1,9 +1,9 @@
-package com.rest.app.java.makePDF;
+package com.rest.app.zJava.makePDF;
 
-import com.rest.app.dataBaseK.Employer;
-import com.rest.app.dataBaseK.EmployerGet;
-import com.rest.app.dataBaseK.GetMap;
-import com.rest.app.dataBaseK.MyPdfURLs;
+import com.rest.app.dataBase.Employer;
+import com.rest.app.dataBase.EmployerGet;
+import com.rest.app.dataBase.GetMap;
+import com.rest.app.dataBase.MyPdfURLs;
 import net.sf.jasperreports.engine.*;
 
 import java.io.File;
@@ -14,21 +14,21 @@ public class ReportPDF {
 
     public void makeReport(Employer employer, String reportName) throws JRException {
         // DataSource. This is simple example, no database. Then using empty datasource
-        JRDataSource dataSource = new JREmptyDataSource();
+        JRDataSource dataSource = new JREmptyDataSource(); // обязательно использовать! без него будут пустые отчеты
         // от куда берём jrxml файл
         JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getMyReportJrxml());
-        // JasperPrint
+        // JasperPrint - заполняет шаблон
         JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getMap.getFillMap(employer), dataSource);
         // проверка и создание пути для экспорта PDF файла
         File outDir = new File(MyPdfURLs.INSTANCE.getDirWay());
         outDir.mkdirs();
-        // Export to PDF.  "путь/имя экспортируемого PDF файла"
+        // Экспорт данных в PDF файл
         JasperExportManager.exportReportToPdfFile(jasperPrint, MyPdfURLs.INSTANCE.getExportPDF(reportName));
-        //JasperExportManager.exportReportToPdfStream(jasperPrint,);
+        // для отчёта
         System.out.println("method makeReport is done! New file created: " + reportName);
     }
 
-    // для RESTа
+    // для RESTа - генерирует PDF на сервере
     public void makeRestReport(String userName) throws JRException {
         JRDataSource dataSource = new JREmptyDataSource();
         JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getMyReportJrxml());

@@ -1,4 +1,4 @@
-package com.rest.app.zLeftClasses.domain;
+package com.rest.app.zJava.LeftClasses.domain;
 
 public class Address {
     private String name;

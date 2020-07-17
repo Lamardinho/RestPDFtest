@@ -1,6 +1,6 @@
-package com.rest.app.zLeftClasses;
+package com.rest.app.zJava.LeftClasses;
 
-import com.rest.app.dataBaseK.MyPdfFiles;
+import com.rest.app.dataBase.MyPdfFiles;
 
 import java.awt.*;
 import java.io.File;

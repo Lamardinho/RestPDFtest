@@ -1,36 +1,37 @@
-package com.rest.app.kotlin.makePDF
+package com.rest.app.makePDF
 
-import com.rest.app.dataBaseK.Employer
-import com.rest.app.dataBaseK.EmployerGet
-import com.rest.app.dataBaseK.GetMap
-import com.rest.app.dataBaseK.MyPdfURLs.getDirWay
-import com.rest.app.dataBaseK.MyPdfURLs.getExportPDF
-import com.rest.app.dataBaseK.MyPdfURLs.getMyReportJrxml
+import com.rest.app.dataBase.Employer
+import com.rest.app.dataBase.EmployerGet
+import com.rest.app.dataBase.GetMap
+import com.rest.app.dataBase.MyPdfURLs.getDirWay
+import com.rest.app.dataBase.MyPdfURLs.getExportPDF
+import com.rest.app.dataBase.MyPdfURLs.getMyReportJrxml
 import net.sf.jasperreports.engine.*
 import java.io.File
 
-class ReportPDFk {
+class ReportPDF {
     private val employerGet = EmployerGet()
     private val getMap = GetMap()
 
+    // генерирует PDF на сервере
     @Throws(JRException::class)
     fun makeReport(employer: Employer, reportName: String) {
         // DataSource. This is simple example, no database. Then using empty datasource
         val dataSource: JRDataSource = JREmptyDataSource() // обязательно использовать! без него будут пустые отчеты
         // от куда берём jrxml файл
         val jrxmlFile = JasperCompileManager.compileReport(getMyReportJrxml())
-        // JasperPrint
+        // JasperPrint - заполняет шаблон
         val jasperPrint = JasperFillManager.fillReport(jrxmlFile, getMap.getFillMap(employer), dataSource)
         // проверка и создание пути для экспорта PDF файла
         val outDir = File(getDirWay())
         outDir.mkdirs()
-        // Export to PDF.  "путь/имя экспортируемого PDF файла"
+        // Экспорт данных в PDF файл
         JasperExportManager.exportReportToPdfFile(jasperPrint, getExportPDF(reportName))
-        //JasperExportManager.exportReportToPdfStream(jasperPrint,);
+        // для отчёта
         println("method makeReport is done! New file created: $reportName")
     }
 
-    // для RESTа
+    // для RESTа - генерирует PDF на сервере
     @Throws(JRException::class)
     fun makeRestReport(userName: String) {
         val dataSource: JRDataSource = JREmptyDataSource()

@@ -1,11 +1,10 @@
-package com.rest.app.kotlin.makePDF
+package com.rest.app.makePDF
 
-import com.rest.app.dataBaseK.MyPdfFiles
-import com.rest.app.dataBaseK.MyPdfFiles.getMyReport
-import com.rest.app.dataBaseK.MyPdfFiles.getMyReport2
+import com.rest.app.dataBase.MyPdfFiles.getMyReport
+import com.rest.app.dataBase.MyPdfFiles.getMyReport2
 import com.testautomationguru.utility.PDFUtil
 
-class ComparisonPDFk {
+class ComparisonPDF {
     // сравнение файлов
     @Throws(Exception::class)
     fun compPDF() {

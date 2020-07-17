@@ -1,4 +1,4 @@
-package com.rest.app.dataBaseK
+package com.rest.app.dataBase
 
 data class Employer( // конструктор класса EmployerKotlin (Сотрудник)
         val jrName: String,

@@ -1,4 +1,4 @@
-package com.rest.app.dataBaseK
+package com.rest.app.dataBase
 
 object MyPdfURLs {
     fun getMyReportJrxml(): String { // путь на PDF файл "одинаковый"

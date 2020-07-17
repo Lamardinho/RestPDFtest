@@ -1,7 +1,7 @@
-package com.rest.app.java.makePDF;
+package com.rest.app.zJava.makePDF;
 
 import com.testautomationguru.utility.PDFUtil; // добавляем библиотеку для работы с PDF
-import com.rest.app.dataBaseK.MyPdfFiles;
+import com.rest.app.dataBase.MyPdfFiles;
 
 public class ComparisonPDF {
     // сравнение файлов

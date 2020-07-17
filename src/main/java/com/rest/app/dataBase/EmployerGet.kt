@@ -1,4 +1,4 @@
-package com.rest.app.dataBaseK
+package com.rest.app.dataBase
 
 class EmployerGet {
     private val employerEng = Employer("Ilya Slezkin", "Developer", "8-963-01-65-023", "16.04.1987")
