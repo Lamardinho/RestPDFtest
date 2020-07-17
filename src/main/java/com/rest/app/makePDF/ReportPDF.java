@@ -51,8 +51,9 @@ public class ReportPDF {
         System.out.println("method makeTestReport is done! New file created :" + MyPdfURLs.INSTANCE.getExportPDF(userName));
     }
 
-    @NotNull // метод для заполнения Мапы и получения её parameters
-    private Map<String, Object> getFillMapParam(Employer employer) {
+    @NotNull
+    // метод для заполнения Мапы и получения её parameters
+    protected Map<String, Object> getFillMapParam(Employer employer) {
         Map<String, Object> parameters = new HashMap<>(); // Parameters for report
         // Parameters for report
         parameters.put("jr_name", employer.getJrName());
