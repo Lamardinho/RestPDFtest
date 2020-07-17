@@ -1,6 +1,7 @@
 package com.rest.app.makePDF;
 
 import com.rest.app.dataBaseK.Employer;
+import com.rest.app.dataBaseK.EmployerGet;
 import com.rest.app.dataBaseK.MyPdfURLs;
 import net.sf.jasperreports.engine.*;
 import org.jetbrains.annotations.NotNull;
@@ -10,9 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ReportPDF {
-    // сотрудники, для вставки данных в отчет
-    private final Employer employerEng = new Employer("Ilya Slezkin", "Developer", "8-963-01-65-023", "16.04.1987");
-    private final Employer employerRus = new Employer("Илья Слезкин", "Разработчик", "8-963-01-65-023", "16.04.1987");
+    EmployerGet employerGet = new EmployerGet();
 
     public void makeReport(Employer employer, String reportName) throws JRException {
         // DataSource. This is simple example, no database. Then using empty datasource
@@ -33,7 +32,7 @@ public class ReportPDF {
     public void makeTestReport() throws JRException {
         JRDataSource dataSource = new JREmptyDataSource();
         JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getMyReportJrxml());
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getFillMapParam(employerEng), dataSource);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getFillMapParam(employerGet.getEnglish()), dataSource);
         File outDir = new File(MyPdfURLs.INSTANCE.getDirWay());
         outDir.mkdirs();
         JasperExportManager.exportReportToPdfFile(
@@ -44,7 +43,7 @@ public class ReportPDF {
     public void makeRestReport(String userName) throws JRException {
         JRDataSource dataSource = new JREmptyDataSource();
         JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getMyReportJrxml());
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getFillMapParam(employerEng), dataSource);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getFillMapParam(employerGet.getEnglish()), dataSource);
         File outDir = new File(MyPdfURLs.INSTANCE.getDirWay());
         outDir.mkdirs();
         JasperExportManager.exportReportToPdfFile(jasperPrint, MyPdfURLs.INSTANCE.getExportPDF(userName));
@@ -61,13 +60,5 @@ public class ReportPDF {
         parameters.put("jr_phone_mobile", employer.getJrPhoneMobile());
         parameters.put("jr_data_birthday", employer.getJrDataBirthday());
         return parameters;
-    }
-
-    public Employer getEmployerEng() {
-        return employerEng;
-    }
-
-    public Employer getEmployerRus() {
-        return employerRus;
     }
 }

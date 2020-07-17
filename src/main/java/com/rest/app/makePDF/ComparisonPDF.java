@@ -4,13 +4,14 @@ import com.testautomationguru.utility.PDFUtil; // добавляем библи�
 import com.rest.app.dataBaseK.MyPdfFiles;
 
 public class ComparisonPDF {
-
-    public void compPDF() throws Exception {   // сравнение
+    // сравнение файлов
+    public void compPDF() throws Exception {
         PDFUtil pdfUtil = new PDFUtil();      // читает PDF и переводит его в String
         boolean comparison = pdfUtil.compare(MyPdfFiles.INSTANCE.getMyReport(), MyPdfFiles.INSTANCE.getMyReport2());
         System.out.println("compPDF: myReport vs myReport2 = " + comparison);
     }
 
+    // сравнение файлов на выбор
     public void compPDF(String a, String b) throws Exception {
         PDFUtil pdfUtil = new PDFUtil();      // читает PDF и переводит его в String
         boolean comparison = pdfUtil.compare(a, b);

@@ -11,7 +11,7 @@ import java.awt.*;
 import java.io.File;
 
 @Path("/pdf")
-public class RestPDF {
+public class RestPDFonDisk {
     /*
     http://localhost:8080/RestPDFtest_war_exploded/rest/pdf
     */
@@ -29,11 +29,10 @@ public class RestPDF {
     @Path("/{pdfname}")
     @Produces(MediaType.APPLICATION_JSON) // для передачи в формате JSON
     public Response createPDFReport(@PathParam("pdfname") String gPDFName) throws JRException {
-        //String user = System.getProperty("user.name"); // определяет имя пользователя системы
         ReportPDF reportPDF = new ReportPDF();
         reportPDF.makeRestReport(gPDFName); // генерируем PDF и присваимваем имя "gPDFName"
         File pdfFile = new File(MyPdfURLs.INSTANCE.getExportPDF(gPDFName)); // читаем сегенерир. файл
-        return Response.ok().entity(pdfFile).header( // и отправляем его
+        return Response.ok().entity(pdfFile).header( // и открываем его
                 "Content-disposition", "attachment; filename=\"" + gPDFName + ".pdf\"").build();
     }
 

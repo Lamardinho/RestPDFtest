@@ -1,8 +1,8 @@
 package com.rest.app.webRestApi;
 
 import com.rest.app.dataBaseK.Employer;
+import com.rest.app.dataBaseK.EmployerGet;
 import com.rest.app.dataBaseK.MyPdfURLs;
-import com.rest.app.makePDF.ReportPDF;
 import net.sf.jasperreports.engine.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,15 +12,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 @Path("/pdfbuffer")
 public class RestPDFBuffer {
-    private final Employer employerEng = new Employer("Ilya Slezkin", "Developer", "8-963-01-65-023", "16.04.1987");
+    EmployerGet employerGet = new EmployerGet(); // ссылка на существующего сотрудника
 
     /*
     http://localhost:8080/RestPDFtest_war_exploded/rest/pdfbuffer
@@ -33,21 +30,17 @@ public class RestPDFBuffer {
     }
 
     /*
-    http://localhost:8080/RestPDFtest_war_exploded/rest/pdfbuffer/Marcus
+    http://localhost:8080/RestPDFtest_war_exploded/rest/pdfbuffer/anyname
     */
+    // формирование PDFки в буфер и сохранение на стороне клиента:
     @GET
-    @Path("/{buffername}")
+    @Path("/{pdfbuffer}")
     @Produces(MediaType.APPLICATION_JSON) // для передачи в формате JSON
-    public Response createPDFReport(@PathParam("buffername") String gPDFName) throws JRException, IOException {
-        JRDataSource dataSource = new JREmptyDataSource();
+    public Response createPDFReport(@PathParam("pdfbuffer") String gPDFName) throws JRException {
+        JRDataSource dataSource = new JREmptyDataSource(); // обязательно использовать! без него будут пустые отчеты
         JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getMyReportJrxml());
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getFillMapParam(employerEng), dataSource);
-
-        File pdf = File.createTempFile("output.", ".pdf");
-        JasperExportManager.exportReportToPdfStream(jasperPrint, new FileOutputStream(pdf));
-
-        //File pdfFile = new File(pdf); // читаем сегенерир. файл
-        return Response.ok().entity(pdf).header( // и отправляем его
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getFillMapParam(employerGet.getEnglish()), dataSource);
+        return Response.ok().entity(JasperExportManager.exportReportToPdf(jasperPrint)).header(
                 "Content-disposition", "attachment; filename=\"" + gPDFName + ".pdf\"").build();
     }
 

@@ -10,7 +10,6 @@ class ReportPdfKotlin {
     val employerEng = Employer("Ilya Slezkin", "Developer", "8-963-01-65-023", "16.04.1987")
     val employerRus = Employer("Илья Слезкин", "Разработчик", "8-963-01-65-023", "16.04.1987")
 
-
     @Throws(JRException::class)
     fun makeReport(employer: Employer, name: String) {
         val parameters: MutableMap<String, Any?> = HashMap() // Parameters for report
@@ -30,28 +29,6 @@ class ReportPdfKotlin {
         outDir.mkdirs()
         // Export to PDF.  "путь/имя экспортируемого PDF файла"
         JasperExportManager.exportReportToPdfFile(jasperPrint, "src/main/resources/PDFoutput/$name.pdf")
-        println("Done!")
-    }
-
-    @Throws(JRException::class)
-    fun testRestReport() {
-        val parameters: MutableMap<String, Any?> = HashMap() // Parameters for report
-        // Parameters for report // можно переписать параметры в методе, если переменная более в 2ух методах
-        parameters["jr_name"] = employerEng.jrName
-        parameters["jr_position"] = employerEng.jrPosition
-        parameters["jr_phone_mobile"] = employerEng.jrPhoneMobile
-        parameters["jr_data_birthday"] = employerEng.jrDataBirthday
-        // DataSource. This is simple example, no database. Then using empty datasource
-        val dataSource: JRDataSource = JREmptyDataSource()
-        // от куда берём jrxml файл
-        val jrxmlFile = JasperCompileManager.compileReport("D:/JavaProjects/RestPDFtest/src/main/resources/templates/myReport.jrxml")
-        // JasperPrint
-        val jasperPrint = JasperFillManager.fillReport(jrxmlFile, parameters, dataSource)
-        // Make sure the output directory exists
-        val outDir = File("D:/JavaProjects/RestPDFtest/src/main/resources/PDFoutput") // проверка и создание пути для экспорта PDF файла
-        outDir.mkdirs()
-        // Export to PDF.  "путь/имя экспортируемого PDF файла"
-        JasperExportManager.exportReportToPdfFile(jasperPrint, "D:/JavaProjects/RestPDFtest/src/main/resources/PDFoutput/testRestReport.pdf")
         println("Done!")
     }
 }

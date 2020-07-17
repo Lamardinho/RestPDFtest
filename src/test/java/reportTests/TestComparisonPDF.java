@@ -6,7 +6,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import com.rest.app.makePDF.ComparisonPDF;
 
-public class TestComparisonPDF { // класс для сравнения PDF файлов
+// ******* класс для сравнения PDF файлов
+
+public class TestComparisonPDF {
     private final PDFUtil pdfUtil = new PDFUtil();      // читает PDF и переводит его в String
 
     @Test   // положительное сравнение
