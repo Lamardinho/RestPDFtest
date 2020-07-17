@@ -27,7 +27,7 @@ public class ReportPDF {
         // Export to PDF.  "путь/имя экспортируемого PDF файла"
         JasperExportManager.exportReportToPdfFile(jasperPrint, MyPdfURLs.INSTANCE.getExportPDF(reportName));
         //JasperExportManager.exportReportToPdfStream(jasperPrint,);
-        System.out.println("method makeReport is done! New file name: " + reportName);
+        System.out.println("method makeReport is done! New file created: " + reportName);
     }
 
     public void makeTestReport() throws JRException {
@@ -38,7 +38,7 @@ public class ReportPDF {
         outDir.mkdirs();
         JasperExportManager.exportReportToPdfFile(
                 jasperPrint, MyPdfURLs.INSTANCE.getExportPDF("test"));
-        System.out.println("method makeTestReport is done! New file name:" + MyPdfURLs.INSTANCE.getExportPDF("test"));
+        System.out.println("method makeTestReport is done! New file created :" + MyPdfURLs.INSTANCE.getExportPDF("test"));
     }
 
     public void makeRestReport(String userName) throws JRException {
@@ -48,10 +48,10 @@ public class ReportPDF {
         File outDir = new File(MyPdfURLs.INSTANCE.getDirWay());
         outDir.mkdirs();
         JasperExportManager.exportReportToPdfFile(jasperPrint, MyPdfURLs.INSTANCE.getExportPDF(userName));
-        System.out.println("method makeTestReport is done! New file name:" + MyPdfURLs.INSTANCE.getExportPDF(userName));
+        System.out.println("method makeTestReport is done! New file created :" + MyPdfURLs.INSTANCE.getExportPDF(userName));
     }
 
-    @NotNull // методе для заполнения Мапы и получения её parameters
+    @NotNull // метод для заполнения Мапы и получения её parameters
     private Map<String, Object> getFillMapParam(Employer employer) {
         Map<String, Object> parameters = new HashMap<>(); // Parameters for report
         // Parameters for report

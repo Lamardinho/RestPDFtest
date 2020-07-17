@@ -1,4 +1,4 @@
-package com.rest.app.webRestApi;
+package com.rest.app.leftClasses;
 
 import com.rest.app.domain.Address;
 import com.rest.app.domain.Role;

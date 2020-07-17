@@ -1,4 +1,4 @@
-package com.rest.app.webRestApi;
+package com.rest.app.leftClasses;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
