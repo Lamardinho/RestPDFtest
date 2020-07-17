@@ -1,17 +1,16 @@
-package com.rest.app.makePDF;
+package com.rest.app.java.makePDF;
 
 import com.rest.app.dataBaseK.Employer;
 import com.rest.app.dataBaseK.EmployerGet;
+import com.rest.app.dataBaseK.GetMap;
 import com.rest.app.dataBaseK.MyPdfURLs;
 import net.sf.jasperreports.engine.*;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ReportPDF {
-    EmployerGet employerGet = new EmployerGet();
+    private final EmployerGet employerGet = new EmployerGet();
+    private final GetMap getMap = new GetMap();
 
     public void makeReport(Employer employer, String reportName) throws JRException {
         // DataSource. This is simple example, no database. Then using empty datasource
@@ -19,7 +18,7 @@ public class ReportPDF {
         // от куда берём jrxml файл
         JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getMyReportJrxml());
         // JasperPrint
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getFillMapParam(employer), dataSource);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getMap.getFillMap(employer), dataSource);
         // проверка и создание пути для экспорта PDF файла
         File outDir = new File(MyPdfURLs.INSTANCE.getDirWay());
         outDir.mkdirs();
@@ -29,36 +28,14 @@ public class ReportPDF {
         System.out.println("method makeReport is done! New file created: " + reportName);
     }
 
-    public void makeTestReport() throws JRException {
-        JRDataSource dataSource = new JREmptyDataSource();
-        JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getMyReportJrxml());
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getFillMapParam(employerGet.getEnglish()), dataSource);
-        File outDir = new File(MyPdfURLs.INSTANCE.getDirWay());
-        outDir.mkdirs();
-        JasperExportManager.exportReportToPdfFile(
-                jasperPrint, MyPdfURLs.INSTANCE.getExportPDF("test"));
-        System.out.println("method makeTestReport is done! New file created :" + MyPdfURLs.INSTANCE.getExportPDF("test"));
-    }
-
+    // для RESTа
     public void makeRestReport(String userName) throws JRException {
         JRDataSource dataSource = new JREmptyDataSource();
         JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getMyReportJrxml());
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getFillMapParam(employerGet.getEnglish()), dataSource);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getMap.getFillMap(employerGet.getEnglish()), dataSource);
         File outDir = new File(MyPdfURLs.INSTANCE.getDirWay());
         outDir.mkdirs();
         JasperExportManager.exportReportToPdfFile(jasperPrint, MyPdfURLs.INSTANCE.getExportPDF(userName));
         System.out.println("method makeTestReport is done! New file created :" + MyPdfURLs.INSTANCE.getExportPDF(userName));
-    }
-
-    @NotNull
-    // метод для заполнения Мапы и получения её parameters
-    protected Map<String, Object> getFillMapParam(Employer employer) {
-        Map<String, Object> parameters = new HashMap<>(); // Parameters for report
-        // Parameters for report
-        parameters.put("jr_name", employer.getJrName());
-        parameters.put("jr_position", employer.getJrPosition());
-        parameters.put("jr_phone_mobile", employer.getJrPhoneMobile());
-        parameters.put("jr_data_birthday", employer.getJrDataBirthday());
-        return parameters;
     }
 }

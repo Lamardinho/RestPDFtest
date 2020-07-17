@@ -1,4 +1,4 @@
-package com.rest.app.makePDF;
+package com.rest.app.java.makePDF;
 
 import com.testautomationguru.utility.PDFUtil; // добавляем библиотеку для работы с PDF
 import com.rest.app.dataBaseK.MyPdfFiles;

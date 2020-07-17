@@ -1,8 +1,8 @@
-package com.rest.app.leftClasses;
+package com.rest.app.zLeftClasses;
 
-import com.rest.app.domain.Address;
-import com.rest.app.domain.Role;
-import com.rest.app.domain.User;
+import com.rest.app.zLeftClasses.domain.Address;
+import com.rest.app.zLeftClasses.domain.Role;
+import com.rest.app.zLeftClasses.domain.User;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.*;

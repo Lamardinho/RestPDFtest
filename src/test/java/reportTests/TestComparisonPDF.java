@@ -4,7 +4,7 @@ import com.testautomationguru.utility.PDFUtil; // добавляем библи�
 import com.rest.app.dataBaseK.MyPdfFiles;
 import org.junit.Assert;
 import org.junit.Test;
-import com.rest.app.makePDF.ComparisonPDF;
+import com.rest.app.java.makePDF.ComparisonPDF;
 
 // ******* класс для сравнения PDF файлов
 

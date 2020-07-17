@@ -1,4 +1,4 @@
-package com.rest.app.leftClasses;
+package com.rest.app.zLeftClasses;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

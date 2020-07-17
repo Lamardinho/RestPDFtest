@@ -1,12 +1,12 @@
-package com.rest.app.domain;
+package com.rest.app.zLeftClasses.domain;
 
-public class Role {
+public class Address {
     private String name;
 
-    public Role() {
+    public Address() {
     }
 
-    public Role(String name) {
+    public Address(String name) {
         this.name = name;
     }
 

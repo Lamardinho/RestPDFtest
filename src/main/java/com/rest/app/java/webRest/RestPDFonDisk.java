@@ -1,13 +1,12 @@
-package com.rest.app.webRestApi;
+package com.rest.app.java.webRest;
 
 import com.rest.app.dataBaseK.MyPdfURLs;
-import com.rest.app.makePDF.ReportPDF;
+import com.rest.app.java.makePDF.ReportPDF;
 import net.sf.jasperreports.engine.JRException;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.awt.*;
 import java.io.File;
 
 @Path("/pdf")
