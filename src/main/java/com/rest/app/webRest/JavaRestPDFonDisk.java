@@ -20,7 +20,6 @@ public class JavaRestPDFonDisk {
                 " Eg: http://localhost:8080/RestPDFtest_war_exploded/rest/pdf/Marcus";
     }
 
-
     // http://localhost:8080/RestPDFtest_war_exploded/rest/pdf/Marcus
     @GET
     @Path("/{javapdfname}")

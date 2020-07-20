@@ -1,6 +1,5 @@
 package com.rest.app.dataBase
 
-import com.rest.app.dataBase.Employer
 import java.util.HashMap
 
 class GetMap {

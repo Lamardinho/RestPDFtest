@@ -10,8 +10,8 @@ import net.sf.jasperreports.engine.*
 import java.io.File
 
 class ReportPDF {
-    private val employerGet = EmployerGet()
-    private val getMap = GetMap()
+    private val employerGet = EmployerGet()     // ссылка на класс с сотрудниками
+    private val getMap = GetMap()   // ссылка на мапу
 
     // генерирует PDF на сервере
     @Throws(JRException::class)
@@ -20,13 +20,13 @@ class ReportPDF {
         val dataSource: JRDataSource = JREmptyDataSource() // обязательно использовать! без него будут пустые отчеты
         // от куда берём jrxml файл
         val jrxmlFile = JasperCompileManager.compileReport(getMyReportJrxml())
-        // JasperPrint - заполняет шаблон
+        // JasperPrint - заполняем шаблон
         val jasperPrint = JasperFillManager.fillReport(jrxmlFile, getMap.getFillMap(employer), dataSource)
         // проверка и создание пути для экспорта PDF файла
         val outDir = File(getDirWay())
         outDir.mkdirs()
         // Экспорт данных в PDF файл
-        JasperExportManager.exportReportToPdfFile(jasperPrint, getExportPDF(reportName))
+        JasperExportManager.exportReportToPdfFile(jasperPrint, getExportPDF(reportName))    // ,(заполненный шаблон, путь(имя))
         // для отчёта
         println("method makeReport is done! New file created: $reportName")
     }

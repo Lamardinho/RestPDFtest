@@ -37,16 +37,4 @@ public class JavaRestPDFBuffer {
         return Response.ok().entity(JasperExportManager.exportReportToPdf(jasperPrint)).header(
                 "Content-disposition", "attachment; filename=\"" + gPDFName + ".pdf\"").build();
     }
-
-    /*@NotNull
-    // метод для заполнения Мапы и получения её parameters
-    private Map<String, Object> getFillMapParam(Employer employer) {
-        Map<String, Object> parameters = new HashMap<>(); // Parameters for report
-        // Parameters for report
-        parameters.put("jr_name", employer.getJrName());
-        parameters.put("jr_position", employer.getJrPosition());
-        parameters.put("jr_phone_mobile", employer.getJrPhoneMobile());
-        parameters.put("jr_data_birthday", employer.getJrDataBirthday());
-        return parameters;
-    }*/
 }

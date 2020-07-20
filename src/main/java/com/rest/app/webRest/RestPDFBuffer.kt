@@ -32,8 +32,8 @@ open class RestPDFBuffer {
     @Throws(JRException::class)
     fun createPDFReport(@PathParam("buffername") gPDFName: String): Response? {
         val dataSource: JRDataSource = JREmptyDataSource() // обязательно использовать! без него будут пустые отчеты
-        val jrxmlFile = JasperCompileManager.compileReport(getMyReportJrxml())
-        val jasperPrint = JasperFillManager.fillReport(jrxmlFile, getMap.getFillMap(employerGet.getEnglish()), dataSource)
+        val jrxmlFile = JasperCompileManager.compileReport(getMyReportJrxml()) // выбираем шаблон
+        val jasperPrint = JasperFillManager.fillReport(jrxmlFile, getMap.getFillMap(employerGet.getEnglish()), dataSource) // заполняем шаблон
         return Response.ok().entity(JasperExportManager.exportReportToPdf(jasperPrint)).header(
                 "Content-disposition", "attachment; filename=\"$gPDFName.pdf\"").build()
     }
