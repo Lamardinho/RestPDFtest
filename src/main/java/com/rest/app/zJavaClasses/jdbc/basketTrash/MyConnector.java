@@ -1,4 +1,4 @@
-package com.rest.app.zLeftClassesJava.postgresSQL;
+package com.rest.app.zJavaClasses.jdbc.basketTrash;
 
 import java.sql.*;
 
@@ -6,9 +6,7 @@ public class MyConnector {
 
     private void getConnection() throws SQLException {
         try (Connection ignored = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/rest_staff",
-                "postgres",
-                "post@post23")) {
+                "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23")) {
             System.out.println("Connection successful");
         }
     }

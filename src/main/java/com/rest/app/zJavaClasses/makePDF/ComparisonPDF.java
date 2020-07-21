@@ -1,4 +1,4 @@
-package com.rest.app.zLeftClassesJava.makePDF;
+package com.rest.app.zJavaClasses.makePDF;
 
 import com.testautomationguru.utility.PDFUtil; // добавляем библиотеку для работы с PDF
 import com.rest.app.dataBase.MyPdfFiles;

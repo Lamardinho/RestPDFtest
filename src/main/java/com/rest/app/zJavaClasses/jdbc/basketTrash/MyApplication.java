@@ -1,4 +1,4 @@
-package com.rest.app.zLeftClassesJava.postgresSqlLeftTests;
+package com.rest.app.zJavaClasses.jdbc.basketTrash;
 
 import java.sql.*;
 

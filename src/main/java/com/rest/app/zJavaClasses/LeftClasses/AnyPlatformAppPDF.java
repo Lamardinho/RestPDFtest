@@ -1,4 +1,4 @@
-package com.rest.app.zLeftClassesJava.LeftClasses;
+package com.rest.app.zJavaClasses.LeftClasses;
 
 import com.rest.app.dataBase.MyPdfFiles;
 

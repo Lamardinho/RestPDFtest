@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS staff;
 
 CREATE TABLE public.staff
 (
-    employee_id            smallserial,
+    employee_id            serial,
     employee_name          character varying(50) NOT NULL,
     employee_position      character varying(50) NOT NULL,
     employee_phone         bigint                NOT NULL,

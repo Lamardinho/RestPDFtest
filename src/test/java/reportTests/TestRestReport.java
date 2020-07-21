@@ -1,7 +1,7 @@
 package reportTests;
 
 import com.rest.app.dataBase.MyPdfURLs;
-import com.rest.app.zLeftClassesJava.makePDF.ReportPDF;
+import com.rest.app.zJavaClasses.makePDF.ReportPDF;
 import net.sf.jasperreports.engine.JRException;
 import org.junit.Test;
 
