@@ -27,10 +27,10 @@ open class RestPDFBuffer {
     //  http://localhost:8080/RestPDFtest_war_exploded/rest/pdfbuffer/anyname
     // формирование PDFки в буфер и сохранение на стороне клиента:
     @GET
-    @Path("/{buffername}/{userId}")      // доб /{userId}
+    @Path("/{buffername}")      // доб /{userId} = @Path("/{buffername}/{userId}") // fun createPDFReport(@PathParam("buffername") gPDFName: String, @PathParam("userId")
     @Produces(MediaType.APPLICATION_JSON) // для передачи в формате JSON
     @Throws(JRException::class)
-    fun createPDFReport(@PathParam("buffername") gPDFName: String, @PathParam("userId") userId: String): Response? {
+    fun createPDFReport(@PathParam("buffername") gPDFName: String): Response? {
         val dataSource: JRDataSource = JREmptyDataSource() // обязательно использовать! без него будут пустые отчеты
         val jrxmlFile = JasperCompileManager.compileReport(getMyReportJrxml()) // выбираем шаблон
         val jasperPrint = JasperFillManager.fillReport(jrxmlFile, getMap.getFillMap(employeeGet.getEnglish()), dataSource) // заполняем шаблон

@@ -30,7 +30,7 @@ public class TestsJdbcJava {
     @Test
     public void deleteEmp() throws SQLException {
         System.out.println("\n@Test deleteEmp:");
-        sqlSelectsJava.deleteEmployee(20);
-        sqlSelectsJava.deleteEmployee(21);
+        sqlSelectsJava.deleteEmployee(22);
+        sqlSelectsJava.deleteEmployee(23);
     }
 }
