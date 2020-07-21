@@ -1,7 +1,7 @@
 package com.rest.app.makePDF
 
-import com.rest.app.dataBase.Employer
-import com.rest.app.dataBase.EmployerGet
+import com.rest.app.dataBase.Employee
+import com.rest.app.dataBase.EmployeeGet
 import com.rest.app.dataBase.GetMap
 import com.rest.app.dataBase.MyPdfURLs.getDirWay
 import com.rest.app.dataBase.MyPdfURLs.getExportPDF
@@ -10,18 +10,18 @@ import net.sf.jasperreports.engine.*
 import java.io.File
 
 class ReportPDF {
-    private val employerGet = EmployerGet()     // ссылка на класс с сотрудниками
+    private val employeeGet = EmployeeGet()     // ссылка на класс с сотрудниками
     private val getMap = GetMap()   // ссылка на мапу
 
     // генерирует PDF на сервере
     @Throws(JRException::class)
-    fun makeReport(employer: Employer, reportName: String) {
+    fun makeReport(employee: Employee, reportName: String) {
         // DataSource. This is simple example, no database. Then using empty datasource
         val dataSource: JRDataSource = JREmptyDataSource() // обязательно использовать! без него будут пустые отчеты
         // от куда берём jrxml файл
         val jrxmlFile = JasperCompileManager.compileReport(getMyReportJrxml())
         // JasperPrint - заполняем шаблон
-        val jasperPrint = JasperFillManager.fillReport(jrxmlFile, getMap.getFillMap(employer), dataSource)
+        val jasperPrint = JasperFillManager.fillReport(jrxmlFile, getMap.getFillMap(employee), dataSource)
         // проверка и создание пути для экспорта PDF файла
         val outDir = File(getDirWay())
         outDir.mkdirs()
@@ -36,7 +36,7 @@ class ReportPDF {
     fun makeRestReport(userName: String) {
         val dataSource: JRDataSource = JREmptyDataSource()
         val jrxmlFile = JasperCompileManager.compileReport(getMyReportJrxml())
-        val jasperPrint = JasperFillManager.fillReport(jrxmlFile, getMap.getFillMap(employerGet.getEnglish()), dataSource)
+        val jasperPrint = JasperFillManager.fillReport(jrxmlFile, getMap.getFillMap(employeeGet.getEnglish()), dataSource)
         val outDir = File(getDirWay())
         outDir.mkdirs()
         JasperExportManager.exportReportToPdfFile(jasperPrint, getExportPDF(userName))

@@ -1,7 +1,7 @@
 package com.rest.app.zJava.makePDF;
 
-import com.rest.app.dataBase.Employer;
-import com.rest.app.dataBase.EmployerGet;
+import com.rest.app.dataBase.Employee;
+import com.rest.app.dataBase.EmployeeGet;
 import com.rest.app.dataBase.GetMap;
 import com.rest.app.dataBase.MyPdfURLs;
 import net.sf.jasperreports.engine.*;
@@ -9,16 +9,16 @@ import net.sf.jasperreports.engine.*;
 import java.io.File;
 
 public class ReportPDF {
-    private final EmployerGet employerGet = new EmployerGet();
+    private final EmployeeGet employeeGet = new EmployeeGet();
     private final GetMap getMap = new GetMap();
 
-    public void makeReport(Employer employer, String reportName) throws JRException {
+    public void makeReport(Employee employee, String reportName) throws JRException {
         // DataSource. This is simple example, no database. Then using empty datasource
         JRDataSource dataSource = new JREmptyDataSource(); // обязательно использовать! без него будут пустые отчеты
         // от куда берём jrxml файл
         JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getMyReportJrxml());
         // JasperPrint - заполняет шаблон
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getMap.getFillMap(employer), dataSource);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getMap.getFillMap(employee), dataSource);
         // проверка и создание пути для экспорта PDF файла
         File outDir = new File(MyPdfURLs.INSTANCE.getDirWay());
         outDir.mkdirs();
@@ -32,7 +32,7 @@ public class ReportPDF {
     public void makeRestReport(String userName) throws JRException {
         JRDataSource dataSource = new JREmptyDataSource();
         JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getMyReportJrxml());
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getMap.getFillMap(employerGet.getEnglish()), dataSource);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getMap.getFillMap(employeeGet.getEnglish()), dataSource);
         File outDir = new File(MyPdfURLs.INSTANCE.getDirWay());
         outDir.mkdirs();
         JasperExportManager.exportReportToPdfFile(jasperPrint, MyPdfURLs.INSTANCE.getExportPDF(userName));

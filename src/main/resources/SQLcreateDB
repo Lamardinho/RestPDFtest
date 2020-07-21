@@ -1,0 +1,20 @@
+DROP TABLE IF EXISTS staff;
+
+CREATE TABLE public.staff
+(
+    employee_id            integer               NOT NULL,
+    employee_name          character varying(50) NOT NULL,
+    employee_position      character varying(50) NOT NULL,
+    employee_phone         bigint                NOT NULL,
+    employee_data_birthday date                  NOT NULL,
+    CONSTRAINT pk_employee_id PRIMARY KEY (employee_id)
+);
+
+ALTER TABLE public.staff
+    OWNER to postgres;
+
+INSERT INTO staff
+VALUES (1, 'Marcus Prince', 'Developer', 89630165023, '1987-04-16');
+
+INSERT INTO staff
+VALUES (2, 'Илья Слёзкин', 'Разработчик', 89630165023, '1987-04-16');

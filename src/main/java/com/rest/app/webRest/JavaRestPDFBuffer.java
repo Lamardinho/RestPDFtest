@@ -1,6 +1,6 @@
 package com.rest.app.webRest;
 
-import com.rest.app.dataBase.EmployerGet;
+import com.rest.app.dataBase.EmployeeGet;
 import com.rest.app.dataBase.GetMap;
 import com.rest.app.dataBase.MyPdfURLs;
 import net.sf.jasperreports.engine.*;
@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 
 @Path("/javabuffer")
 public class JavaRestPDFBuffer {
-    private final EmployerGet employerGet = new EmployerGet(); // ссылка на сотрудника
+    private final EmployeeGet employeeGet = new EmployeeGet(); // ссылка на сотрудника
     private final GetMap getMap = new GetMap();
 
     //  http://localhost:8080/RestPDFtest_war_exploded/rest/javabuffer
@@ -33,7 +33,7 @@ public class JavaRestPDFBuffer {
     public Response createPDFReport(@PathParam("javabufname") String gPDFName) throws JRException {
         JRDataSource dataSource = new JREmptyDataSource();  // обязательно использовать! без него будут пустые отчеты
         JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getMyReportJrxml());
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getMap.getFillMap(employerGet.getEnglish()), dataSource);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, getMap.getFillMap(employeeGet.getEnglish()), dataSource);
         return Response.ok().entity(JasperExportManager.exportReportToPdf(jasperPrint)).header(
                 "Content-disposition", "attachment; filename=\"" + gPDFName + ".pdf\"").build();
     }

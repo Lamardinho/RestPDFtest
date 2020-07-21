@@ -4,13 +4,13 @@ import java.util.HashMap
 
 class GetMap {
     // метод для заполнения Мапы и получения её parameters
-    fun getFillMap(employer: Employer): Map<String, Any> {
+    fun getFillMap(employee: Employee): Map<String, Any> {
         val parameters: MutableMap<String, Any> = HashMap() // Parameters for report
         // Parameters for report
-        parameters["jr_name"] = employer.jrName
-        parameters["jr_position"] = employer.jrPosition
-        parameters["jr_phone_mobile"] = employer.jrPhoneMobile
-        parameters["jr_data_birthday"] = employer.jrDataBirthday
+        parameters["jr_name"] = employee.jrName
+        parameters["jr_position"] = employee.jrPosition
+        parameters["jr_phone_mobile"] = employee.jrPhoneMobile
+        parameters["jr_data_birthday"] = employee.jrDataBirthday
         return parameters
     }
 }
