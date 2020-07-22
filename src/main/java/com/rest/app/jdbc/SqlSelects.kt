@@ -6,7 +6,7 @@ import java.sql.SQLException
 
 class SqlSelects {
     @Throws(SQLException::class)
-    fun addNewEmployee(name: String, position: String?, phone: Long, date: Date?) {
+    fun addNewEmployee(name: String, position: String, phone: Long, date: Date) {
         DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23").use { connection ->
             connection.prepareStatement(
@@ -41,14 +41,15 @@ class SqlSelects {
             connection.prepareStatement(
                     "SELECT * FROM rest_staff.public.staff WHERE employee_id = (?)").use { statement ->
                 statement.setInt(1, employeeId) // employeeId - это (?) из запроса
-                val resultSet = statement.executeQuery() // применение команд?
-                if (resultSet.next()) {
-                    val employeeName = resultSet.getString(2)
-                    val employeePosition = resultSet.getString(3)
-                    val employeePhone = resultSet.getLong(4)
-                    val employeeDataBirthday = resultSet.getDate(5)
-                    println("Name: " + "{" + employeeName + "}" + " Position: " + "{" + employeePosition + "}" +
-                            " Phone: " + "{" + employeePhone + "}" + " Birthday: " + "{" + employeeDataBirthday + "}")
+                statement.executeQuery().use { resultSet ->  // применение команд?
+                    if (resultSet.next()) {
+                        val employeeName = resultSet.getString(2)
+                        val employeePosition = resultSet.getString(3)
+                        val employeePhone = resultSet.getLong(4)
+                        val employeeDataBirthday = resultSet.getDate(5)
+                        println("Name: " + "{" + employeeName + "}" + " Position: " + "{" + employeePosition + "}" +
+                                " Phone: " + "{" + employeePhone + "}" + " Birthday: " + "{" + employeeDataBirthday + "}")
+                    }
                 }
             }
         }

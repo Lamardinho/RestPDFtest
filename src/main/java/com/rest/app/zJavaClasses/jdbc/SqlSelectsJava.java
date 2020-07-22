@@ -23,7 +23,6 @@ public class SqlSelectsJava {
                 "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23");
              PreparedStatement statement = connection.prepareStatement(
                      "DELETE FROM rest_staff.public.staff WHERE employee_id = (?)")) {
-
             statement.setInt(1, employeeId);   // employeeId - это (?) из запроса
             statement.executeUpdate();  // применение команд?
             System.out.println("employee id: '" + employeeId + "' has been removed");
@@ -35,16 +34,16 @@ public class SqlSelectsJava {
                 "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23");
              PreparedStatement statement = connection.prepareStatement(
                      "SELECT * FROM rest_staff.public.staff WHERE employee_id = (?)")) {
-
             statement.setInt(1, employeeId);   // employeeId - это (?) из запроса
-            final ResultSet resultSet = statement.executeQuery();  // применение команд?
-            if (resultSet.next()) {
-                String employeeName = resultSet.getString(2);
-                String employeePosition = resultSet.getString(3);
-                long employeePhone = resultSet.getLong(4);
-                java.sql.Date employeeDataBirthday = resultSet.getDate(5);
-                System.out.println("Name: " + "{" + employeeName + "}" + " Position: " + "{" + employeePosition + "}" +
-                        " Phone: " + "{" + employeePhone + "}" + " Birthday: " + "{" + employeeDataBirthday + "}");
+            try (final ResultSet resultSet = statement.executeQuery()) { // применение команд?
+                if (resultSet.next()) {
+                    String employeeName = resultSet.getString(2);
+                    String employeePosition = resultSet.getString(3);
+                    long employeePhone = resultSet.getLong(4);
+                    java.sql.Date employeeDataBirthday = resultSet.getDate(5);
+                    System.out.println("Name: " + "{" + employeeName + "}" + " Position: " + "{" + employeePosition + "}" +
+                            " Phone: " + "{" + employeePhone + "}" + " Birthday: " + "{" + employeeDataBirthday + "}");
+                }
             }
         }
     }
