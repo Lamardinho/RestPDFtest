@@ -18,10 +18,10 @@ open class RestPDFBuffer {
 
     //  http://localhost:8080/RestPDFtest_war_exploded/rest/pdfbuffer
     @GET
-    open fun hello(): String? {
+    open fun hello(): String {
         val user = System.getProperty("user.name") // определяет имя пользователя системы
         return "Hello " + user + "! Enter the filename in the URL line to export to PDF: /filename." +
-                " Eg: http://localhost:8080/RestPDFtest_war_exploded/rest/pdfbuffer/Marcus"
+                " Eg: ..../rest/pdfbuffer/anyNAME"
     }
 
     //  http://localhost:8080/RestPDFtest_war_exploded/rest/pdfbuffer/anyname
@@ -30,7 +30,7 @@ open class RestPDFBuffer {
     @Path("/{buffername}")      // доб /{userId} = @Path("/{buffername}/{userId}") // fun createPDFReport(@PathParam("buffername") gPDFName: String, @PathParam("userId")
     @Produces(MediaType.APPLICATION_JSON) // для передачи в формате JSON
     @Throws(JRException::class)
-    fun createPDFReport(@PathParam("buffername") gPDFName: String): Response? {
+    fun createPDFReport(@PathParam("buffername") gPDFName: String): Response {
         val dataSource: JRDataSource = JREmptyDataSource() // обязательно использовать! без него будут пустые отчеты
         val jrxmlFile = JasperCompileManager.compileReport(getMyReportJrxml()) // выбираем шаблон
         val jasperPrint = JasperFillManager.fillReport(jrxmlFile, getMap.getFillMap(employeeGet.getEnglish()), dataSource) // заполняем шаблон

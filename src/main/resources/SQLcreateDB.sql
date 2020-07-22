@@ -21,3 +21,10 @@ INSERT INTO staff(employee_name, employee_position, employee_phone, employee_dat
 VALUES ('Harry Potter', 'Magic Developer', 89999999999, '1980-07-31');
 
 --SELECT * FROM staff;
+
+/*CREATE TABLE public.orders
+(
+    order_id               serial,
+    order_date             date,
+    CONSTRAINT pk_employee_id PRIMARY KEY (order_id)
+);*/
