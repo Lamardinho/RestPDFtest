@@ -5,7 +5,7 @@ import com.rest.app.dataBase.MySQLs;
 import java.sql.*;
 
 public class SqlSelectsJava {
-
+    // добавить Employee
     public void addNewEmployee(String name, String position, long phone, java.sql.Date date) throws SQLException {
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23");
@@ -19,20 +19,22 @@ public class SqlSelectsJava {
         }
     }
 
-    public void deleteEmployee(int employeeId) throws SQLException {
+    // удалить Employee
+    public void deleteEmployeeById(int employeeId) throws SQLException {
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23");
-             PreparedStatement statement = connection.prepareStatement(MySQLs.INSTANCE.deleteEmployee())) {
+             PreparedStatement statement = connection.prepareStatement(MySQLs.INSTANCE.deleteEmployeeById())) {
             statement.setInt(1, employeeId);   // employeeId - это (?) из запроса
             statement.executeUpdate();  // применение команд?
             System.out.println("employee id: '" + employeeId + "' has been removed");
         }
     }
 
-    public void selectEmployee(int employeeId) throws SQLException {
+    // выбрать Employee
+    public void selectEmployeeById(int employeeId) throws SQLException {
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23");
-             PreparedStatement statement = connection.prepareStatement(MySQLs.INSTANCE.selectEmployee())) {
+             PreparedStatement statement = connection.prepareStatement(MySQLs.INSTANCE.selectEmployeeById())) {
             statement.setInt(1, employeeId);   // employeeId - это (?) из запроса
             try (final ResultSet resultSet = statement.executeQuery()) { // применение команд?
                 if (resultSet.next()) {
@@ -42,6 +44,44 @@ public class SqlSelectsJava {
                     java.sql.Date employeeDataBirthday = resultSet.getDate(5);
                     System.out.println("Name: " + "{" + employeeName + "}" + " Position: " + "{" + employeePosition + "}" +
                             " Phone: " + "{" + employeePhone + "}" + " Birthday: " + "{" + employeeDataBirthday + "}");
+                }
+            }
+        }
+    }
+
+    // выбрать Employee
+    public void selectEmployeeByName(String Name) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(
+                "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23");
+             PreparedStatement statement = connection.prepareStatement(MySQLs.INSTANCE.selectEmployeeByName())) {
+            statement.setString(1, Name);   // Name - это (?) из запроса
+            try (final ResultSet resultSet = statement.executeQuery()) { // применение команд?
+                if (resultSet.next()) {
+                    String employeeName = resultSet.getString(2);
+                    String employeePosition = resultSet.getString(3);
+                    long employeePhone = resultSet.getLong(4);
+                    java.sql.Date employeeDataBirthday = resultSet.getDate(5);
+                    System.out.println("Name: " + "{" + employeeName + "}" + " Position: " + "{" + employeePosition + "}" +
+                            " Phone: " + "{" + employeePhone + "}" + " Birthday: " + "{" + employeeDataBirthday + "}");
+                }
+            }
+        }
+    }
+
+    // выбрать всех Employees
+    public void selectAllStaff() throws SQLException {
+        try (Connection connection = DriverManager.getConnection(
+                "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23");
+             Statement statement = connection.createStatement()) {
+            try (final ResultSet resultSet = statement.executeQuery(MySQLs.INSTANCE.selectAllStaff())) { // применение команд?
+                while (resultSet.next()) {
+                    String employeeName = resultSet.getString(2);
+                    String employeePosition = resultSet.getString(3);
+                    long employeePhone = resultSet.getLong(4);
+                    java.sql.Date employeeDataBirthday = resultSet.getDate(5);
+                    int id = resultSet.getInt(1);
+                    System.out.println("Name: " + "{" + employeeName + "}" + " Position: " + "{" + employeePosition + "}" +
+                            " Phone: " + "{" + employeePhone + "}" + " Birthday: " + "{" + employeeDataBirthday + "}" + " id: " + "{" + id + "}");
                 }
             }
         }

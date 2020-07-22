@@ -6,31 +6,37 @@ import org.junit.Test;
 import java.sql.SQLException;
 
 public class TestsJdbcJava {
-    SqlSelectsJava sqlSelectsJava = new SqlSelectsJava();
+    private final SqlSelectsJava sqlSelectsJava = new SqlSelectsJava();
 
     @Test
-    public void selectEmp() throws SQLException {
+    public void selectEmployeeById() throws SQLException {
         System.out.println("\n@Test selectEmp:");
-        sqlSelectsJava.selectEmployee(1);
-        sqlSelectsJava.selectEmployee(2);
-        sqlSelectsJava.selectEmployee(3);
-        sqlSelectsJava.selectEmployee(4);
-        sqlSelectsJava.selectEmployee(5);
-        sqlSelectsJava.selectEmployee(6);
-        sqlSelectsJava.selectEmployee(12);
+        sqlSelectsJava.selectEmployeeById(1);
+        sqlSelectsJava.selectEmployeeById(2);
+        sqlSelectsJava.selectEmployeeById(3);
+    }
+
+    @Test
+    public void selectAllEmployee() throws SQLException {
+        System.out.println("\n@Test selectAllEmp:");
+        sqlSelectsJava.selectAllStaff();
+    }
+
+    @Test
+    public void selectEmployeeByName() throws SQLException {
+        System.out.println("\n@Test selectAllEmp:");
+        sqlSelectsJava.selectEmployeeByName("Marcus Prince");
     }
 
     @Test
     public void createEmp() throws SQLException {
         System.out.println("\n@Test createEmp:");
-        sqlSelectsJava.addNewEmployee("Michael Jordan", "Сorporate girls сoach", 89085487041L, java.sql.Date.valueOf("1963-02-17"));
-        sqlSelectsJava.addNewEmployee("LeBron James", "Сorporate сoach", 89025486047L, java.sql.Date.valueOf("1984-12-30"));
+        sqlSelectsJava.addNewEmployee("Test User", "Tester", 89630165023L, java.sql.Date.valueOf("1990-01-01"));
     }
 
     @Test
     public void deleteEmp() throws SQLException {
         System.out.println("\n@Test deleteEmp:");
-        sqlSelectsJava.deleteEmployee(26);
-        sqlSelectsJava.deleteEmployee(27);
+        sqlSelectsJava.deleteEmployeeById(29);
     }
 }
