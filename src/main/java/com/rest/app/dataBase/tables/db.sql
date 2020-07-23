@@ -101,3 +101,13 @@ INSERT INTO orders (date, fk_customer_name, fk_service, pay)
 VALUES ('2020-07-19', 'Marcus', 'internet', 500);
 INSERT INTO orders (date, fk_customer_name, fk_service, pay)
 VALUES ('2020-07-19', 'Marcus', 'TV', 300);
+
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-06-19', 'Alice', 'internet', 500);
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-07-19', 'Alice', 'internet', 500);
+
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-06-19', 'Alexandra', 'internet', 500);
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-07-19', 'Alexandra', 'TV', 300);
