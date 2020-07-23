@@ -1,6 +1,6 @@
 package com.rest.app.webRest;
 
-import com.rest.app.zJavaClasses.jdbc.SqlOrders;
+import com.rest.app.zJavaClasses.jdbc.SqlOrdersJava;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -18,8 +18,8 @@ public class JavaTestJdbcReturnOrders {
     @Path("/{user}")
     @Produces(MediaType.APPLICATION_JSON) // для передачи в формате JSON
     @Consumes(MediaType.APPLICATION_JSON)
-    public SqlOrders myOrders(@PathParam("user") String userName) throws SQLException, ClassNotFoundException {
-        SqlOrders orders = new SqlOrders();
+    public SqlOrdersJava myOrders(@PathParam("user") String userName) throws SQLException, ClassNotFoundException {
+        SqlOrdersJava orders = new SqlOrdersJava();
         orders.selectByName(userName);
         return orders;
     }

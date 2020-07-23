@@ -4,7 +4,7 @@ import com.rest.app.dataBase.tables.OrderTable;
 
 import java.sql.*;
 
-public class SqlOrders {
+public class SqlOrdersJava {
     // вывод всех заказов по ИМЕНИ клиента
     public void selectByName(String Name) throws SQLException, ClassNotFoundException {
         Class.forName("org.postgresql.Driver");
@@ -13,7 +13,7 @@ public class SqlOrders {
              PreparedStatement statement = connection.prepareStatement(
                      "SELECT * FROM rtk.public.orders WHERE fk_customer_name = (?)")) {
             statement.setString(1, Name);   // Name - это (?) из запроса
-            try (final ResultSet resultSet = statement.executeQuery()) { // применение команд?
+            try (final ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     OrderTable order = new OrderTable();
                     order.setOrderNumber(resultSet.getInt(1));
@@ -28,7 +28,7 @@ public class SqlOrders {
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        SqlOrders orders = new SqlOrders();
+        SqlOrdersJava orders = new SqlOrdersJava();
         orders.selectByName("Marcus");
     }
 }
