@@ -1,13 +1,13 @@
 package com.rest.app.dataBase.tables;
 
-public class Customer {
+public class CustomerTable {
     private int id;
     private String login;
 
-    public Customer() {
+    public CustomerTable() {
     }
 
-    public Customer(int id, String login) {
+    public CustomerTable(int id, String login) {
         this.id = id;
         this.login = login;
     }

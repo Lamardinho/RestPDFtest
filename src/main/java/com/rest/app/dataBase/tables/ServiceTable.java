@@ -1,13 +1,13 @@
 package com.rest.app.dataBase.tables;
 
-public class Service {
+public class ServiceTable {
     private int id;
     private String service;
 
-    public Service() {
+    public ServiceTable() {
     }
 
-    public Service(int id, String service) {
+    public ServiceTable(int id, String service) {
         this.id = id;
         this.service = service;
     }

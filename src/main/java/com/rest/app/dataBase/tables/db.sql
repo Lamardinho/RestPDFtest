@@ -57,7 +57,7 @@ create table orders
     order_number     serial                                        NOT NULL,
     date             date                                          NOT NULL,
     fk_customer_name varchar REFERENCES customers (customer_login) NOT NULL,
-    fk_service       integer REFERENCES services (service_id)      NOT NULL,
+    fk_service       varchar REFERENCES services (service_name)    NOT NULL,
     pay              integer                                       NOT NULL
 );
 
@@ -69,4 +69,7 @@ alter table orders
         primary key (order_number);
 
 INSERT INTO orders (date, fk_customer_name, fk_service, pay)
-VALUES ('2020-07-23', 'Marcus', 1, 500);
+VALUES ('2020-07-19', 'Marcus', 'internet', 500);
+
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-07-20', 'Marcus', 'TV', 500);

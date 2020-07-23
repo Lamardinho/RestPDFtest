@@ -2,17 +2,17 @@ package com.rest.app.dataBase.tables;
 
 import java.sql.Date;
 
-public class Order {
+public class OrderTable {
     private int orderNumber;
     private Date date;
     private String customer;
     private String service;
     private int pay;
 
-    public Order() {
+    public OrderTable() {
     }
 
-    public Order(int orderNumber, Date date, String customer, String service, int pay) {
+    public OrderTable(int orderNumber, Date date, String customer, String service, int pay) {
         this.orderNumber = orderNumber;
         this.date = date;
         this.customer = customer;
@@ -62,6 +62,6 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" + "orderNumber=" + orderNumber + ", date=" + date + ", customer='" + customer + '\'' + ", service='" + service + '\'' + ", pay=" + pay + '}';
+        return "info: {" + "order #: " + orderNumber + ", date=" + date + ", customer='" + customer + '\'' + ", service='" + service + '\'' + ", pay=" + pay + '}';
     }
 }
