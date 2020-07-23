@@ -1,7 +1,5 @@
 package com.rest.app.zJavaClasses.jdbc;
 
-import com.rest.app.dataBase.MySQLs;
-
 import java.sql.*;
 
 public class SqlSelectsJava {
@@ -9,7 +7,7 @@ public class SqlSelectsJava {
     public void addNewEmployee(String name, String position, long phone, java.sql.Date date) throws SQLException {
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23");
-             PreparedStatement statement = connection.prepareStatement(MySQLs.INSTANCE.createEmployee())) {
+             PreparedStatement statement = connection.prepareStatement("INSERT INTO rest_staff.public.staff(employee_name, employee_position, employee_phone, employee_data_birthday) VALUES(?,?,?,?)")) {
             statement.setString(1, name);
             statement.setString(2, position);
             statement.setLong(3, phone);
@@ -23,7 +21,7 @@ public class SqlSelectsJava {
     public void deleteEmployeeById(int employeeId) throws SQLException {
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23");
-             PreparedStatement statement = connection.prepareStatement(MySQLs.INSTANCE.deleteEmployeeById())) {
+             PreparedStatement statement = connection.prepareStatement("DELETE FROM rest_staff.public.staff WHERE employee_id = (?)")) {
             statement.setInt(1, employeeId);   // employeeId - это (?) из запроса
             statement.executeUpdate();  // применение команд?
             System.out.println("employee id: '" + employeeId + "' has been removed");
@@ -34,7 +32,7 @@ public class SqlSelectsJava {
     public void selectEmployeeById(int employeeId) throws SQLException {
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23");
-             PreparedStatement statement = connection.prepareStatement(MySQLs.INSTANCE.selectEmployeeById())) {
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM rest_staff.public.staff WHERE employee_id = (?)")) {
             statement.setInt(1, employeeId);   // employeeId - это (?) из запроса
             try (final ResultSet resultSet = statement.executeQuery()) { // применение команд?
                 if (resultSet.next()) {
@@ -53,7 +51,7 @@ public class SqlSelectsJava {
     public void selectEmployeeByName(String Name) throws SQLException {
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23");
-             PreparedStatement statement = connection.prepareStatement(MySQLs.INSTANCE.selectEmployeeByName())) {
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM rest_staff.public.staff WHERE employee_name = (?)")) {
             statement.setString(1, Name);   // Name - это (?) из запроса
             try (final ResultSet resultSet = statement.executeQuery()) { // применение команд?
                 if (resultSet.next()) {
@@ -73,7 +71,7 @@ public class SqlSelectsJava {
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23");
              Statement statement = connection.createStatement()) {
-            try (final ResultSet resultSet = statement.executeQuery(MySQLs.INSTANCE.selectAllStaff())) { // применение команд?
+            try (final ResultSet resultSet = statement.executeQuery("SELECT * FROM rest_staff.public.staff")) { // применение команд?
                 while (resultSet.next()) {
                     String employeeName = resultSet.getString(2);
                     String employeePosition = resultSet.getString(3);
@@ -86,14 +84,6 @@ public class SqlSelectsJava {
             }
         }
     }
-    // лучше через enum или лучше как сейчас? Если через enum, то лучше внутри класса или отдельным enum class? или без разницы и от ситуации?
-    /*enum SQLsEnum {
-        GET("SELECT * FROM rest_staff.public.staff WHERE employee_id = (?)"),
-        INSERT("INSERT INTO rest_staff.public.staff(employee_name, employee_position, employee_phone, employee_data_birthday) VALUES(?,?,?,?)"),
-        DELETE("DELETE FROM rest_staff.public.staff WHERE employee_id = (?)");  // UPDATE("")
-        String QUERY;
-        SQLsEnum(String QUERY) {this.QUERY = QUERY;}
-    }*/
 }
 
 /*Соответствие методов командам SQL:

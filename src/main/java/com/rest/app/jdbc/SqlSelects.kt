@@ -1,26 +1,22 @@
 package com.rest.app.jdbc
 
-import com.rest.app.dataBase.MySQLs
-import com.rest.app.dataBase.MySQLs.createEmployee
-import com.rest.app.dataBase.MySQLs.deleteEmployeeById
-import com.rest.app.dataBase.MySQLs.selectEmployeeById
-import com.rest.app.dataBase.MySQLs.selectEmployeeByName
 import java.sql.Date
 import java.sql.DriverManager
 import java.sql.SQLException
 
 class SqlSelects {
+
     // добавить Employee
     @Throws(SQLException::class)
     fun addNewEmployee(name: String, position: String, phone: Long, date: Date) {
         DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23").use { connection ->
-            connection.prepareStatement(createEmployee()).use { statement ->
+            connection.prepareStatement("INSERT INTO rest_staff.public.staff(employee_name, employee_position, employee_phone, employee_data_birthday) VALUES(?,?,?,?)").use { statement ->
                 statement.setString(1, name)
                 statement.setString(2, position)
                 statement.setLong(3, phone)
                 statement.setDate(4, date)
-                statement.executeUpdate() // применение команд?
+                statement.executeUpdate()
                 println("employee '$name' was created")
             }
         }
@@ -31,9 +27,9 @@ class SqlSelects {
     fun deleteEmployeeById(employeeId: Int) {
         DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23").use { connection ->
-            connection.prepareStatement(deleteEmployeeById()).use { statement ->
+            connection.prepareStatement("DELETE FROM rest_staff.public.staff WHERE employee_id = (?)").use { statement ->
                 statement.setInt(1, employeeId) // employeeId - это (?) из запроса
-                statement.executeUpdate() // применение команд?
+                statement.executeUpdate()
                 println("employee id: '$employeeId' has been removed")
             }
         }
@@ -44,9 +40,9 @@ class SqlSelects {
     fun selectEmployeeById(employeeId: Int) {
         DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23").use { connection ->
-            connection.prepareStatement(selectEmployeeById()).use { statement ->
+            connection.prepareStatement("SELECT * FROM rest_staff.public.staff WHERE employee_id = (?)").use { statement ->
                 statement.setInt(1, employeeId) // employeeId - это (?) из запроса
-                statement.executeQuery().use { resultSet ->  // применение команд?
+                statement.executeQuery().use { resultSet ->
                     if (resultSet.next()) {
                         val employeeName = resultSet.getString(2)
                         val employeePosition = resultSet.getString(3)
@@ -65,9 +61,9 @@ class SqlSelects {
     fun selectEmployeeByName(Name: String) {
         DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23").use { connection ->
-            connection.prepareStatement(selectEmployeeByName()).use { statement ->
+            connection.prepareStatement("SELECT * FROM rest_staff.public.staff WHERE employee_name = (?)").use { statement ->
                 statement.setString(1, Name) // Name - это (?) из запроса
-                statement.executeQuery().use { resultSet ->  // применение команд?
+                statement.executeQuery().use { resultSet ->
                     if (resultSet.next()) {
                         val employeeName = resultSet.getString(2)
                         val employeePosition = resultSet.getString(3)
@@ -87,7 +83,7 @@ class SqlSelects {
         DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23").use { connection ->
             connection.createStatement().use { statement ->
-                statement.executeQuery(MySQLs.selectAllStaff()).use { resultSet ->  // применение команд?
+                statement.executeQuery("SELECT * FROM rest_staff.public.staff").use { resultSet ->
                     while (resultSet.next()) {
                         val employeeName = resultSet.getString(2)
                         val employeePosition = resultSet.getString(3)
@@ -102,11 +98,3 @@ class SqlSelects {
         }
     }
 }
-// лучше через enum или лучше как сейчас? Если через enum, то лучше внутри класса или отдельным enum class? или без разницы и от ситуации?
-/*enum SQLsEnum {
-    GET("SELECT * FROM rest_staff.public.staff WHERE employee_id = (?)"),
-    INSERT("INSERT INTO rest_staff.public.staff(employee_name, employee_position, employee_phone, employee_data_birthday) VALUES(?,?,?,?)"),
-    DELETE("DELETE FROM rest_staff.public.staff WHERE employee_id = (?)");  // UPDATE("")
-    String QUERY;
-    SQLsEnum(String QUERY) {this.QUERY = QUERY;}
-}*/
