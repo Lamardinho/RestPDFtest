@@ -4,7 +4,7 @@ import java.sql.Date
 import java.sql.DriverManager
 import java.sql.SQLException
 
-class SqlSelects {
+class SqlEmployeesSel {
 
     // добавить Employee
     @Throws(SQLException::class)

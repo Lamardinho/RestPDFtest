@@ -1,13 +1,13 @@
 package jdbcTests
 
-import com.rest.app.jdbc.SqlSelects
+import com.rest.app.jdbc.SqlEmployeesSel
 import org.junit.Test
 import java.sql.Date
 import java.sql.SQLException
 
 class TestJDBC {
 
-    private val sqlSelects = SqlSelects()
+    private val sqlSelects = SqlEmployeesSel()
 
     @Test
     @Throws(SQLException::class)
