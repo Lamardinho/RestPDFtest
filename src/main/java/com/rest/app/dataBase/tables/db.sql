@@ -68,8 +68,36 @@ alter table orders
     add constraint orders_pk
         primary key (order_number);
 
+-- выставляем данные в orders table
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2019-12-19', 'Marcus', 'internet', 500);
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2019-12-19', 'Marcus', 'TV', 300);
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-01-20', 'Marcus', 'internet', 500);
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-01-19', 'Marcus', 'TV', 300);
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-02-19', 'Marcus', 'internet', 500);
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-02-19', 'Marcus', 'TV', 300);
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-03-19', 'Marcus', 'internet', 500);
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-03-19', 'Marcus', 'TV', 300);
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-04-19', 'Marcus', 'internet', 500);
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-04-19', 'Marcus', 'TV', 300);
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-05-19', 'Marcus', 'internet', 500);
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-05-19', 'Marcus', 'TV', 300);
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-06-19', 'Marcus', 'internet', 500);
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-06-19', 'Marcus', 'TV', 300);
 INSERT INTO orders (date, fk_customer_name, fk_service, pay)
 VALUES ('2020-07-19', 'Marcus', 'internet', 500);
-
 INSERT INTO orders (date, fk_customer_name, fk_service, pay)
-VALUES ('2020-07-20', 'Marcus', 'TV', 500);
+VALUES ('2020-07-19', 'Marcus', 'TV', 300);
