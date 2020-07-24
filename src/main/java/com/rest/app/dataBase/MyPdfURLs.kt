@@ -5,6 +5,10 @@ object MyPdfURLs {
         return "D:/JavaProjects/RestPDFtest/src/main/resources/templates/myReport.jrxml"
     }
 
+    fun getInternetPayOrder(): String { // путь на PDF файл "одинаковый"
+        return "D:/JavaProjects/RestPDFtest/src/main/resources/templates/InternetPayOrder.jrxml"
+    }
+
     fun getDirWay(): String { // путь на PDF файл "одинаковый"
         return "D:/JavaProjects/RestPDFtest/src/main/resources/PDFoutput"
     }
