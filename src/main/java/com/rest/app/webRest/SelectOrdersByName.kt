@@ -8,10 +8,10 @@ import java.util.concurrent.ConcurrentHashMap
 import javax.ws.rs.*
 import javax.ws.rs.core.MediaType
 
-@Path("/ReturnMyOrders")
+@Path("/SelectOrdersByName")
 class SelectOrdersByName {
     //  *   *   *   выводит сразу все заказы при переходе на эту на страницу  *   *   *
-    // http://localhost:8080/RestPDFtest_war_exploded/rest/ReturnMyOrdersJava
+    // http://localhost:8080/RestPDFtest_war_exploded/rest/SelectOrdersByName
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -25,7 +25,7 @@ class SelectOrdersByName {
     }
 
     //  *   *   *   выводит все заказы по имени клиента  *   *   *     /Marcus or /Alice or / Alexandra и т.д...
-    // http://localhost:8080/RestPDFtest_war_exploded/rest/ReturnMyOrdersJava/Marcus
+    // http://localhost:8080/RestPDFtest_war_exploded/rest/SelectOrdersByName/Marcus
     @GET
     @Path("/{user}")
     @Produces(MediaType.APPLICATION_JSON) // для передачи в формате JSON

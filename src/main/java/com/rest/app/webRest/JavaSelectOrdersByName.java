@@ -9,13 +9,13 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Path("/ReturnMyOrdersJava")
+@Path("/JavaSelectOrdersByName")
 public class JavaSelectOrdersByName {
     //  *   *   *   выводит сразу все заказы при переходе на эту на страницу  *   *   *
-    // http://localhost:8080/RestPDFtest_war_exploded/rest/ReturnMyOrdersJava
+    // http://localhost:8080/RestPDFtest_war_exploded/rest/JavaSelectOrdersByName
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)   // тип данных отправляемых клиенту (не является обязательной?)
+    @Consumes(MediaType.APPLICATION_JSON)   // тип данных получаемых от клиента в теле запроса
     public Collection<OrderTable> mainHome() throws ClassNotFoundException, SQLException {
         Class.forName("org.postgresql.Driver");
         final Map<Integer, OrderTable> ordersMap = new ConcurrentHashMap<>();
@@ -23,13 +23,13 @@ public class JavaSelectOrdersByName {
                 "jdbc:postgresql://localhost:5432/rtk", "postgres", "post@post23");
              PreparedStatement statement = connection.prepareStatement("SELECT * FROM rtk.public.orders")) {
 
-            getResultSetExecuteQuery(ordersMap, statement);
+            getExecuteQuery(ordersMap, statement);
         }
         return ordersMap.values();
     }
 
     //  *   *   *   выводит все заказы по имени клиента  *   *   *     /Marcus or /Alice or / Alexandra и т.д...
-    // http://localhost:8080/RestPDFtest_war_exploded/rest/ReturnMyOrdersJava/Marcus
+    // http://localhost:8080/RestPDFtest_war_exploded/rest/JavaSelectOrdersByName/Marcus
     @GET
     @Path("/{user}")
     @Produces(MediaType.APPLICATION_JSON) // для передачи в формате JSON
@@ -42,13 +42,13 @@ public class JavaSelectOrdersByName {
              PreparedStatement statement = connection.prepareStatement("SELECT * FROM rtk.public.orders WHERE fk_customer_name = (?)")) {
             statement.setString(1, userName);   // Name - это (?) из запроса
 
-            getResultSetExecuteQuery(ordersMap, statement);
+            getExecuteQuery(ordersMap, statement);
         }
         return ordersMap.values();
     }
 
-    // метод для наполнения объекта order данными из базы данных и заполнения Мапы ordersMap для передачи на web
-    private void getResultSetExecuteQuery(Map<Integer, OrderTable> ordersMap, PreparedStatement statement) throws SQLException {
+    // наполнение объектов order данными из БД и заполнение Мапы ordersMap для передачи на web
+    private void getExecuteQuery(Map<Integer, OrderTable> ordersMap, PreparedStatement statement) throws SQLException {
         try (final ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 OrderTable order = new OrderTable();

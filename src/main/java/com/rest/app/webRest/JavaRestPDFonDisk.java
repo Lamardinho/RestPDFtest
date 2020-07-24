@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.File;
 
-@Path("/javapdf")
+@Path("/JavaRestPDFonDisk")
 public class JavaRestPDFonDisk {
 
     // http://localhost:8080/RestPDFtest_war_exploded/rest/pdf
@@ -20,7 +20,7 @@ public class JavaRestPDFonDisk {
                 " Eg: http://localhost:8080/RestPDFtest_war_exploded/rest/pdf/Marcus";
     }
 
-    // http://localhost:8080/RestPDFtest_war_exploded/rest/pdf/Marcus
+    // http://localhost:8080/RestPDFtest_war_exploded/rest/JavaRestPDFonDisk/Marcus
     @GET
     @Path("/{javapdfname}")
     @Produces(MediaType.APPLICATION_JSON) // для передачи в формате JSON

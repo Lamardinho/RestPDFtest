@@ -12,12 +12,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/javabuffer")
+@Path("/JavaRestPDFBuffer")
 public class JavaRestPDFBuffer {
     private final EmployeeGet employeeGet = new EmployeeGet(); // ссылка на сотрудника
     private final GetMap getMap = new GetMap();
 
-    //  http://localhost:8080/RestPDFtest_war_exploded/rest/javabuffer
+    //  http://localhost:8080/RestPDFtest_war_exploded/rest/JavaRestPDFBuffer
     @GET
     public String hello() {
         String user = System.getProperty("user.name"); // определяет имя пользователя системы
@@ -25,7 +25,7 @@ public class JavaRestPDFBuffer {
                 " Eg: http://localhost:8080/RestPDFtest_war_exploded/rest/pdfbuffer/Marcus";
     }
 
-    //  http://localhost:8080/RestPDFtest_war_exploded/rest/javabuffer/anyname
+    //  http://localhost:8080/RestPDFtest_war_exploded/rest/JavaRestPDFBuffer/anyname
     // формирование PDFки в буфер и сохранение на стороне клиента:
     @GET
     @Path("/{javabufname}")
