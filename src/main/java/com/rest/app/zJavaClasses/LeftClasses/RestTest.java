@@ -13,14 +13,15 @@ public class RestTest {
         String user = System.getProperty("user.name"); // определяет имя пользователя системы
         return "Hello " + user;
     }
+
     /*
     http://localhost:8080/RestPDFtest_war_exploded/rest/hello/23?name=Marcus
+                                                              Marcus?pay=500
     */
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON) // для передачи в формате JSON
-    public String checkPerson(@PathParam("id") int id,
-                              @QueryParam("name") String name) {
+    public String checkPerson(@PathParam("id") int id, @QueryParam("name") String name) {
         return "your id: " + id + ",your  name " + name;
     }
 }

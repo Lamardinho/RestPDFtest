@@ -1,10 +1,10 @@
 package com.rest.app.dataBase.tables;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class OrderTable {
     private int orderNumber;
-    private Date date;
+    private Timestamp timestamp;
     private String customer;
     private String service;
     private int pay;
@@ -12,9 +12,9 @@ public class OrderTable {
     public OrderTable() {
     }
 
-    public OrderTable(int orderNumber, Date date, String customer, String service, int pay) {
+    public OrderTable(int orderNumber, Timestamp timestamp, String customer, String service, int pay) {
         this.orderNumber = orderNumber;
-        this.date = date;
+        this.timestamp = timestamp;
         this.customer = customer;
         this.service = service;
         this.pay = pay;
@@ -28,12 +28,12 @@ public class OrderTable {
         this.orderNumber = orderNumber;
     }
 
-    public Date getDate() {
-        return date;
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getCustomer() {
@@ -62,6 +62,12 @@ public class OrderTable {
 
     @Override
     public String toString() {
-        return "info: {" + "order #: " + orderNumber + ", date=" + date + ", customer='" + customer + '\'' + ", service='" + service + '\'' + ", pay=" + pay + '}';
+        return "OrderTable{" +
+                "orderNumber=" + orderNumber +
+                ", timestamp=" + timestamp +
+                ", customer='" + customer + '\'' +
+                ", service='" + service + '\'' +
+                ", pay=" + pay +
+                '}';
     }
 }

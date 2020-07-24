@@ -53,7 +53,7 @@ public class JavaSelectOrdersByName {
             while (resultSet.next()) {
                 OrderTable order = new OrderTable();
                 order.setOrderNumber(resultSet.getInt(1));
-                order.setDate(resultSet.getDate(2));
+                order.setTimestamp(resultSet.getTimestamp(2));
                 order.setCustomer(resultSet.getString(3));
                 order.setService(resultSet.getString(4));
                 order.setPay(resultSet.getInt(5));

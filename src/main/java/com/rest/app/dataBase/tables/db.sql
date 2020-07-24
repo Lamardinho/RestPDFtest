@@ -55,7 +55,7 @@ VALUES (DEFAULT, 'internet'),
 create table orders
 (
     order_number     serial                                        NOT NULL,
-    date             date                                          NOT NULL,
+    date             timestamp                                     NOT NULL,
     fk_customer_name varchar REFERENCES customers (customer_login) NOT NULL,
     fk_service       varchar REFERENCES services (service_name)    NOT NULL,
     pay              integer                                       NOT NULL
@@ -111,3 +111,4 @@ INSERT INTO orders (date, fk_customer_name, fk_service, pay)
 VALUES ('2020-06-19', 'Alexandra', 'internet', 500);
 INSERT INTO orders (date, fk_customer_name, fk_service, pay)
 VALUES ('2020-07-19', 'Alexandra', 'TV', 300);
+

@@ -16,7 +16,7 @@ class SelectOrdersByName {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Throws(ClassNotFoundException::class, SQLException::class)
-    fun mainHome(): Collection<OrderTable>? {
+    fun mainHome(): Collection<OrderTable> {
         Class.forName("org.postgresql.Driver")
         val ordersMap: MutableMap<Int, OrderTable> = ConcurrentHashMap()
         DriverManager.getConnection(
@@ -31,7 +31,7 @@ class SelectOrdersByName {
     @Produces(MediaType.APPLICATION_JSON) // для передачи в формате JSON
     @Consumes(MediaType.APPLICATION_JSON)
     @Throws(SQLException::class, ClassNotFoundException::class)
-    fun myOrders(@PathParam("user") userName: String?): Collection<OrderTable>? {
+    fun myOrders(@PathParam("user") userName: String): Collection<OrderTable> {
         Class.forName("org.postgresql.Driver")
         val ordersMap: MutableMap<Int, OrderTable> = ConcurrentHashMap()
         DriverManager.getConnection(
@@ -51,7 +51,7 @@ class SelectOrdersByName {
             while (resultSet.next()) {
                 val order = OrderTable()
                 order.orderNumber = resultSet.getInt(1)
-                order.date = resultSet.getDate(2)
+                order.timestamp = resultSet.getTimestamp(2)
                 order.customer = resultSet.getString(3)
                 order.service = resultSet.getString(4)
                 order.pay = resultSet.getInt(5)

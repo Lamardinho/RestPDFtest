@@ -16,7 +16,7 @@ class SqlOrders {
                     while (resultSet.next()) {
                         val order = OrderTable()
                         order.orderNumber = resultSet.getInt(1)
-                        order.date = resultSet.getDate(2)
+                        order.timestamp = resultSet.getTimestamp(2)
                         order.customer = resultSet.getString(3)
                         order.service = resultSet.getString(4)
                         order.pay = resultSet.getInt(5)
