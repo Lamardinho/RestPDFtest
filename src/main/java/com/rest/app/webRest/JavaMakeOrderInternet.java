@@ -29,7 +29,7 @@ public class JavaMakeOrderInternet {
             preparedStatement.setString(1, name);
             preparedStatement.setInt(2, pay);
             preparedStatement.executeUpdate();  // выполнить запрос
-            System.out.println("Done!");
+            System.out.println("You paid" + pay + " +RUB");
 
             /*try (final ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -44,9 +44,8 @@ public class JavaMakeOrderInternet {
                 }
             }*/
 
-            System.out.println("order '" + " " + "Date" + "' was created");
         }
-        return "done";
+        return "You paid" + pay + " +RUB";
     }
 
     /*public static void main(String[] args) {
