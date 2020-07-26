@@ -1,8 +1,8 @@
-package com.rest.app.zJavaClasses.makePDF;
+package employees.makePDF.makePDFjava;
 
-import com.rest.app.dataBase.Employee;
-import com.rest.app.dataBase.EmployeeGet;
-import com.rest.app.dataBase.GetMap;
+import employees.database.Employee;
+import employees.database.EmployeeGet;
+import employees.database.GetMap;
 import com.rest.app.dataBase.MyPdfURLs;
 import net.sf.jasperreports.engine.*;
 

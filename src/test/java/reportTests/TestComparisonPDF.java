@@ -1,10 +1,10 @@
 package reportTests;
 
 import com.testautomationguru.utility.PDFUtil; // добавляем библиотеку для работы с PDF
-import com.rest.app.dataBase.MyPdfFiles;
+import employees.database.MyPdfFiles;
 import org.junit.Assert;
 import org.junit.Test;
-import com.rest.app.zJavaClasses.makePDF.ComparisonPDF;
+import employees.makePDF.makePDFjava.ComparisonPDF;
 
 // ******* класс для сравнения PDF файлов
 

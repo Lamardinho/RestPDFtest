@@ -1,4 +1,4 @@
-package com.rest.app.jdbc
+package employees.jdbc
 
 import java.sql.Date
 import java.sql.DriverManager

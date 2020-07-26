@@ -1,4 +1,4 @@
-package com.rest.app.dataBase
+package employees.database
 
 data class Employee( // класс конструктор EmployerGet (Сотрудник)
         val jrName: String,

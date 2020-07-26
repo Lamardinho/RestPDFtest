@@ -1,8 +1,9 @@
-package com.rest.app.zJavaClasses.jdbc;
+package employees.jdbc;
 
 import java.sql.*;
 
-public class SqlSelectsEmployeesJava {
+public class JavaSqlEmployeesSel {
+
     // добавить Employee
     public void addNewEmployee(String name, String position, long phone, java.sql.Date date) throws SQLException {
         try (Connection connection = DriverManager.getConnection(

@@ -1,7 +1,7 @@
-package com.rest.app.webRest
+package employees.webRest
 
-import com.rest.app.dataBase.EmployeeGet
-import com.rest.app.dataBase.GetMap
+import employees.database.EmployeeGet
+import employees.database.GetMap
 import com.rest.app.dataBase.MyPdfURLs.getMyReportJrxml
 import net.sf.jasperreports.engine.*
 import javax.ws.rs.GET

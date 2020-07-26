@@ -1,4 +1,4 @@
-package com.rest.app.dataBase
+package employees.database
 
 object MyPdfFiles {
     fun getMyReport(): String { // путь на PDF файл "одинаковый"

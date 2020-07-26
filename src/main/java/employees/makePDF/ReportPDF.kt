@@ -1,8 +1,8 @@
-package com.rest.app.makePDF
+package employees.makePDF
 
-import com.rest.app.dataBase.Employee
-import com.rest.app.dataBase.EmployeeGet
-import com.rest.app.dataBase.GetMap
+import employees.database.Employee
+import employees.database.EmployeeGet
+import employees.database.GetMap
 import com.rest.app.dataBase.MyPdfURLs.getDirWay
 import com.rest.app.dataBase.MyPdfURLs.getExportPDF
 import com.rest.app.dataBase.MyPdfURLs.getMyReportJrxml

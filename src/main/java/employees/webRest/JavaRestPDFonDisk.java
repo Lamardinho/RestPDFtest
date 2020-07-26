@@ -1,7 +1,7 @@
-package com.rest.app.webRest;
+package employees.webRest;
 
 import com.rest.app.dataBase.MyPdfURLs;
-import com.rest.app.zJavaClasses.makePDF.ReportPDF;
+import employees.makePDF.makePDFjava.ReportPDF;
 import net.sf.jasperreports.engine.JRException;
 
 import javax.ws.rs.*;

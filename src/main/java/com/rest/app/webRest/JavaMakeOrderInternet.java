@@ -58,26 +58,26 @@ public class JavaMakeOrderInternet {
                     }
                 }
             }
-            //  makeReport(loginName, pay);   // заполнение мапы для отчета JasperReports
         }
         return "You paid " + pay + " RUB";
     }
 
-    public void makeReport(int orderNumber, String jrName, java.sql.Timestamp time, String service, int pay) throws JRException {
+    // наполняет мапу параметрами и передает их в JasperReports отчёт
+    public void makeReport(int orderNumber, String customer, java.sql.Timestamp time, String service, int pay) throws JRException {
         Map<String, Object> parameters = new HashMap<>(); // Parameters for report
         parameters.put("order_number", orderNumber);
-        parameters.put("jr_name", jrName);                                            // +
+        parameters.put("jr_name", customer);  // customer name
         parameters.put("jr_data", time);
         parameters.put("jr_service", service);
-        parameters.put("jr_pay", pay);                                                   // +
+        parameters.put("jr_pay", pay);
 
         JRDataSource dataSource = new JREmptyDataSource(); // без него будут пустые отчеты
-        JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getInternetPayOrder());  // от куда берём jrxml файл
+        JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getInternetPayOrderJrxml());  // от куда берём jrxml файл
         JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, parameters, dataSource);  // JasperPrint - заполняет шаблон
         File outDir = new File(MyPdfURLs.INSTANCE.getDirWay());     // проверка и создание пути для экспорта PDF файла
         outDir.mkdirs();
-        JasperExportManager.exportReportToPdfFile(jasperPrint, MyPdfURLs.INSTANCE.getExportPDF("testOrder")); // Экспорт данных в PDF файл
-        System.out.println("method makeReport is done! New file created: " + jrName); // для отчёта
+        JasperExportManager.exportReportToPdfFile(jasperPrint, MyPdfURLs.INSTANCE.getExportPDF("JavaMakeOrderInternet")); // Экспорт данных в PDF файл
+        System.out.println("method makeReport is done! New file created: " + customer); // для отчёта
     }
 
     // наполнение объектов order данными из БД и заполнение Мапы ordersMap для передачи на web
@@ -96,12 +96,4 @@ public class JavaMakeOrderInternet {
             }
         }
     }
-    /*public static void main(String[] args) {
-        JavaMakeOrderInternet makeOrder = new JavaMakeOrderInternet();
-        try {
-            makeOrder.addNewOrder("Bob", 500);
-        } catch (Exception exception) {
-            System.out.println("Warning! : " + exception);
-        }
-    }*/
 }

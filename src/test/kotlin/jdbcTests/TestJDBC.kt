@@ -1,6 +1,6 @@
 package jdbcTests
 
-import com.rest.app.jdbc.SqlEmployeesSel
+import employees.jdbc.SqlEmployeesSel
 import org.junit.Test
 import java.sql.Date
 import java.sql.SQLException

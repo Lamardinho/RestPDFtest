@@ -1,7 +1,7 @@
-package com.rest.app.makePDF
+package employees.makePDF
 
-import com.rest.app.dataBase.MyPdfFiles.getMyReport
-import com.rest.app.dataBase.MyPdfFiles.getMyReport2
+import employees.database.MyPdfFiles.getMyReport
+import employees.database.MyPdfFiles.getMyReport2
 import com.testautomationguru.utility.PDFUtil
 
 class ComparisonPDF {

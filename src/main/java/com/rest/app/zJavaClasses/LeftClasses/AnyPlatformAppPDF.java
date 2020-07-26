@@ -1,6 +1,6 @@
 package com.rest.app.zJavaClasses.LeftClasses;
 
-import com.rest.app.dataBase.MyPdfFiles;
+import employees.database.MyPdfFiles;
 
 import java.awt.*;
 import java.io.File;
