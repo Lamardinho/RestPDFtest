@@ -21,7 +21,7 @@ class MakeOrderInternet {
     @GET
     @Produces(MediaType.APPLICATION_JSON) // тип данных отправляемых клиенту (не является обязательной?)
     @Consumes(MediaType.APPLICATION_JSON) // тип данных получаемых от клиента в теле запроса
-    fun hello(): String? {
+    fun hello(): String {
         return "Hello " + System.getProperty("user.name") + "!"
     }
 
@@ -30,7 +30,7 @@ class MakeOrderInternet {
     @GET
     @Path("/{user}") // @Path("/{user}/{pay}")       /Marcus?pay=500
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)
-    fun addNewOrder(@PathParam("user") loginName: String?, @QueryParam("pay") pay: Int): String? {
+    fun addNewOrder(@PathParam("user") loginName: String, @QueryParam("pay") pay: Int): String {
         Class.forName("org.postgresql.Driver")
         val ordersMap: MutableMap<Int, OrderTable> = ConcurrentHashMap()
         DriverManager.getConnection(
