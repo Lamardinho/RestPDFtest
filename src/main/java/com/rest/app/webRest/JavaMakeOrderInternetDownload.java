@@ -53,15 +53,15 @@ public class JavaMakeOrderInternetDownload {    // класс для сохра�
                         order.setCustomer(resultSet.getString(3));
                         order.setService(resultSet.getString(4));
                         order.setPay(resultSet.getInt(5));
-                        getExecuteQuery(ordersMap, statement);
-
+                        getExecuteQuery(ordersMap, statement);  // наполняем мапу ordersMap данными из БД
+                        // наполняем мапу parameters для JasperReports
                         Map<String, Object> parameters = new HashMap<>(); // Parameters for report
                         parameters.put("order_number", order.getOrderNumber());
                         parameters.put("jr_name", order.getCustomer());  // customer name
                         parameters.put("jr_data", timestamp);
                         parameters.put("jr_service", order.getService());
                         parameters.put("jr_pay", order.getPay());
-
+                        // формируем отчёт
                         JRDataSource dataSource = new JREmptyDataSource(); // без него будут пустые отчеты
                         JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getInternetPayOrderJrxml());  // от куда берём jrxml файл
                         jasperPrint = JasperFillManager.fillReport(jrxmlFile, parameters, dataSource);  // JasperPrint - заполняет шаблон
