@@ -1,4 +1,4 @@
-package com.rest.app.zJavaClasses.LeftClasses;
+package com.rest.app.zJavaClasses.LeftClasses.domain;
 
 import com.rest.app.zJavaClasses.LeftClasses.domain.Address;
 import com.rest.app.zJavaClasses.LeftClasses.domain.Role;
@@ -56,18 +56,18 @@ public class UserRestController {
         System.out.println("123");    }*/
 
     @GET
+    // метод GET должен быть уникальный, все остальные GET должны быть "перезагрузкой": 1) @Path("/{id}") 2) @Path("/") и тд
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public User getUser(@PathParam("id") int id) {
-        return USERS.getOrDefault(
-                id, new User() {
-                    public String getError() {
-                        return String.format("User not found. [id=%s]", id);
-                    }
-                }
-        );
+        return USERS.getOrDefault(id, new User() {
+            public String getError() {   // возвращает сообщение, если объект не существует
+                return String.format("User not found. [id=%s]", id);
+            }
+        });
     }
 
+    // отдает все объекты
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
@@ -75,7 +75,7 @@ public class UserRestController {
         return USERS.values();
     }
 
-    @POST
+    @POST   // @POST - используется для создания объекта
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -85,7 +85,8 @@ public class UserRestController {
         return user;
     }
 
-    @POST
+    // метод для множественного создания объектов
+    @POST    // перегруженный метод @POST
     @Path("/multi")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -96,7 +97,7 @@ public class UserRestController {
         return users;
     }
 
-    @PUT
+    @PUT    // для обновления - update
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -105,7 +106,7 @@ public class UserRestController {
         return user;
     }
 
-    @DELETE
+    @DELETE     // в методах @DELETE используем только: public Response, другие типы данных не приемлимы
     @Path("/{id}")
     public Response delete(@PathParam("id") int id) {
         USERS.remove(id);

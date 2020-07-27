@@ -6,14 +6,14 @@ import net.sf.jasperreports.engine.*;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.io.File;
+import javax.ws.rs.core.Response;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Path("/JavaMakeOrderInternet")
-public class JavaMakeOrderInternet {
+@Path("/JavaMakeOrderInternetDownload")
+public class JavaMakeOrderInternetDownload {    // класс для сохранения отчета только на ПК клиента
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)   // тип данных отправляемых клиенту (не является обязательной?)
@@ -23,12 +23,13 @@ public class JavaMakeOrderInternet {
     }
 
     // добавить Order
-    // http://localhost:8080/RestPDFtest_war_exploded/rest/JavaMakeOrderInternet/Marcus?pay=500
+    // http://localhost:8080/RestPDFtest_war_exploded/rest/JavaMakeOrderInternetDownload/John?pay=500
     @GET
     @Path("/{user}")      // @Path("/{user}/{pay}")       /Marcus?pay=500
-    public String addNewOrder(@PathParam("user") String loginName, @QueryParam("pay") int pay) throws SQLException, ClassNotFoundException, JRException {
+    public Response addNewOrder(@PathParam("user") String loginName, @QueryParam("pay") int pay) throws SQLException, ClassNotFoundException, JRException {
         Class.forName("org.postgresql.Driver");
         final Map<Integer, OrderTable> ordersMap = new ConcurrentHashMap<>();
+        JasperPrint jasperPrint = null;
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rtk", "postgres", "post@post23");
              PreparedStatement preparedStatement = connection.prepareStatement(
@@ -54,30 +55,24 @@ public class JavaMakeOrderInternet {
                         order.setPay(resultSet.getInt(5));
                         getExecuteQuery(ordersMap, statement);
 
-                        makeReport(order.getOrderNumber(), order.getCustomer(), timestamp, order.getService(), order.getPay());
+                        Map<String, Object> parameters = new HashMap<>(); // Parameters for report
+                        parameters.put("order_number", order.getOrderNumber());
+                        parameters.put("jr_name", order.getCustomer());  // customer name
+                        parameters.put("jr_data", timestamp);
+                        parameters.put("jr_service", order.getService());
+                        parameters.put("jr_pay", order.getPay());
+
+                        JRDataSource dataSource = new JREmptyDataSource(); // без него будут пустые отчеты
+                        JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getInternetPayOrderJrxml());  // от куда берём jrxml файл
+                        jasperPrint = JasperFillManager.fillReport(jrxmlFile, parameters, dataSource);  // JasperPrint - заполняет шаблон
+                        // JasperExportManager.exportReportToPdfFile(jasperPrint, MyPdfURLs.INSTANCE.getExportPDF("JavaMakeOrderInternet")); // Экспорт данных в PDF файл
+                        System.out.println("method makeReport is done! New file created: " + loginName); // для отчёта
                     }
                 }
             }
         }
-        return "You paid " + pay + " RUB";
-    }
-
-    // наполняет мапу параметрами и передает их в JasperReports отчёт
-    public void makeReport(int orderNumber, String customer, java.sql.Timestamp time, String service, int pay) throws JRException {
-        Map<String, Object> parameters = new HashMap<>(); // Parameters for report
-        parameters.put("order_number", orderNumber);
-        parameters.put("jr_name", customer);  // customer name
-        parameters.put("jr_data", time);
-        parameters.put("jr_service", service);
-        parameters.put("jr_pay", pay);
-
-        JRDataSource dataSource = new JREmptyDataSource(); // без него будут пустые отчеты
-        JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getInternetPayOrderJrxml());  // от куда берём jrxml файл
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jrxmlFile, parameters, dataSource);  // JasperPrint - заполняет шаблон
-        File outDir = new File(MyPdfURLs.INSTANCE.getDirWay());     // проверка и создание пути для экспорта PDF файла
-        outDir.mkdirs();
-        JasperExportManager.exportReportToPdfFile(jasperPrint, MyPdfURLs.INSTANCE.getExportPDF("JavaMakeOrderInternet")); // Экспорт данных в PDF файл
-        System.out.println("method makeReport is done! New file created: " + customer); // для отчёта
+        return Response.ok().entity(JasperExportManager.exportReportToPdf(jasperPrint)).header(
+                "Content-disposition", "attachment; filename=\"" + loginName + ".pdf\"").build();
     }
 
     // наполнение объектов order данными из БД и заполнение Мапы ordersMap для передачи на web

@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
 @Path("/RestPDFBuffer")
-open class RestPDFBuffer {
+open class RestPdfDownload {
     private val employeeGet = EmployeeGet() // ссылка на сотрудника
     private val getMap = GetMap()
 

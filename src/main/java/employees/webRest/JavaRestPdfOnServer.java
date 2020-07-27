@@ -10,7 +10,7 @@ import javax.ws.rs.core.Response;
 import java.io.File;
 
 @Path("/JavaRestPDFonDisk")
-public class JavaRestPDFonDisk {
+public class JavaRestPdfOnServer {
 
     // http://localhost:8080/RestPDFtest_war_exploded/rest/pdf
     @GET

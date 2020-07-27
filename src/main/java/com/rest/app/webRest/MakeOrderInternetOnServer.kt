@@ -16,7 +16,7 @@ import javax.ws.rs.*
 import javax.ws.rs.core.MediaType
 
 @Path("/MakeOrderInternet")
-class MakeOrderInternet {
+class MakeOrderInternetOnServer {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON) // тип данных отправляемых клиенту (не является обязательной?)
