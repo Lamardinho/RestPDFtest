@@ -32,15 +32,17 @@ public class JavaMakeOrderInternetOnServer {
         JasperPrint jasperPrint;
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rtk", "postgres", "post@post23"); // подключаемся к БД
-             PreparedStatement preparedStatement = connection.prepareStatement(
-                     "SELECT * FROM rtk.public.make_order(?,?,'internet',?)")) {
-            preparedStatement.setTimestamp(1, timestamp);   // 1ый '?' wildCard
-            preparedStatement.setString(2, loginName);      // 2ой '?' wildCard
-            preparedStatement.setInt(3, pay);               // 3ий '?' wildCard
-            // preparedStatement.execute();  // выполнить запрос
+             // используем CallableStatement для работы с хранимыми процедурами
+             CallableStatement callableStatement = connection.prepareCall("SELECT * FROM rtk.public.make_order(?,?,'internet',?)")) {
+            callableStatement.setTimestamp(1, timestamp);   // 1ый '?' wildCard
+            callableStatement.setString(2, loginName);      // 2ой '?' wildCard
+            callableStatement.setInt(3, pay);               // 3ий '?' wildCard
+            /*boolean hasResults = callableStatement.execute();
+            while (hasResults) {ResultSet resultSet = callableStatement.getResultSet();
+                while (resultSet.next()) {System.out.println(resultSet.getInt(1));}
+                hasResults = callableStatement.getMoreResults();}*/
             System.out.println("You paid " + pay + " RUB");
-            // реализовать CallableStatement вместо PreparedStatement (вверху)
-            try (final ResultSet resultSet = preparedStatement.executeQuery()) {
+            try (final ResultSet resultSet = callableStatement.executeQuery()) {
                 if (resultSet.next()) {
                     // заполняем объект order данными из БД, для послед.наполнения мапы
                     OrderTable order = new OrderTable();
@@ -71,4 +73,3 @@ public class JavaMakeOrderInternetOnServer {
         return "You paid " + pay + " RUB";
     }
 }
-

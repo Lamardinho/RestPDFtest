@@ -35,14 +35,15 @@ class MakeOrderInternetOnServer {
         var jasperPrint: JasperPrint
         DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rtk", "postgres", "post@post23").use { connection ->
-            connection.prepareStatement(
-                    "SELECT * FROM rtk.public.make_order(?,?,'internet',?)").use { preparedStatement ->
-                preparedStatement.setTimestamp(1, timestamp) // 1ый '?' wildCard
-                preparedStatement.setString(2, loginName) // 2ой '?' wildCard
-                preparedStatement.setInt(3, pay) // 3ий '?' wildCard
-                // preparedStatement.execute();  // выполнить запрос
-                println("You paid $pay RUB")
-                preparedStatement.executeQuery().use { resultSet ->
+            connection.prepareCall("SELECT * FROM rtk.public.make_order(?,?,'internet',?)").use { callableStatement ->
+                callableStatement.setTimestamp(1, timestamp) // 1ый '?' wildCard
+                callableStatement.setString(2, loginName) // 2ой '?' wildCard
+                callableStatement.setInt(3, pay) // 3ий '?' wildCard
+                /*boolean hasResults = callableStatement.execute();
+                        while (hasResults) {ResultSet resultSet = callableStatement.getResultSet();
+                            while (resultSet.next()) {System.out.println(resultSet.getInt(1));}
+                            hasResults = callableStatement.getMoreResults();}*/println("You paid $pay RUB")
+                callableStatement.executeQuery().use { resultSet ->
                     if (resultSet.next()) {
                         // заполняем объект order данными из БД, для послед.наполнения мапы
                         val order = OrderTable()

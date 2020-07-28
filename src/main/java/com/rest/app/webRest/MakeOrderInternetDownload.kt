@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType
 import javax.ws.rs.core.Response
 
 @Path("/MakeOrderInternetDownload")
-class MakeOrderInternetDownload {    // класс для сохранения отчета только на ПК клиента
+open class MakeOrderInternetDownload {    // класс для сохранения отчета только на ПК клиента
 
     // класс для сохранения отчета только на ПК клиента
     @GET
@@ -27,20 +27,21 @@ class MakeOrderInternetDownload {    // класс для сохранения �
     @GET
     @Path("/{user}") // @Path("/{user}/{pay}")       /Marcus?pay=500
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)
-    fun addNewOrder(@PathParam("user") loginName: String, @QueryParam("pay") pay: Int): Response {
+    open fun addNewOrder(@PathParam("user") loginName: String, @QueryParam("pay") pay: Int): Response {
         Class.forName("org.postgresql.Driver") // указываем для того, чтобы Tomcat подхватил драйвер
         val timestamp = Timestamp.valueOf(LocalDateTime.now()) // для вставки даты
         var jasperPrint: JasperPrint? = null
         DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rtk", "postgres", "post@post23").use { connection ->
-            connection.prepareStatement(
-                    "SELECT * FROM rtk.public.make_order(?,?,'internet',?)").use { preparedStatement ->
-                preparedStatement.setTimestamp(1, timestamp) // 1ый '?' wildCard
-                preparedStatement.setString(2, loginName) // 2ой '?' wildCard
-                preparedStatement.setInt(3, pay) // 3ий '?' wildCard
-                // preparedStatement.execute();  // выполнить запрос
-                println("You paid $pay RUB")
-                preparedStatement.executeQuery().use { resultSet ->
+            connection.prepareCall("SELECT * FROM rtk.public.make_order(?,?,'internet',?)").use { callableStatement ->
+                callableStatement.setTimestamp(1, timestamp) // 1ый '?' wildCard
+                callableStatement.setString(2, loginName) // 2ой '?' wildCard
+                callableStatement.setInt(3, pay) // 3ий '?' wildCard
+                /*boolean hasResults = callableStatement.execute();
+                        while (hasResults) {ResultSet resultSet = callableStatement.getResultSet();
+                            while (resultSet.next()) {System.out.println(resultSet.getInt(1));}
+                            hasResults = callableStatement.getMoreResults();}*/println("You paid $pay RUB")
+                callableStatement.executeQuery().use { resultSet ->
                     if (resultSet.next()) {
                         // заполняем объект order данными из БД, для послед.наполнения мапы
                         val order = OrderTable()

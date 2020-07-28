@@ -1,30 +1,30 @@
-package com.rest.app.webRest;
+package jdbcTests;
 
 import com.rest.app.dataBase.MyPdfURLs;
 import com.rest.app.dataBase.tables.OrderTable;
+import com.rest.app.webRest.JavaMakeOrderInternetDownload;
 import net.sf.jasperreports.engine.*;
+import org.junit.Test;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@Path("/JavaMakeOrderInternetDownload")
-public class JavaMakeOrderInternetDownload {    // класс для сохранения отчета только на ПК клиента
+public class TestJavaMakeOrderInternet {
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)   // тип данных отправляемых клиенту (не является обязательной?)
-    @Consumes(MediaType.APPLICATION_JSON)   // тип данных получаемых от клиента в теле запроса
-    public String hello() {
-        return "Hello " + System.getProperty("user.name") + "!";
+    @Test
+    public void test1() throws SQLException, JRException, ClassNotFoundException {
+        testInsert1("Bob", 500);
     }
 
-    // добавить Order: http://localhost:8080/RestPDFtest_war_exploded/rest/JavaMakeOrderInternetDownload/John?pay=500
-    @GET
-    @Path("/{user}")      // @Path("/{user}/{pay}")       /Marcus?pay=500
-    public Response addNewOrder(@PathParam("user") String loginName, @QueryParam("pay") int pay) throws SQLException, ClassNotFoundException, JRException {
+    @Test
+    public void test2() throws SQLException, JRException, ClassNotFoundException {
+        JavaMakeOrderInternetDownload makeOrder = new JavaMakeOrderInternetDownload();
+        makeOrder.addNewOrder("John", 500);
+    }
+
+    public void testInsert1(String loginName, int pay) throws SQLException, JRException, ClassNotFoundException {
         Class.forName("org.postgresql.Driver");  // указываем для того, чтобы Tomcat подхватил драйвер
         final java.sql.Timestamp timestamp = Timestamp.valueOf(java.time.LocalDateTime.now()); // для вставки даты
         JasperPrint jasperPrint = null;
@@ -60,12 +60,10 @@ public class JavaMakeOrderInternetDownload {    // класс для сохра�
                     JRDataSource dataSource = new JREmptyDataSource(); // без него будут пустые отчеты
                     JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getInternetPayOrderJrxml());  // от куда берём jrxml файл
                     jasperPrint = JasperFillManager.fillReport(jrxmlFile, parameters, dataSource);  // JasperPrint - заполняет шаблон
-                    // JasperExportManager.exportReportToPdfFile(jasperPrint, MyPdfURLs.INSTANCE.getExportPDF("JavaMakeOrderInternet")); // Экспорт данных в PDF файл
+                    JasperExportManager.exportReportToPdfFile(jasperPrint, MyPdfURLs.INSTANCE.getExportPDF("TestCallableSt")); // Экспорт данных в PDF файл
                     System.out.println("method makeReport is done! New file created: " + loginName); // для отчёта
                 }
             }
         }
-        return Response.ok().entity(JasperExportManager.exportReportToPdf(jasperPrint)).header(
-                "Content-disposition", "attachment; filename=\"" + loginName + "_" + timestamp + ".pdf\"").build();
     }
 }
