@@ -1,0 +1,133 @@
+DROP FUNCTION IF EXISTS select_orders();
+
+CREATE FUNCTION select_orders() RETURNS TABLE ("like" orders)
+AS
+$$
+BEGIN
+    RETURN QUERY SELECT * FROM orders ORDER BY order_number;
+END;
+$$ STABLE LANGUAGE plpgsql;
+
+SELECT select_orders();
+
+------------------------------------------------------------------------------
+
+SELECT *
+FROM rtk.public.orders
+WHERE fk_customer_name = (?);
+
+-------------
+
+-- DROP FUNCTION IF EXISTS select_orders_by_name();
+
+CREATE FUNCTION select_orders(name varchar) RETURNS TABLE ("like" orders)
+AS
+$$
+BEGIN
+    RETURN QUERY SELECT * FROM orders WHERE fk_customer_name = (name) ORDER BY order_number;
+END;
+$$ STABLE LANGUAGE plpgsql;
+
+SELECT select_orders('Bob');
+
+------------------------------------------------------------------------------
+
+SELECT * FROM rtk.public.orders WHERE fk_customer_name = (?) AND date = (?);
+
+-------------
+
+-- DROP FUNCTION IF EXISTS select_orders_by_name_and_date();
+
+CREATE FUNCTION select_orders(name varchar, data_time timestamp)
+    RETURNS TABLE ("like" orders)
+AS
+$$
+BEGIN
+    RETURN QUERY SELECT * FROM orders WHERE fk_customer_name = (name) AND date = (data_time) ORDER BY order_number;
+END;
+$$ STABLE LANGUAGE plpgsql;
+
+--- 2020-07-24 12:23:42.210282
+SELECT select_orders('Bob', '2020-07-24 12:23:42.210282');
+
+------------------------------------------------------------------------------
+
+INSERT INTO rtk.public.orders(date, fk_customer_name, fk_service, pay)
+VALUES (?, ?, 'internet', ?);
+
+-------------
+
+DROP FUNCTION IF EXISTS make_order2();
+
+CREATE FUNCTION make_order2(data_time timestamp, name varchar, service varchar, pay_int integer)
+    RETURNS TABLE
+            (
+                "like" orders
+            )
+AS
+$$
+BEGIN
+    INSERT INTO orders(date, fk_customer_name, fk_service, pay) VALUES (data_time, name, service, pay_int);
+END;
+$$ STABLE LANGUAGE plpgsql;
+
+--- 2020-07-24 12:23:42.210282
+SELECT make_order2('2020-07-24 12:23:42.210282', 'Bob', 'TV', 300);
+
+
+DROP FUNCTION IF EXISTS make_order(data_time timestamp, name varchar, service varchar, pay_int integer);
+
+CREATE OR REPLACE FUNCTION make_order(data_time timestamp, name varchar, service varchar, pay_int integer)
+    RETURNS void
+AS
+$$
+BEGIN
+    INSERT INTO orders(date, fk_customer_name, fk_service, pay)
+    VALUES (data_time, name, service, pay_int);
+END;
+$$ VOLATILE LANGUAGE plpgsql;
+
+
+SELECT make_order('2020-07-24 12:23:42.210282', 'Bob', 'TV', 300);
+
+SELECT * FROM make_order('2020-07-24 12:23:42.210282', 'Bob', 'TV', 300);
+
+SELECT * FROM orders where order_number = 81;
+
+
+------------------------------------------------------------------------------
+
+DROP FUNCTION IF EXISTS insert_make_order(data_time timestamp, name varchar, service varchar, pay_int integer);
+
+CREATE OR REPLACE FUNCTION insert_make_order(data_time timestamp, name varchar, service varchar, pay_int integer) RETURNS void
+AS
+$$
+BEGIN
+    INSERT INTO orders(date, fk_customer_name, fk_service, pay)
+    VALUES (data_time, name, service, pay_int);
+END;
+$$ LANGUAGE plpgsql;
+
+
+SELECT insert_make_order('2020-07-24 12:23:42.210282', 'Bob', 'TV', 300);
+
+DROP TABLE IF EXISTS city;
+------------------------------------------------------------------------------
+
+DROP FUNCTION IF EXISTS msk_tables();
+DROP FUNCTION IF EXISTS msk_tables(name varchar);
+DROP FUNCTION IF EXISTS msk_tables(name varchar, name2 varchar);
+CREATE OR REPLACE FUNCTION msk_tables(name varchar, name2 varchar) RETURNS VOID AS
+    $$
+    DECLARE
+        cmd text := format('CREATE TABLE city (id SERIAL, %I VARCHAR, %I VARCHAR)',name,name2);
+        cmd2 text := 'DROP TABLE IF EXISTS city';
+       -- cmd2 text := select_orders();
+    BEGIN
+  --  EXECUTE cmd2;
+    EXECUTE cmd;
+   -- EXECUTE cmd2;
+    END;
+$$ LANGUAGE plpgsql;
+
+SELECT msk_tables('Bob','Bob2');

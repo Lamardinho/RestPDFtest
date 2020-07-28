@@ -8,7 +8,6 @@ import org.junit.Test;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class TestInsert {
 
@@ -19,7 +18,6 @@ public class TestInsert {
 
     public void testInsert1(String loginName, int pay) throws SQLException, JRException {
         final java.sql.Timestamp timestamp = Timestamp.valueOf(java.time.LocalDateTime.now()); // для вставки даты
-        final Map<Integer, OrderTable> ordersMap = new ConcurrentHashMap<>();
         JasperPrint jasperPrint;
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rtk", "postgres", "post@post23");
@@ -28,53 +26,32 @@ public class TestInsert {
             preparedStatement.setTimestamp(1, timestamp);
             preparedStatement.setString(2, loginName);
             preparedStatement.setInt(3, pay);
-            preparedStatement.execute();  // выполнить запрос
+            // preparedStatement.execute();  // выполнить запрос
             System.out.println("You paid " + pay + " RUB");
+            // CallableStatement вместо PreparedStatement (вверху)
 
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM rtk.public.select_orders(?,?)")) {
-                statement.setString(1, loginName);   // Name - это (?) из запроса
-                statement.setTimestamp(2, timestamp);
-                try (final ResultSet resultSet = statement.executeQuery()) {
-                    if (resultSet.next()) {
-                        OrderTable order = new OrderTable();
-                        order.setOrderNumber(resultSet.getInt(1));
-                        order.setTimestamp(resultSet.getTimestamp(2));
-                        order.setCustomer(resultSet.getString(3));
-                        order.setService(resultSet.getString(4));
-                        order.setPay(resultSet.getInt(5));
-                        getExecuteQuery(ordersMap, statement);  // наполняем мапу ordersMap данными из БД
-                        // наполняем мапу parameters для JasperReports
-                        Map<String, Object> parameters = new HashMap<>(); // Parameters for report
-                        parameters.put("order_number", order.getOrderNumber());
-                        parameters.put("jr_name", order.getCustomer());  // customer name
-                        parameters.put("jr_data", timestamp);
-                        parameters.put("jr_service", order.getService());
-                        parameters.put("jr_pay", order.getPay());
-                        // формируем отчёт
-                        JRDataSource dataSource = new JREmptyDataSource(); // без него будут пустые отчеты
-                        JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getInternetPayOrderJrxml());  // от куда берём jrxml файл
-                        jasperPrint = JasperFillManager.fillReport(jrxmlFile, parameters, dataSource);  // JasperPrint - заполняет шаблон
-                        JasperExportManager.exportReportToPdfFile(jasperPrint, MyPdfURLs.INSTANCE.getExportPDF("JavaMakeOrderInternet")); // Экспорт данных в PDF файл
-                        System.out.println("method makeReport is done! New file created: " + loginName); // для отчёта
-                    }
+            try (final ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    OrderTable order = new OrderTable();
+                    order.setOrderNumber(resultSet.getInt(1));
+                    order.setTimestamp(resultSet.getTimestamp(2));
+                    order.setCustomer(resultSet.getString(3));
+                    order.setService(resultSet.getString(4));
+                    order.setPay(resultSet.getInt(5));
+                    // наполняем мапу parameters для JasperReports
+                    Map<String, Object> parameters = new HashMap<>(); // Parameters for report
+                    parameters.put("order_number", order.getOrderNumber());
+                    parameters.put("jr_name", order.getCustomer());  // customer name
+                    parameters.put("jr_data", timestamp);
+                    parameters.put("jr_service", order.getService());
+                    parameters.put("jr_pay", order.getPay());
+                    // формируем отчёт
+                    JRDataSource dataSource = new JREmptyDataSource(); // без него будут пустые отчеты
+                    JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getInternetPayOrderJrxml());  // от куда берём jrxml файл
+                    jasperPrint = JasperFillManager.fillReport(jrxmlFile, parameters, dataSource);  // JasperPrint - заполняет шаблон
+                    JasperExportManager.exportReportToPdfFile(jasperPrint, MyPdfURLs.INSTANCE.getExportPDF("JavaMakeOrderInternet")); // Экспорт данных в PDF файл
+                    System.out.println("method makeReport is done! New file created: " + loginName); // для отчёта
                 }
-            }
-        }
-    }
-
-    // наполнение объектов order данными из БД и заполнение Мапы ordersMap для передачи на web
-    private void getExecuteQuery(Map<Integer, OrderTable> ordersMap, PreparedStatement statement) throws SQLException {
-        try (final ResultSet resultSet = statement.executeQuery()) {
-            while (resultSet.next()) {
-                OrderTable order = new OrderTable();
-                order.setOrderNumber(resultSet.getInt(1));
-                order.setTimestamp(resultSet.getTimestamp(2));
-                order.setCustomer(resultSet.getString(3));
-                order.setService(resultSet.getString(4));
-                order.setPay(resultSet.getInt(5));
-
-                ordersMap.put(order.getOrderNumber(), order);
-                System.out.println(order);
             }
         }
     }
