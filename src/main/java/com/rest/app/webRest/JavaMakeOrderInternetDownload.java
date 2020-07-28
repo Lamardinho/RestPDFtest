@@ -28,13 +28,14 @@ public class JavaMakeOrderInternetDownload {    // класс для сохра�
     @Path("/{user}")      // @Path("/{user}/{pay}")       /Marcus?pay=500
     public Response addNewOrder(@PathParam("user") String loginName, @QueryParam("pay") int pay) throws SQLException, ClassNotFoundException, JRException {
         Class.forName("org.postgresql.Driver");
+        final java.sql.Timestamp timestamp = Timestamp.valueOf(java.time.LocalDateTime.now()); // для вставки даты
         final Map<Integer, OrderTable> ordersMap = new ConcurrentHashMap<>();
         JasperPrint jasperPrint = null;
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rtk", "postgres", "post@post23");
              PreparedStatement preparedStatement = connection.prepareStatement(
                      "INSERT INTO rtk.public.orders(date, fk_customer_name, fk_service, pay) VALUES (?,?,'internet',?)")) {
-            java.sql.Timestamp timestamp = Timestamp.valueOf(java.time.LocalDateTime.now()); // для вставки даты
+
 
             preparedStatement.setTimestamp(1, timestamp);
             preparedStatement.setString(2, loginName);
@@ -42,7 +43,7 @@ public class JavaMakeOrderInternetDownload {    // класс для сохра�
             preparedStatement.executeUpdate();  // выполнить запрос
             System.out.println("You paid " + pay + " RUB");
 
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM rtk.public.orders WHERE fk_customer_name = (?) AND date = (?)")) {
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM rtk.public.select_orders(?,?)")) {
                 statement.setString(1, loginName);   // Name - это (?) из запроса
                 statement.setTimestamp(2, timestamp);
                 try (final ResultSet resultSet = statement.executeQuery()) {
@@ -72,7 +73,7 @@ public class JavaMakeOrderInternetDownload {    // класс для сохра�
             }
         }
         return Response.ok().entity(JasperExportManager.exportReportToPdf(jasperPrint)).header(
-                "Content-disposition", "attachment; filename=\"" + loginName + ".pdf\"").build();
+                "Content-disposition", "attachment; filename=\"" + loginName + "_" + timestamp + ".pdf\"").build();
     }
 
     // наполнение объектов order данными из БД и заполнение Мапы ordersMap для передачи на web

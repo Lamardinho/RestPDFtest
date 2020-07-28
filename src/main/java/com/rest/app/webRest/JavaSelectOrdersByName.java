@@ -39,7 +39,7 @@ public class JavaSelectOrdersByName {
         final Map<Integer, OrderTable> ordersMap = new ConcurrentHashMap<>();
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rtk", "postgres", "post@post23");
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM rtk.public.select_orders_by_name(?)")) {
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM rtk.public.select_orders(?)")) {
             statement.setString(1, userName);   // Name - это (?) из запроса
 
             getExecuteQuery(ordersMap, statement);
