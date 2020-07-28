@@ -21,7 +21,7 @@ class SelectOrdersByName {
         val ordersMap: MutableMap<Int, OrderTable> = ConcurrentHashMap()
         DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rtk", "postgres", "post@post23").use { connection ->
-            connection.prepareStatement("SELECT * FROM rtk.public.orders").use { statement ->
+            connection.prepareStatement("SELECT * FROM rtk.public.select_orders()").use { statement ->
                 getResultSetExecuteQuery(ordersMap, statement)
             }
         }
@@ -40,7 +40,7 @@ class SelectOrdersByName {
         val ordersMap: MutableMap<Int, OrderTable> = ConcurrentHashMap()
         DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rtk", "postgres", "post@post23").use { connection ->
-            connection.prepareStatement("SELECT * FROM rtk.public.orders WHERE fk_customer_name = (?)").use { statement ->
+            connection.prepareStatement("SELECT * FROM rtk.public.select_orders_by_name(?)").use { statement ->
                 statement.setString(1, userName)     // Name - это (?) из запроса
 
                 getResultSetExecuteQuery(ordersMap, statement)

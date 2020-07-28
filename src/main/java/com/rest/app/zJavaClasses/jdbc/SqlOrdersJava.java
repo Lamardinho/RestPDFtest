@@ -29,6 +29,6 @@ public class SqlOrdersJava {
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         SqlOrdersJava orders = new SqlOrdersJava();
-        orders.selectByName("Marcus");
+        orders.selectByName("Bob");
     }
 }

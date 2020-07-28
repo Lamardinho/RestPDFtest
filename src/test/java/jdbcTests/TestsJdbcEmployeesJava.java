@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.sql.SQLException;
 
-public class TestsJdbcJava {
+public class TestsJdbcEmployeesJava {
     private final JavaSqlEmployeesSel javaSqlEmployeesSel = new JavaSqlEmployeesSel();
 
     @Test
