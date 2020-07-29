@@ -1,6 +1,6 @@
 package jdbcTests
 
-import com.rest.app.jdbc.SqlOrders
+import com.rest.app.domain.SqlOrders
 import java.sql.SQLException
 import kotlin.test.Test
 

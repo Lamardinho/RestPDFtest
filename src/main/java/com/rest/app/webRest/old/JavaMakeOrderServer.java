@@ -1,6 +1,6 @@
 package com.rest.app.webRest.old;
 
-import com.rest.app.webRest.domain.BasePayMakeOrder;
+import com.rest.app.domain.PayMakeOrder;
 import net.sf.jasperreports.engine.JRException;
 
 import javax.ws.rs.*;
@@ -22,8 +22,8 @@ public class JavaMakeOrderServer {
     @Path("/{user}")
     public String javaMakeOrderServer(@PathParam("user") String loginName, @QueryParam("service") String service, @QueryParam("pay") int pay) throws SQLException, ClassNotFoundException, JRException {
         System.out.println("Using make on SERVER");
-        final BasePayMakeOrder basePayMakeOrder = new BasePayMakeOrder();
-        basePayMakeOrder.makeOrderOnServer(loginName, service, pay);
+        final PayMakeOrder payMakeOrder = new PayMakeOrder();
+        payMakeOrder.makeOrderOnServer(loginName, service, pay);
 
         return "Hello " + loginName + " you paid for " + service + ": " + pay + " RUB";
     }

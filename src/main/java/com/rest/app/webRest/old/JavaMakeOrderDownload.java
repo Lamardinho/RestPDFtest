@@ -1,6 +1,6 @@
 package com.rest.app.webRest.old;
 
-import com.rest.app.webRest.domain.BasePayMakeOrder;
+import com.rest.app.domain.PayMakeOrder;
 import net.sf.jasperreports.engine.JRException;
 
 import javax.ws.rs.*;
@@ -23,8 +23,8 @@ public class JavaMakeOrderDownload {
     @Path("/{user}")
     public Response javaMakeOrderDownload(@PathParam("user") String loginName, @QueryParam("service") String service, @QueryParam("pay") int pay) throws SQLException, ClassNotFoundException, JRException {
         System.out.println("Using make DOWNLOAD");
-        final BasePayMakeOrder basePayMakeOrder = new BasePayMakeOrder();
-        byte[] bytes = basePayMakeOrder.makeOrderDownload(loginName, service, pay);
-        return Response.ok().entity(bytes).header("Content-disposition", "attachment; filename=\"" + loginName + "_" + basePayMakeOrder.myDate() + ".pdf\"").build();
+        final PayMakeOrder payMakeOrder = new PayMakeOrder();
+        byte[] bytes = payMakeOrder.makeOrderDownload(loginName, service, pay);
+        return Response.ok().entity(bytes).header("Content-disposition", "attachment; filename=\"" + loginName + "_" + payMakeOrder.myDate() + ".pdf\"").build();
     }
 }

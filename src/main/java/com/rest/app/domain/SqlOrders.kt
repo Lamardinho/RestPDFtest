@@ -1,7 +1,8 @@
-package com.rest.app.jdbc
+package com.rest.app.domain
 
 import com.rest.app.dataBase.tables.OrderTable
 import java.sql.DriverManager
+import java.sql.PreparedStatement
 import java.sql.SQLException
 
 class SqlOrders {

@@ -1,11 +1,15 @@
 package com.rest.app.webRest
 
 import com.rest.app.dataBase.tables.OrderTable
+import com.rest.app.domain.SqlOrders
 import java.sql.DriverManager
 import java.sql.PreparedStatement
 import java.sql.SQLException
 import java.util.concurrent.ConcurrentHashMap
-import javax.ws.rs.*
+import javax.ws.rs.GET
+import javax.ws.rs.Path
+import javax.ws.rs.PathParam
+import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 
 @Path("/SelectOrdersByName")
@@ -21,7 +25,6 @@ class SelectOrdersByName {
         DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rtk", "postgres", "post@post23").use { connection ->
             connection.prepareStatement("SELECT * FROM rtk.public.select_orders()").use { statement ->
-
                 getResultSetExecuteQuery(ordersMap, statement)
             }
         }
@@ -39,7 +42,6 @@ class SelectOrdersByName {
         DriverManager.getConnection("jdbc:postgresql://localhost:5432/rtk", "postgres", "post@post23").use { connection ->
             connection.prepareStatement("SELECT * FROM rtk.public.select_orders(?)").use { statement ->
                 statement.setString(1, userName)     // Name - это (?) из запроса
-
                 getResultSetExecuteQuery(ordersMap, statement)
             }
         }
@@ -48,7 +50,7 @@ class SelectOrdersByName {
 
     // метод для наполнения объекта order данными из базы данных и заполнения Мапы ordersMap для передачи на web
     @Throws(SQLException::class)
-    private fun getResultSetExecuteQuery(ORDERS: MutableMap<Int, OrderTable>, statement: PreparedStatement) {
+    fun getResultSetExecuteQuery(ORDERS: MutableMap<Int, OrderTable>, statement: PreparedStatement) {
         statement.executeQuery().use { resultSet ->
             while (resultSet.next()) {
                 val order = OrderTable()

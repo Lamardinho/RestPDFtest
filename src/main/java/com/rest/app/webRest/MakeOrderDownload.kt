@@ -1,6 +1,6 @@
 package com.rest.app.webRest
 
-import com.rest.app.webRest.domain.BasePayMakeOrder
+import com.rest.app.domain.PayMakeOrder
 import net.sf.jasperreports.engine.JRException
 import java.sql.SQLException
 import javax.ws.rs.*
@@ -24,7 +24,7 @@ class MakeOrderDownload {
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)
     fun makeOrderDownload(@PathParam("user") loginName: String, @QueryParam("service") service: String, @QueryParam("pay") pay: Int): Response {
         println("Using make DOWNLOAD")
-        val basePayMakeOrder = BasePayMakeOrder()
+        val basePayMakeOrder = PayMakeOrder()
         val bytesArray = basePayMakeOrder.makeOrderDownload(loginName, service, pay)
         return Response.ok().entity(bytesArray).header("Content-disposition", "attachment; filename=\"" + loginName + "_" + basePayMakeOrder.myDate() + ".pdf\"").build()
     }

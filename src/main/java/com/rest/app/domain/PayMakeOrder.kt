@@ -1,4 +1,4 @@
-package com.rest.app.webRest.domain
+package com.rest.app.domain
 
 import com.rest.app.dataBase.MyPdfURLs.getExportPDF
 import com.rest.app.dataBase.MyPdfURLs.getInternetPayOrderJrxml
@@ -10,7 +10,7 @@ import java.sql.Timestamp
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class BasePayMakeOrder {
+class PayMakeOrder {
 
     // метод для сохранения отчета на сервере
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)

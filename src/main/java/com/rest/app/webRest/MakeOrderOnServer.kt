@@ -1,6 +1,6 @@
 package com.rest.app.webRest
 
-import com.rest.app.webRest.domain.BasePayMakeOrder
+import com.rest.app.domain.PayMakeOrder
 import net.sf.jasperreports.engine.JRException
 import java.sql.SQLException
 import javax.ws.rs.*
@@ -23,7 +23,7 @@ class MakeOrderOnServer {
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)
     fun makeOrderOnServer(@PathParam("user") loginName: String, @QueryParam("service") service: String, @QueryParam("pay") pay: Int): String {
         println("Using make on SERVER")
-        val basePayMakeOrder = BasePayMakeOrder()
+        val basePayMakeOrder = PayMakeOrder()
         basePayMakeOrder.makeOrderOnServer(loginName, service, pay)
         return "Hello $loginName you paid for $service: $pay RUB"
     }
