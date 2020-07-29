@@ -14,7 +14,7 @@ class BasePayMakeOrder {
 
     // save order on server
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)
-    fun makeOrderOnServer(loginName: String, service: String?, pay: Int) {
+    fun makeOrderOnServer(loginName: String, service: String, pay: Int) {
         val jasperPrint = processReport(loginName, service, pay)
         JasperExportManager.exportReportToPdfFile(jasperPrint, getExportPDF(loginName + "_" + myDate()))
         println("method makeReport is done! New file created: " + loginName + "_" + myDate())
@@ -22,14 +22,14 @@ class BasePayMakeOrder {
 
     // just from browser download
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)
-    fun makeOrderDownload(loginName: String, service: String?, pay: Int): ByteArray? {
+    fun makeOrderDownload(loginName: String, service: String, pay: Int): ByteArray {
         val jasperPrint = processReport(loginName, service, pay)
         println("method makeReport is done! New file created: " + loginName + "_" + myDate())
         return JasperExportManager.exportReportToPdf(jasperPrint)
     }
 
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)
-    fun processReport(loginName: String?, service: String?, pay: Int): JasperPrint? {
+    fun processReport(loginName: String, service: String, pay: Int): JasperPrint? {
         Class.forName("org.postgresql.Driver") // указываем для того, чтобы Tomcat подхватил драйвер
         val timestamp = Timestamp.valueOf(LocalDateTime.now()) // для вставки даты
         DriverManager.getConnection(
