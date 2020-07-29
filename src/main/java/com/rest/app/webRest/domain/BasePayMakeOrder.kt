@@ -12,37 +12,36 @@ import java.time.format.DateTimeFormatter
 
 class BasePayMakeOrder {
 
-    // save order on server
+    // метод для сохранения отчета на сервере
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)
     fun makeOrderOnServer(loginName: String, service: String, pay: Int) {
-        val jasperPrint = processReport(loginName, service, pay)
-        JasperExportManager.exportReportToPdfFile(jasperPrint, getExportPDF(loginName + "_" + myDate()))
+        val jasperPrint = processReport(loginName, service, pay)    // jasperPrint принимает возвращаемый jasperPrint из processReport
+        JasperExportManager.exportReportToPdfFile(jasperPrint, getExportPDF(loginName + "_" + myDate()))    // экспорт в PdfFile файл
         println("method makeReport is done! New file created: " + loginName + "_" + myDate())
     }
 
-    // just from browser download
+    // метод для сохранения отчета только на стороне клиента через браузер
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)
-    fun makeOrderDownload(loginName: String, service: String, pay: Int): ByteArray {
-        val jasperPrint = processReport(loginName, service, pay)
+    fun makeOrderDownload(loginName: String, service: String, pay: Int): ByteArray {    // : ByteArray
+        val jasperPrint = processReport(loginName, service, pay)    // jasperPrint принимает возвращаемый jasperPrint из processReport
         println("method makeReport is done! New file created: " + loginName + "_" + myDate())
-        return JasperExportManager.exportReportToPdf(jasperPrint)
+        return JasperExportManager.exportReportToPdf(jasperPrint)   // возвращаем массив байтов
     }
 
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)
     fun processReport(loginName: String, service: String, pay: Int): JasperPrint? {
-        Class.forName("org.postgresql.Driver") // указываем для того, чтобы Tomcat подхватил драйвер
-        val timestamp = Timestamp.valueOf(LocalDateTime.now()) // для вставки даты
-        DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/rtk", "postgres", "post@post23").use { connection ->
+        Class.forName("org.postgresql.Driver")          // указываем для того, чтобы Tomcat подхватил драйвер
+        val timestamp = Timestamp.valueOf(LocalDateTime.now())   // для вставки даты в базу данных
+        DriverManager.getConnection("jdbc:postgresql://localhost:5432/rtk", "postgres", "post@post23").use { connection ->
             connection.prepareCall("SELECT * FROM rtk.public.make_order(?,?,?,?)").use { callableStatement ->
-                callableStatement.setTimestamp(1, timestamp) // 1ый '?' wildCard
-                callableStatement.setString(2, loginName) // 2ой '?' wildCard
-                callableStatement.setString(3, service) // 3ий '?' wildCard
-                callableStatement.setInt(4, pay) // 4ый '?' wildCard
+                callableStatement.setTimestamp(1, timestamp)      // 1ый '?' wildCard
+                callableStatement.setString(2, loginName)         // 2ой '?' wildCard
+                callableStatement.setString(3, service)           // 3ий '?' wildCard
+                callableStatement.setInt(4, pay)                  // 4ый '?' wildCard
                 println("You paid $pay RUB")
                 callableStatement.executeQuery().use { resultSet ->
                     if (resultSet.next()) {
-                        // заполняем объект order данными из БД, для послед.наполнения мапы
+                        // заполняем объект order данными из БД, для наполнения мапы параметров JasperReports
                         val order = OrderTable()
                         order.orderNumber = resultSet.getInt(1)
                         order.timestamp = resultSet.getTimestamp(2)
@@ -57,9 +56,9 @@ class BasePayMakeOrder {
                         parameters["jr_service"] = order.service
                         parameters["jr_pay"] = order.pay
                         // формируем отчёт
-                        val dataSource: JRDataSource = JREmptyDataSource() // без него будут пустые отчеты
-                        val jrxmlFile = JasperCompileManager.compileReport(getInternetPayOrderJrxml()) // от куда берём jrxml файл
-                        return JasperFillManager.fillReport(jrxmlFile, parameters, dataSource) // JasperPrint - заполняет шаблон
+                        val dataSource: JRDataSource = JREmptyDataSource()                              // без него будут пустые отчеты
+                        val jrxmlFile = JasperCompileManager.compileReport(getInternetPayOrderJrxml())  // от куда берём jrxml файл
+                        return JasperFillManager.fillReport(jrxmlFile, parameters, dataSource)          // JasperPrint - заполняет шаблон
                     }
                 }
             }

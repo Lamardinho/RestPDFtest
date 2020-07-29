@@ -25,7 +25,7 @@ class MakeOrderDownload {
     fun makeOrderDownload(@PathParam("user") loginName: String, @QueryParam("service") service: String, @QueryParam("pay") pay: Int): Response {
         println("Using make DOWNLOAD")
         val basePayMakeOrder = BasePayMakeOrder()
-        val bytes = basePayMakeOrder.makeOrderDownload(loginName, service, pay)
-        return Response.ok().entity(bytes).header("Content-disposition", "attachment; filename=\"" + loginName + "_" + basePayMakeOrder.myDate() + ".pdf\"").build()
+        val bytesArray = basePayMakeOrder.makeOrderDownload(loginName, service, pay)
+        return Response.ok().entity(bytesArray).header("Content-disposition", "attachment; filename=\"" + loginName + "_" + basePayMakeOrder.myDate() + ".pdf\"").build()
     }
 }
