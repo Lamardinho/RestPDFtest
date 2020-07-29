@@ -14,7 +14,6 @@ public class JavaMakeOrderDownload {
     // http://localhost:8080/RestPDFtest_war_exploded/rest/JavaPayDownload/
     @GET
     @Produces(MediaType.APPLICATION_JSON)   // тип данных отправляемых клиенту (не является обязательной?)
-    @Consumes(MediaType.APPLICATION_JSON)   // тип данных получаемых от клиента в теле запроса
     public String hello() {
         return "JavaPayDownload: Hello " + System.getProperty("user.name") + "!";
     }

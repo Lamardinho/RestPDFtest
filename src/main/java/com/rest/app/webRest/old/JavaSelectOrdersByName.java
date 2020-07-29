@@ -15,7 +15,6 @@ public class JavaSelectOrdersByName {
     // http://localhost:8080/RestPDFtest_war_exploded/rest/JavaSelectOrdersByName
     @GET
     @Produces(MediaType.APPLICATION_JSON)   // тип данных отправляемых клиенту (не является обязательной?)
-    @Consumes(MediaType.APPLICATION_JSON)   // тип данных получаемых от клиента в теле запроса
     public Collection<OrderTable> mainHome() throws ClassNotFoundException, SQLException {
         Class.forName("org.postgresql.Driver");
         final Map<Integer, OrderTable> ordersMap = new ConcurrentHashMap<>();
@@ -33,7 +32,6 @@ public class JavaSelectOrdersByName {
     @GET
     @Path("/{user}")
     @Produces(MediaType.APPLICATION_JSON) // для передачи в формате JSON
-    @Consumes(MediaType.APPLICATION_JSON)
     public Collection<OrderTable> myOrders(@PathParam("user") String userName) throws SQLException, ClassNotFoundException {
         Class.forName("org.postgresql.Driver");
         final Map<Integer, OrderTable> ordersMap = new ConcurrentHashMap<>();

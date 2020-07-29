@@ -12,7 +12,6 @@ class MakeOrderOnServer {
     // http://localhost:8080/RestPDFtest_war_exploded/rest/MakeOrderOnServer/
     @GET
     @Produces(MediaType.APPLICATION_JSON) // тип данных отправляемых клиенту (не является обязательной?)
-    // @Consumes(MediaType.APPLICATION_JSON) // тип данных получаемых от клиента в теле запроса
     fun hello2(): String {
         return "MakeOrderOnServer: Hello " + System.getProperty("user.name") + "!"
     }

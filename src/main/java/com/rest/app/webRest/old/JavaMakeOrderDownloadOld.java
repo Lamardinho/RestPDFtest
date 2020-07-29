@@ -16,7 +16,6 @@ public class JavaMakeOrderDownloadOld {    // класс для сохранен
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)   // тип данных отправляемых клиенту (не является обязательной?)
-    @Consumes(MediaType.APPLICATION_JSON)   // тип данных получаемых от клиента в теле запроса
     public String hello() {
         return "Hello " + System.getProperty("user.name") + "!";
     }

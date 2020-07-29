@@ -14,7 +14,6 @@ class SelectOrdersByName {
     // http://localhost:8080/RestPDFtest_war_exploded/rest/SelectOrdersByName
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-  //  @Consumes(MediaType.APPLICATION_JSON)
     @Throws(ClassNotFoundException::class, SQLException::class)
     fun selectAllOrders(): Collection<OrderTable> {
         Class.forName("org.postgresql.Driver")
