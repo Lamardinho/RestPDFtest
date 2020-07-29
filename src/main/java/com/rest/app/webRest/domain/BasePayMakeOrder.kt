@@ -1,4 +1,4 @@
-package com.rest.app.webRest.basis
+package com.rest.app.webRest.domain
 
 import com.rest.app.dataBase.MyPdfURLs.getExportPDF
 import com.rest.app.dataBase.MyPdfURLs.getInternetPayOrderJrxml

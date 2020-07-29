@@ -1,6 +1,6 @@
 package com.rest.app.webRest.old;
 
-import com.rest.app.webRest.basis.BasePayMakeOrder;
+import com.rest.app.webRest.domain.BasePayMakeOrder;
 import net.sf.jasperreports.engine.JRException;
 
 import javax.ws.rs.*;

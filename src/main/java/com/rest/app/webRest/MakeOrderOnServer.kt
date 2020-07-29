@@ -1,6 +1,6 @@
 package com.rest.app.webRest
 
-import com.rest.app.webRest.basis.BasePayMakeOrder
+import com.rest.app.webRest.domain.BasePayMakeOrder
 import net.sf.jasperreports.engine.JRException
 import java.sql.SQLException
 import javax.ws.rs.*
