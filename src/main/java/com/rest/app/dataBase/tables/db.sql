@@ -79,11 +79,85 @@ INSERT INTO orders (date, fk_customer_name, fk_service, pay)
 VALUES ('2020-07-19', 'Marcus', 'TV', 300);
 
 INSERT INTO orders (date, fk_customer_name, fk_service, pay)
-VALUES ('2020-06-19', 'Alice', 'internet', 500);
+VALUES ('2020-06-19', 'Ilya', 'internet', 500);
 INSERT INTO orders (date, fk_customer_name, fk_service, pay)
-VALUES ('2020-07-19', 'Alice', 'internet', 500);
+VALUES ('2020-07-19', 'Ilya', 'TV', 300);
 
 INSERT INTO orders (date, fk_customer_name, fk_service, pay)
-VALUES ('2020-06-19', 'Alexandra', 'internet', 500);
+VALUES ('2020-06-05', 'Alice', 'internet', 500);
 INSERT INTO orders (date, fk_customer_name, fk_service, pay)
-VALUES ('2020-07-19', 'Alexandra', 'TV', 300);
+VALUES ('2020-07-23', 'Alice', 'internet', 500);
+
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-06-29', 'Alex', 'internet', 500);
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-07-05', 'Alex', 'TV', 300);
+
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-06-11', 'Bob', 'internet', 500);
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-07-12', 'Bob', 'TV', 300);
+
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-06-13', 'John', 'internet', 500);
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-07-15', 'John', 'TV', 300);
+
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-06-18', 'Alexandra', 'internet', 500);
+INSERT INTO orders (date, fk_customer_name, fk_service, pay)
+VALUES ('2020-07-27', 'Alexandra', 'TV', 300);
+
+
+
+------------------------------------------------------------------------------
+
+DROP FUNCTION IF EXISTS make_order(data_time timestamp without time zone, name character varying, service character varying, pay_int integer);
+create function make_order(data_time timestamp without time zone, name character varying, service character varying, pay_int integer)
+    returns TABLE("like" orders)
+    language plpgsql
+as
+$$
+BEGIN
+    INSERT INTO orders(date, fk_customer_name, fk_service, pay)
+    VALUES (data_time, name, service,pay_int);
+    RETURN QUERY SELECT * FROM orders WHERE fk_customer_name = (name) AND date = (data_time) ORDER BY order_number;
+END;
+$$;
+alter function make_order(timestamp, varchar, varchar, integer) owner to postgres;
+
+------------------------------------------------------------------------------
+
+DROP FUNCTION IF EXISTS select_orders();
+CREATE FUNCTION select_orders() RETURNS TABLE ("like" orders)
+AS
+$$
+BEGIN
+    RETURN QUERY SELECT * FROM orders ORDER BY order_number;
+END;
+$$ STABLE LANGUAGE plpgsql;
+
+------------------------------------------------------------------------------
+
+CREATE FUNCTION select_orders(name varchar) RETURNS TABLE ("like" orders)
+AS
+$$
+BEGIN
+    RETURN QUERY SELECT * FROM orders WHERE fk_customer_name = (name) ORDER BY order_number;
+END;
+$$ STABLE LANGUAGE plpgsql;
+
+------------------------------------------------------------------------------
+
+DROP FUNCTION IF EXISTS select_orders(name varchar, data_time timestamp);
+CREATE FUNCTION select_orders(name varchar, data_time timestamp)
+    RETURNS TABLE ("like" orders)
+AS
+$$
+BEGIN
+    RETURN QUERY SELECT * FROM orders WHERE fk_customer_name = (name) AND date = (data_time) ORDER BY order_number;
+END;
+$$ STABLE LANGUAGE plpgsql;
+
+--- 2020-07-24 12:23:42.210282
+SELECT select_orders('Bob', '2020-07-24 12:23:42.210282');

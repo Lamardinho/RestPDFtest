@@ -14,9 +14,9 @@ class SelectOrdersByName {
     // http://localhost:8080/RestPDFtest_war_exploded/rest/SelectOrdersByName
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
+  //  @Consumes(MediaType.APPLICATION_JSON)
     @Throws(ClassNotFoundException::class, SQLException::class)
-    fun mainHome(): Collection<OrderTable> {
+    fun selectAllOrders(): Collection<OrderTable> {
         Class.forName("org.postgresql.Driver")
         val ordersMap: MutableMap<Int, OrderTable> = ConcurrentHashMap()
         DriverManager.getConnection(
@@ -33,10 +33,8 @@ class SelectOrdersByName {
     // http://localhost:8080/RestPDFtest_war_exploded/rest/SelectOrdersByName/Marcus
     @GET
     @Path("/{user}")
-    @Produces(MediaType.APPLICATION_JSON) // для передачи в формате JSON
-    @Consumes(MediaType.APPLICATION_JSON)
     @Throws(SQLException::class, ClassNotFoundException::class)
-    fun myOrders(@PathParam("user") userName: String): Collection<OrderTable> {
+    fun selectOrdersByName(@PathParam("user") userName: String): Collection<OrderTable> {
         Class.forName("org.postgresql.Driver")
         val ordersMap: MutableMap<Int, OrderTable> = ConcurrentHashMap()
         DriverManager.getConnection("jdbc:postgresql://localhost:5432/rtk", "postgres", "post@post23").use { connection ->

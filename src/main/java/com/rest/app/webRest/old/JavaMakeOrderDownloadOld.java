@@ -1,4 +1,4 @@
-package com.rest.app.webRest;
+package com.rest.app.webRest.old;
 
 import com.rest.app.dataBase.MyPdfURLs;
 import com.rest.app.dataBase.tables.OrderTable;
@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Path("/JavaMakeOrderInternetDownload")
-public class JavaMakeOrderInternetDownload {    // класс для сохранения отчета только на ПК клиента
+public class JavaMakeOrderDownloadOld {    // класс для сохранения отчета только на ПК клиента
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)   // тип данных отправляемых клиенту (не является обязательной?)
@@ -22,9 +22,10 @@ public class JavaMakeOrderInternetDownload {    // класс для сохра�
     }
 
     // добавить Order: http://localhost:8080/RestPDFtest_war_exploded/rest/JavaMakeOrderInternetDownload/John?pay=500
+    // http://localhost:8080/RestPDFtest_war_exploded/rest/JavaMakeOrderInternetDownload/Alice?pay=500&service=TV
     @GET
     @Path("/{user}")      // @Path("/{user}/{pay}")       /Marcus?pay=500
-    public Response addNewOrder(@PathParam("user") String loginName, @QueryParam("pay") int pay) throws SQLException, ClassNotFoundException, JRException {
+    public Response addNewOrder(@PathParam("user") String loginName, @QueryParam("pay") int pay, @QueryParam("service") String service) throws SQLException, ClassNotFoundException, JRException {
         Class.forName("org.postgresql.Driver");  // указываем для того, чтобы Tomcat подхватил драйвер
         final java.sql.Timestamp timestamp = Timestamp.valueOf(java.time.LocalDateTime.now()); // для вставки даты
         JasperPrint jasperPrint = null;

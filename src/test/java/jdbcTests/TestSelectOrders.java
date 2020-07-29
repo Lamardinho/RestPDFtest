@@ -1,7 +1,7 @@
 package jdbcTests;
 
 import com.rest.app.dataBase.tables.OrderTable;
-import com.rest.app.webRest.JavaSelectOrdersByName;
+import com.rest.app.webRest.old.JavaSelectOrdersByName;
 import org.junit.Test;
 
 import java.sql.*;
