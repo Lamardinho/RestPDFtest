@@ -1,7 +1,7 @@
 package jdbcTests;
 
 import com.rest.app.dataBase.tables.OrderTable;
-import com.rest.app.webRest.old.JavaSelectOrdersByName;
+import com.rest.app.webRest.java.SelectOrdersByName_Java;
 import org.junit.Test;
 
 import java.sql.*;
@@ -52,7 +52,7 @@ public class TestSelectOrders {
 
     @Test
     public void test2() throws SQLException, ClassNotFoundException {
-        JavaSelectOrdersByName selectOrdersByName = new JavaSelectOrdersByName();
+        SelectOrdersByName_Java selectOrdersByName = new SelectOrdersByName_Java();
         selectOrdersByName.mainHome();
     }
 

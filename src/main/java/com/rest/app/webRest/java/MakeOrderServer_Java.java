@@ -1,4 +1,4 @@
-package com.rest.app.webRest.old;
+package com.rest.app.webRest.java;
 
 import com.rest.app.domain.PayMakeOrder;
 import net.sf.jasperreports.engine.JRException;
@@ -8,7 +8,7 @@ import javax.ws.rs.core.MediaType;
 import java.sql.SQLException;
 
 @Path("/JavaMakeOrderServer")
-public class JavaMakeOrderServer {
+public class MakeOrderServer_Java {
 
     // http://localhost:8080/RestPDFtest_war_exploded/rest/JavaMakeOrderServer/
     @GET

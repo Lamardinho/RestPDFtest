@@ -1,4 +1,4 @@
-package com.rest.app.zJavaClasses.anyTests;
+package anyTests;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

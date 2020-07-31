@@ -1,4 +1,4 @@
-package com.rest.app.zJavaClasses.LeftClasses.domain;
+package com.rest.app.zJavaClasses.LeftClasses.restLesson;
 
 import java.util.List;
 

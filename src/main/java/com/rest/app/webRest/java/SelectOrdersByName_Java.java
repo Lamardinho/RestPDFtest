@@ -1,4 +1,4 @@
-package com.rest.app.webRest.old;
+package com.rest.app.webRest.java;
 
 import com.rest.app.dataBase.tables.OrderTable;
 
@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Path("/JavaSelectOrdersByName")
-public class JavaSelectOrdersByName {
+public class SelectOrdersByName_Java {
     //  *   *   *   выводит сразу все заказы при переходе на эту на страницу  *   *   *
     // http://localhost:8080/RestPDFtest_war_exploded/rest/JavaSelectOrdersByName
     @GET

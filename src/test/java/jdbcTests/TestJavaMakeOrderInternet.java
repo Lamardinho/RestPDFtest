@@ -2,7 +2,7 @@ package jdbcTests;
 
 import com.rest.app.dataBase.MyPdfURLs;
 import com.rest.app.dataBase.tables.OrderTable;
-import com.rest.app.webRest.old.JavaMakeOrderDownloadOld;
+import com.rest.app.webRest.java.old.JavaMakeOrderDownloadOld;
 import net.sf.jasperreports.engine.*;
 import org.junit.Test;
 

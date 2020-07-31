@@ -1,8 +1,4 @@
-package com.rest.app.zJavaClasses.LeftClasses.domain;
-
-import com.rest.app.zJavaClasses.LeftClasses.domain.Address;
-import com.rest.app.zJavaClasses.LeftClasses.domain.Role;
-import com.rest.app.zJavaClasses.LeftClasses.domain.User;
+package com.rest.app.zJavaClasses.LeftClasses.restLesson;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
