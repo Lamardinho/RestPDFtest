@@ -1,4 +1,4 @@
-package ThreadsTests.Tests2;
+package threadsTests.tests2;
 
 import static java.lang.String.format;
 
@@ -12,6 +12,6 @@ public class SingleThreadClient {
             value += counter.count(i);
         }
 
-        System.out.println(format("Executed by %d s, value : %f", (System.nanoTime() - start) / (1000_000_000), value));
+        System.out.printf("Executed by %d s, value : %f%n", (System.nanoTime() - start) / (1000_000_000), value);
     }
 }

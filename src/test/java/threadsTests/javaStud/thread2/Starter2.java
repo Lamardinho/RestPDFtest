@@ -1,4 +1,4 @@
-package ThreadsTests.javaStud.thread2;
+package threadsTests.javaStud.thread2;
 
 import org.jetbrains.annotations.NotNull;
 

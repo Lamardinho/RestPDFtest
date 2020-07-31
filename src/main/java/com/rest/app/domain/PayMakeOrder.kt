@@ -15,17 +15,16 @@ class PayMakeOrder {
     // метод для сохранения отчета на сервере
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)
     fun makeOrderOnServer(loginName: String, service: String, pay: Int) {
-        val jasperPrint = processReport(loginName, service, pay)    // jasperPrint принимает возвращаемый jasperPrint из processReport
-        JasperExportManager.exportReportToPdfFile(jasperPrint, getExportPDF(loginName + "_" + myDate()))    // экспорт в PdfFile файл
+        JasperExportManager.exportReportToPdfFile(processReport(loginName, service, pay),
+                getExportPDF(loginName + "_" + myDate()))    // экспорт в PdfFile файл
         println("method makeReport is done! New file created: " + loginName + "_" + myDate())
     }
 
     // метод для сохранения отчета только на стороне клиента через браузер
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)
     fun makeOrderDownload(loginName: String, service: String, pay: Int): ByteArray {    // : ByteArray
-        val jasperPrint = processReport(loginName, service, pay)    // jasperPrint принимает возвращаемый jasperPrint из processReport
         println("method makeReport is done! New file created: " + loginName + "_" + myDate())
-        return JasperExportManager.exportReportToPdf(jasperPrint)   // возвращаем массив байтов
+        return JasperExportManager.exportReportToPdf(processReport(loginName, service, pay))   // возвращаем массив байтов
     }
 
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)
@@ -56,9 +55,8 @@ class PayMakeOrder {
                         parameters["jr_service"] = order.service
                         parameters["jr_pay"] = order.pay
                         // формируем отчёт
-                        val dataSource: JRDataSource = JREmptyDataSource()                              // без него будут пустые отчеты
-                        val jrxmlFile = JasperCompileManager.compileReport(getInternetPayOrderJrxml())  // от куда берём jrxml файл
-                        return JasperFillManager.fillReport(jrxmlFile, parameters, dataSource)          // JasperPrint - заполняет шаблон
+                        return JasperFillManager.fillReport(JasperCompileManager.compileReport(getInternetPayOrderJrxml()),
+                                parameters, JREmptyDataSource())
                     }
                 }
             }
@@ -66,9 +64,7 @@ class PayMakeOrder {
         return null
     }
 
-    fun myDate(): String {
-        val myDate = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")
-        val myNow = LocalDateTime.now()
-        return myDate.format(myNow)
+    fun myDate(): String {  // возвращает текущую отформатированную дату
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss").format(LocalDateTime.now())
     }
 }

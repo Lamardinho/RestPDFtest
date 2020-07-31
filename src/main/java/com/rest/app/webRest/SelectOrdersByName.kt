@@ -1,7 +1,6 @@
 package com.rest.app.webRest
 
 import com.rest.app.dataBase.tables.OrderTable
-import com.rest.app.domain.SqlOrders
 import java.sql.DriverManager
 import java.sql.PreparedStatement
 import java.sql.SQLException

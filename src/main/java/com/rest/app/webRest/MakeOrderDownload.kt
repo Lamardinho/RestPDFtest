@@ -24,8 +24,15 @@ class MakeOrderDownload {
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)
     fun makeOrderDownload(@PathParam("user") loginName: String, @QueryParam("service") service: String, @QueryParam("pay") pay: Int): Response {
         println("Using make DOWNLOAD")
-        val basePayMakeOrder = PayMakeOrder()
-        val bytesArray = basePayMakeOrder.makeOrderDownload(loginName, service, pay)
-        return Response.ok().entity(bytesArray).header("Content-disposition", "attachment; filename=\"" + loginName + "_" + basePayMakeOrder.myDate() + ".pdf\"").build()
+        return Response.ok().entity(PayMakeOrder().makeOrderDownload(loginName, service, pay)).header(
+                "Content-disposition", "attachment; filename=\"" + loginName + "_" + PayMakeOrder().myDate() + ".pdf\"").build()
     }
 }
+
+/* как лучше, выше или ниже?
+println("Using make DOWNLOAD")
+        val basePayMakeOrder = PayMakeOrder()
+        val bytesArray = basePayMakeOrder.makeOrderDownload(loginName, service, pay)
+        return Response.ok().entity(bytesArray).header("Content-disposition", "attachment; filename=\"" +
+                loginName + "_" + basePayMakeOrder.myDate() + ".pdf\"").build()
+ */

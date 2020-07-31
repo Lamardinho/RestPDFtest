@@ -1,19 +1,19 @@
-package ThreadsTests.javaStud.thread5ThreadPoolExecutor;
+package threadsTests.javaStud.thread5ThreadPoolExecutor;
 
 import java.util.concurrent.*;
 
 public class Starter5 {
-    static class MyCallable5 implements Callable<Long> {
+    static class MyCallable5 implements Callable<String> {
         @Override
-        public Long call() {
+        public String call() {
             try {
                 System.out.println("Thread started: " + Thread.currentThread().getId());
                 Thread.sleep(2000);
-                System.out.println("Thread finished: " + Thread.currentThread().getId() + "\n");
+                System.out.println("Thread finished: " + Thread.currentThread().getId());
             } catch (Exception ex) {
                 ex.printStackTrace(System.out);
             }
-            return Thread.currentThread().getId();
+            return Thread.currentThread().getName();
         }
     }
 
@@ -25,10 +25,15 @@ public class Starter5 {
     }
 
     public void test1() {
-        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 4, 1,
-                TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(2), new MyReject5());
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
+                2,      // количество рабочих потоков
+                6,  // размер очереди?
+                1,    // сколько живет поток
+                TimeUnit.MILLISECONDS,
+                new LinkedBlockingQueue<>(),   // выстраивание очереди запросов
+                new MyReject5());
 
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 5; i++) {
             MyCallable5 myCallable5 = new MyCallable5();
             threadPoolExecutor.submit(myCallable5);
         }

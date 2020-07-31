@@ -23,8 +23,7 @@ class MakeOrderOnServer {
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)
     fun makeOrderOnServer(@PathParam("user") loginName: String, @QueryParam("service") service: String, @QueryParam("pay") pay: Int): String {
         println("Using make on SERVER")
-        val basePayMakeOrder = PayMakeOrder()
-        basePayMakeOrder.makeOrderOnServer(loginName, service, pay)
+        PayMakeOrder().makeOrderOnServer(loginName, service, pay)
         return "Hello $loginName you paid for $service: $pay RUB"
     }
 }

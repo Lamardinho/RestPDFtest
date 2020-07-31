@@ -23,8 +23,8 @@ public class MakeOrderDownload_Java {
     @Path("/{user}")
     public Response javaMakeOrderDownload(@PathParam("user") String loginName, @QueryParam("service") String service, @QueryParam("pay") int pay) throws SQLException, ClassNotFoundException, JRException {
         System.out.println("Using make DOWNLOAD");
-        final PayMakeOrder payMakeOrder = new PayMakeOrder();
-        byte[] bytes = payMakeOrder.makeOrderDownload(loginName, service, pay);
-        return Response.ok().entity(bytes).header("Content-disposition", "attachment; filename=\"" + loginName + "_" + payMakeOrder.myDate() + ".pdf\"").build();
+        return Response.ok().entity(new PayMakeOrder().makeOrderDownload(loginName, service, pay)).header(
+                "Content-disposition", "attachment; filename=\"" +
+                        loginName + "_" + new PayMakeOrder().myDate() + ".pdf\"").build();
     }
 }

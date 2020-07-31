@@ -29,7 +29,6 @@ public class PayMakeOrder_Java {
     public JasperPrint processReport(String loginName, String service, int pay) throws SQLException, ClassNotFoundException, JRException {
         Class.forName("org.postgresql.Driver");  // указываем для того, чтобы Tomcat подхватил драйвер
         final java.sql.Timestamp timestamp = Timestamp.valueOf(java.time.LocalDateTime.now()); // для вставки даты
-
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rtk", "postgres", "post@post23"); // подключаемся к БД
              // используем CallableStatement для работы с хранимыми процедурами

@@ -1,4 +1,4 @@
-package ThreadsTests.javaStud.thread4;
+package threadsTests.javaStud.thread4;
 
 import java.util.ArrayList;
 import java.util.List;

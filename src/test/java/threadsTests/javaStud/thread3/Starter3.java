@@ -1,4 +1,4 @@
-package ThreadsTests.javaStud.thread3;
+package threadsTests.javaStud.thread3;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;

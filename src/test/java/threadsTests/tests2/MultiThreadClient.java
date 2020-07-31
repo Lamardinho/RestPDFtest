@@ -1,4 +1,4 @@
-package ThreadsTests.Tests2;
+package threadsTests.tests2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class MultiThreadClient {
         for (Future<Double> future : futures) {
             value += future.get();
         }
-        System.out.println(format("Executed by %d s, value : %f", (System.nanoTime() - start) / (1000_000_000), value));
+        System.out.printf("Executed by %d s, value : %f%n", (System.nanoTime() - start) / (1000_000_000), value);
         threadPool.shutdown();
     }
 }

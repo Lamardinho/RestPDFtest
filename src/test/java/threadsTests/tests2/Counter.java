@@ -1,4 +1,4 @@
-package ThreadsTests.Tests2;
+package threadsTests.tests2;
 
 public class Counter {
 

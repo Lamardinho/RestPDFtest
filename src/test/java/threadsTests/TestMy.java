@@ -1,4 +1,4 @@
-package ThreadsTests;
+package threadsTests;
 
 import org.junit.Test;
 
@@ -8,6 +8,10 @@ import java.util.concurrent.ThreadPoolExecutor;
 import static org.junit.Assert.assertEquals;
 
 public class TestMy {
+    public static void main(String[] args) {
+        TestMy testMy = new TestMy();
+        testMy.t2();
+    }
 
     @Test
     public void t() {
@@ -15,7 +19,7 @@ public class TestMy {
 
         for (int i = 1; i <= 3; i++) {
             executor.submit(() -> {
-                Thread.sleep(100000);
+                Thread.sleep(5000);
                 return null;
             });
             System.out.println("цикл # " + i);
@@ -31,7 +35,7 @@ public class TestMy {
         ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
         for (int i = 1; i <= 30; i++) {
             executor.submit(() -> {
-                Thread.sleep(100000);
+                Thread.sleep(5000);
                 return null;
             });
             System.out.println("цикл # " + i);

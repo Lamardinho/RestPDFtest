@@ -116,7 +116,7 @@ DROP FUNCTION IF EXISTS make_order(data_time timestamp without time zone, name c
 create function make_order(data_time timestamp without time zone, name character varying, service character varying, pay_int integer)
     returns TABLE("like" orders)
     language plpgsql
-as
+testAS
 $$
 BEGIN
     INSERT INTO orders(date, fk_customer_name, fk_service, pay)
