@@ -22,9 +22,9 @@ class PayMakeOrder {
 
     // метод для сохранения отчета только на стороне клиента через браузер
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)
-    fun makeOrderDownload(loginName: String, service: String, pay: Int): ByteArray {    // : ByteArray
+    fun makeOrderDownload(loginName: String, service: String, pay: Int): ByteArray {
         println("method makeReport is done! New file created: " + loginName + "_" + myDate())
-        return JasperExportManager.exportReportToPdf(processReport(loginName, service, pay))   // возвращаем массив байтов
+        return JasperExportManager.exportReportToPdf(processReport(loginName, service, pay))   // возвращаем массив байт
     }
 
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)

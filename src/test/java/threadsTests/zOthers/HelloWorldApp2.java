@@ -1,4 +1,4 @@
-package threadsTests;
+package threadsTests.zOthers;
 
 import java.util.concurrent.*;
 

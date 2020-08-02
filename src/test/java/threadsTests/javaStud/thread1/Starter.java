@@ -1,26 +1,28 @@
 package threadsTests.javaStud.thread1;
 
+// https://youtu.be/HeQZTYbQVZI?list=PLyxk-1FCKqodhV1d55ZmoAcz6aeyhLxnr
+
 public class Starter {
+
     public static void main(String[] args) {
+
         for (int i = 0; i < 5; i++) {
-            MyThread myThread = new MyThread();
-            myThread.start();
+            new MyThread().start();
         }
 
         for (int i = 0; i < 5; i++) {
-            MyRunnable myRunnable = new MyRunnable();
-            Thread thread = new Thread(myRunnable);
-            thread.start();
+            new Thread(new MyRunnable()).start();
         }
+
     }
 
     private static class MyRunnable implements Runnable {
         @Override
         public void run() {
             try {
-                System.out.println("Start Thread: " + Thread.currentThread().getId());
+                System.out.println("Start Runnable: " + Thread.currentThread().getId());
                 Thread.sleep(5000);
-                System.out.println("Finish Thread: " + Thread.currentThread().getId());
+                System.out.println("Finish Runnable: " + Thread.currentThread().getId());
             } catch (Exception e) {
                 e.printStackTrace(System.out);
             }

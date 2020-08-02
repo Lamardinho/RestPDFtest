@@ -1,7 +1,5 @@
 package threadsTests.tests2;
 
-import static java.lang.String.format;
-
 public class SingleThreadClient {
     public static void main(String[] args) {
         Counter counter = new Counter();

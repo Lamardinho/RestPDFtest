@@ -15,21 +15,16 @@ public class TestMyTPEJava {
     }
 
     public void runTasks() throws ExecutionException, InterruptedException {
-        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
-                4,                             // количество рабочих потоков
-                6,                         // увеличение потоков
-                1, TimeUnit.MILLISECONDS,    // сколько живет поток
-                new LinkedBlockingQueue<>(),
-                new MyReject());            // выстраивание очереди запросов
+        ThreadPoolExecutor tpExecutor = new ThreadPoolExecutor(4, 6, 1, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), new MyReject());
 
         List<Future<String>> futures = new ArrayList<>();
         MyCallable mc = new MyCallable();
 
-        for (int i = 0; i < 10; i++) futures.add(threadPoolExecutor.submit(mc));
+        for (int i = 0; i < 10; i++) futures.add(tpExecutor.submit(mc));
         // ждем окончания таска
         for (Future<String> f : futures) System.out.println("Task finished: " + f.get());
 
-        threadPoolExecutor.shutdown();
+        tpExecutor.shutdown();
     }
 
     static class MyCallable implements Callable<String> {
@@ -38,7 +33,8 @@ public class TestMyTPEJava {
             try {
                 System.out.println("Thread started: " + Thread.currentThread().getId());
                 System.out.println(new TestMyTPEJava().getRandomNum());
-                Thread.sleep(2000);                // System.out.println("Thread finished: " + Thread.currentThread().getId());
+                Thread.sleep(2000);
+                // System.out.println("Thread finished: " + Thread.currentThread().getId());
             } catch (Exception ex) {
                 ex.printStackTrace(System.out);
             }

@@ -1,5 +1,7 @@
 package threadsTests.tests2;
 
+// https://habr.com/ru/post/326146/
+
 public class Counter {
 
     public static void main(String[] args) {

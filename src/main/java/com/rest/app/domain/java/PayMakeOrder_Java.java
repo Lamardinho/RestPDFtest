@@ -12,23 +12,22 @@ import java.util.Map;
 
 public class PayMakeOrder_Java {
 
-    // on server
+    // метод для сохранения отчета на сервере
     public void makeOrderOnServer(String loginName, String service, int pay) throws SQLException, ClassNotFoundException, JRException {
-        JasperPrint jasperPrint = processReport(loginName, service, pay);
-        JasperExportManager.exportReportToPdfFile(jasperPrint, MyPdfURLs.INSTANCE.getExportPDF(loginName + "_" + myDate()));
+        JasperExportManager.exportReportToPdfFile(processReport(loginName, service, pay),
+                MyPdfURLs.INSTANCE.getExportPDF(loginName + "_" + myDate()));
         System.out.println("method makeReport is done! New file created: " + loginName + "_" + myDate());
     }
 
-    // just from browser download
+    // метод для сохранения отчета только на стороне клиента через браузер
     public byte[] makeOrderDownload(String loginName, String service, int pay) throws SQLException, ClassNotFoundException, JRException {
-        JasperPrint jasperPrint = processReport(loginName, service, pay);
         System.out.println("method makeReport is done! New file created: " + loginName + "_" + myDate());
-        return JasperExportManager.exportReportToPdf(jasperPrint);
+        return JasperExportManager.exportReportToPdf(processReport(loginName, service, pay));      // возвращаем массив байт
     }
 
     public JasperPrint processReport(String loginName, String service, int pay) throws SQLException, ClassNotFoundException, JRException {
         Class.forName("org.postgresql.Driver");  // указываем для того, чтобы Tomcat подхватил драйвер
-        final java.sql.Timestamp timestamp = Timestamp.valueOf(java.time.LocalDateTime.now()); // для вставки даты
+        final java.sql.Timestamp timestamp = Timestamp.valueOf(java.time.LocalDateTime.now());   // для вставки даты в базу данных
         try (Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/rtk", "postgres", "post@post23"); // подключаемся к БД
              // используем CallableStatement для работы с хранимыми процедурами
@@ -41,7 +40,7 @@ public class PayMakeOrder_Java {
             System.out.println("You paid " + pay + " RUB");
             try (final ResultSet resultSet = callableStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    // заполняем объект order данными из БД, для послед.наполнения мапы
+                    // заполняем объект order данными из БД, для наполнения мапы параметров JasperReports
                     OrderTable order = new OrderTable();
                     order.setOrderNumber(resultSet.getInt(1));
                     order.setTimestamp(resultSet.getTimestamp(2));
@@ -56,18 +55,15 @@ public class PayMakeOrder_Java {
                     parameters.put("jr_service", order.getService());
                     parameters.put("jr_pay", order.getPay());
                     // формируем отчёт
-                    JRDataSource dataSource = new JREmptyDataSource(); // без него будут пустые отчеты
-                    JasperReport jrxmlFile = JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getInternetPayOrderJrxml());  // от куда берём jrxml файл
-                    return JasperFillManager.fillReport(jrxmlFile, parameters, dataSource);  // JasperPrint - заполняет шаблон
+                    return JasperFillManager.fillReport(JasperCompileManager.compileReport(MyPdfURLs.INSTANCE.getInternetPayOrderJrxml())
+                            , parameters, new JREmptyDataSource());
                 }
             }
         }
         return null;
     }
 
-    public String myDate() {
-        final DateTimeFormatter myDate = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
-        LocalDateTime myNow = LocalDateTime.now();
-        return myDate.format(myNow);
+    public String myDate() {  // возвращает текущую отформатированную дату
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss").format(LocalDateTime.now());
     }
 }
