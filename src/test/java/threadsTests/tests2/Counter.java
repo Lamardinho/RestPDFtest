@@ -5,8 +5,7 @@ package threadsTests.tests2;
 public class Counter {
 
     public static void main(String[] args) {
-        Counter counter = new Counter();
-        counter.count(10);
+        new Counter().count(10);
     }
 
     public Double count(double a) {

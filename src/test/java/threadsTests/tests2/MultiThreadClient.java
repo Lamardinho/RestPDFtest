@@ -3,11 +3,10 @@ package threadsTests.tests2;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class MultiThreadClient {
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    public static void main(String[] args) throws Exception {
         ThreadPool threadPool = new ThreadPool(8);
         long start = System.nanoTime();
 

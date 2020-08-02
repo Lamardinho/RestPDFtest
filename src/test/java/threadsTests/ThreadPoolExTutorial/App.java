@@ -6,8 +6,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class App {
     public static void main(String[] args) {
-        App app = new App();
-        app.runApp();
+        new App().runApp();
     }
 
     public void runApp() {

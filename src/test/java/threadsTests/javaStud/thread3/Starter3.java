@@ -10,7 +10,7 @@ import java.util.concurrent.Future;
 public class Starter3 {
 
     public static void main(String[] args) throws Exception {
-        new Starter3().test4();
+        new Starter3().test2();
     }
 
     public void test1() {
