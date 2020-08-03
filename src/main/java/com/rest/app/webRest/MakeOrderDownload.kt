@@ -30,7 +30,7 @@ class MakeOrderDownload {
 }
 
 /* как лучше, выше или ниже?
-println("Using make DOWNLOAD")
+
         val basePayMakeOrder = PayMakeOrder()
         val bytesArray = basePayMakeOrder.makeOrderDownload(loginName, service, pay)
         return Response.ok().entity(bytesArray).header("Content-disposition", "attachment; filename=\"" +

@@ -28,7 +28,6 @@ public class ThreadPool implements Executor {
     }
 
     private final class TaskWorker implements Runnable {
-
         @Override
         public void run() {
             while (isRunning) {

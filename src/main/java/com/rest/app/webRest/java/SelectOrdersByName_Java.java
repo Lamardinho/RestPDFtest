@@ -62,13 +62,3 @@ public class SelectOrdersByName_Java {
         }
     }
 }
-
-/*
-public Collection<OrderTable> myOrders(...) {
-        return ORDERS.values();     }
-
-или
-
-public String myOrders(...) {
-        return ORDERS.toString();   }
- */
