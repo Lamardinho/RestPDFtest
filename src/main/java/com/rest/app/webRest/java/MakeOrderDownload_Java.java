@@ -1,5 +1,6 @@
 package com.rest.app.webRest.java;
 
+import com.rest.app.dataBase.MyDate;
 import com.rest.app.domain.PayMakeOrder;
 import net.sf.jasperreports.engine.JRException;
 
@@ -26,6 +27,6 @@ public class MakeOrderDownload_Java {
         System.out.println("Using make DOWNLOAD");
         return Response.ok().entity(new PayMakeOrder().makeOrderDownload(loginName, service, pay)).header(
                 "Content-disposition", "attachment; filename=\"" +
-                        loginName + "_" + new PayMakeOrder().myDate() + ".pdf\"").build();
+                        loginName + "_" + MyDate.INSTANCE.getNowDate() + ".pdf\"").build();
     }
 }

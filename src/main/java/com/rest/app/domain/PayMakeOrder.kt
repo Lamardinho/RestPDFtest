@@ -1,5 +1,6 @@
 package com.rest.app.domain
 
+import com.rest.app.dataBase.MyDate.getNowDate
 import com.rest.app.dataBase.MyPdfURLs.getExportPDF
 import com.rest.app.dataBase.MyPdfURLs.getInternetPayOrderJrxml
 import com.rest.app.dataBase.tables.OrderTable
@@ -8,7 +9,6 @@ import java.sql.DriverManager
 import java.sql.SQLException
 import java.sql.Timestamp
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.concurrent.*
 
 class PayMakeOrder {
@@ -18,24 +18,20 @@ class PayMakeOrder {
 
     // метод для сохранения отчета на сервере
     @Throws(Exception::class)
-    public fun makeOrderOnServer(loginName: String, service: String, pay: Int): Future<String>? {
+    fun makeOrderOnServer(loginName: String, service: String, pay: Int): Future<String>? {
         val future = executor.submit(MyCallable(loginName, service, pay))
         JasperExportManager.exportReportToPdfFile(future.get(),
-                getExportPDF(loginName + "_" + myDate()))
-        println("method makeReport is done! New file created: " + loginName + "_" + myDate())
+                getExportPDF(loginName + "_" + getNowDate()))
+        println("method makeReport is done! New file created: " + loginName + "_" + getNowDate())
         return null
     }
 
     // метод для сохранения отчета только на стороне клиента через браузер
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class, ExecutionException::class, InterruptedException::class)
-    public fun makeOrderDownload(loginName: String, service: String, pay: Int): ByteArray {
+    fun makeOrderDownload(loginName: String, service: String, pay: Int): ByteArray {
         val future = executor.submit(MyCallable(loginName, service, pay))
-        println("method makeReport is done! New file created: " + loginName + "_" + myDate())
+        println("method makeReport is done! New file created: " + loginName + "_" + getNowDate())
         return JasperExportManager.exportReportToPdf(future.get()) // возвращаем массив байт
-    }
-
-    fun myDate(): String {  // возвращает текущую отформатированную дату
-        return DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss").format(LocalDateTime.now())
     }
 
     internal class MyCallable(var loginName: String, var service: String, var pay: Int) : Callable<JasperPrint> {

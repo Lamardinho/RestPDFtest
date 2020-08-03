@@ -1,5 +1,6 @@
 package com.rest.app.webRest
 
+import com.rest.app.dataBase.MyDate.getNowDate
 import com.rest.app.domain.PayMakeOrder
 import net.sf.jasperreports.engine.JRException
 import java.sql.SQLException
@@ -25,7 +26,7 @@ class MakeOrderDownload {
     fun makeOrderDownload(@PathParam("user") loginName: String, @QueryParam("service") service: String, @QueryParam("pay") pay: Int): Response {
         println("Using make DOWNLOAD")
         return Response.ok().entity(PayMakeOrder().makeOrderDownload(loginName, service, pay)).header(
-                "Content-disposition", "attachment; filename=\"" + loginName + "_" + PayMakeOrder().myDate() + ".pdf\"").build()
+                "Content-disposition", "attachment; filename=\"" + loginName + "_" + getNowDate() + ".pdf\"").build()
     }
 }
 

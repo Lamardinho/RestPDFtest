@@ -1,5 +1,6 @@
 package com.rest.app.domain.java;
 
+import com.rest.app.dataBase.MyDate;
 import com.rest.app.dataBase.MyPdfURLs;
 import com.rest.app.dataBase.tables.OrderTable;
 import net.sf.jasperreports.engine.*;
@@ -15,13 +16,13 @@ public class PayMakeOrderOld {
     // метод для сохранения отчета на сервере
     public void makeOrderOnServer(String loginName, String service, int pay) throws SQLException, ClassNotFoundException, JRException {
         JasperExportManager.exportReportToPdfFile(processReport(loginName, service, pay),
-                MyPdfURLs.INSTANCE.getExportPDF(loginName + "_" + myDate()));
-        System.out.println("method makeReport is done! New file created: " + loginName + "_" + myDate());
+                MyPdfURLs.INSTANCE.getExportPDF(loginName + "_" + MyDate.INSTANCE.getNowDate()));
+        System.out.println("method makeReport is done! New file created: " + loginName + "_" + MyDate.INSTANCE.getNowDate());
     }
 
     // метод для сохранения отчета только на стороне клиента через браузер
     public byte[] makeOrderDownload(String loginName, String service, int pay) throws SQLException, ClassNotFoundException, JRException {
-        System.out.println("method makeReport is done! New file created: " + loginName + "_" + myDate());
+        System.out.println("method makeReport is done! New file created: " + loginName + "_" + MyDate.INSTANCE.getNowDate());
         return JasperExportManager.exportReportToPdf(processReport(loginName, service, pay));      // возвращаем массив байт
     }
 
@@ -61,9 +62,5 @@ public class PayMakeOrderOld {
             }
         }
         return null;
-    }
-
-    public String myDate() {  // возвращает текущую отформатированную дату
-        return DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss").format(LocalDateTime.now());
     }
 }

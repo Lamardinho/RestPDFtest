@@ -1,5 +1,6 @@
 package com.rest.app.domain.java;
 
+import com.rest.app.dataBase.MyDate;
 import com.rest.app.dataBase.MyPdfURLs;
 import com.rest.app.dataBase.tables.OrderTable;
 import net.sf.jasperreports.engine.*;
@@ -21,20 +22,16 @@ public class PayMakeOrderPlusThreadPoolEx {
         Future<JasperPrint> future = executor.submit(new MyCallable(loginName, service, pay));
 
         JasperExportManager.exportReportToPdfFile(future.get(),
-                MyPdfURLs.INSTANCE.getExportPDF(loginName + "_" + myDate()));
-        System.out.println("method makeReport is done! New file created: " + loginName + "_" + myDate());
+                MyPdfURLs.INSTANCE.getExportPDF(loginName + "_" + MyDate.INSTANCE.getNowDate()));
+        System.out.println("method makeReport is done! New file created: " + loginName + "_" + MyDate.INSTANCE.getNowDate());
         return null;
     }
 
     // метод для сохранения отчета только на стороне клиента через браузер
     public byte[] makeOrderDownload(String loginName, String service, int pay) throws SQLException, ClassNotFoundException, JRException, ExecutionException, InterruptedException {
         Future<JasperPrint> future = executor.submit(new MyCallable(loginName, service, pay));
-        System.out.println("method makeReport is done! New file created: " + loginName + "_" + myDate());
+        System.out.println("method makeReport is done! New file created: " + loginName + "_" + MyDate.INSTANCE.getNowDate());
         return JasperExportManager.exportReportToPdf(future.get());      // возвращаем массив байт
-    }
-
-    public String myDate() {  // возвращает текущую отформатированную дату
-        return DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss").format(LocalDateTime.now());
     }
 
     static class MyCallable implements Callable<JasperPrint> {
