@@ -16,7 +16,7 @@ open class RestPdfDownload {
     private val employeeGet = EmployeeGet() // ссылка на сотрудника
     private val getMap = GetMap()
 
-    //  http://localhost:8080/RestPDFtest_war_exploded/rest/RestPDFBuffer
+    //  http://localhost:8080/home/rest/RestPDFBuffer
     @GET
     open fun hello(): String {
         val user = System.getProperty("user.name") // определяет имя пользователя системы
@@ -24,7 +24,7 @@ open class RestPdfDownload {
                 " Eg: ..../rest/pdfbuffer/anyNAME"
     }
 
-    //  http://localhost:8080/RestPDFtest_war_exploded/rest/RestPDFBuffer/anyname
+    //  http://localhost:8080/home/rest/RestPDFBuffer/anyname
     // формирование PDFки в буфер и сохранение на стороне клиента:
     @GET
     @Path("/{buffername}")      // доб /{userId} = @Path("/{buffername}/{userId}") // fun createPDFReport(@PathParam("buffername") gPDFName: String, @PathParam("userId")

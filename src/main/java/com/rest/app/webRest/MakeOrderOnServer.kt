@@ -9,14 +9,14 @@ import javax.ws.rs.core.MediaType
 @Path("/MakeOrderOnServer")
 class MakeOrderOnServer {
 
-    // http://localhost:8080/RestPDFtest_war_exploded/rest/MakeOrderOnServer/
+    // http://localhost:8080/home/rest/MakeOrderOnServer/
     @GET
     @Produces(MediaType.APPLICATION_JSON) // тип данных отправляемых клиенту (не является обязательной?)
     fun hello2(): String {
         return "MakeOrderOnServer: Hello " + System.getProperty("user.name") + "!"
     }
 
-    // http://localhost:8080/RestPDFtest_war_exploded/rest/MakeOrderOnServer/Marcus?service=TV&pay=300
+    // http://localhost:8080/home/rest/MakeOrderOnServer/Marcus?service=TV&pay=300
     @GET
     @Path("/{user}")
     @Produces(MediaType.APPLICATION_JSON)

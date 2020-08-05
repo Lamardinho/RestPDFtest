@@ -12,15 +12,15 @@ import java.io.File;
 @Path("/JavaRestPDFonDisk")
 public class JavaRestPdfOnServer {
 
-    // http://localhost:8080/RestPDFtest_war_exploded/rest/pdf
+    // http://localhost:8080/home/rest/pdf
     @GET
     public String hello() {
         String user = System.getProperty("user.name"); // определяет имя пользователя системы
         return "Hello " + user + "! Enter the filename in the URL line to export to PDF: /filename." +
-                " Eg: http://localhost:8080/RestPDFtest_war_exploded/rest/pdf/Marcus";
+                " Eg: http://localhost:8080/home/rest/pdf/Marcus";
     }
 
-    // http://localhost:8080/RestPDFtest_war_exploded/rest/JavaRestPDFonDisk/Marcus
+    // http://localhost:8080/home/rest/JavaRestPDFonDisk/Marcus
     @GET
     @Path("/{javapdfname}")
     @Produces(MediaType.APPLICATION_JSON) // для передачи в формате JSON

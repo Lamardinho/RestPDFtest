@@ -11,14 +11,14 @@ import javax.ws.rs.core.Response
 @Path("/MakeOrderDownload")
 class MakeOrderDownload {
 
-    // http://localhost:8080/RestPDFtest_war_exploded/rest/MakeOrderDownload/
+    // http://localhost:8080/home/rest/MakeOrderDownload/
     @GET
     @Produces(MediaType.APPLICATION_JSON) // тип данных отправляемых клиенту (не является обязательной?)
     fun hello(): String {
         return "MakeOrderDownload: Hello " + System.getProperty("user.name") + "!"
     }
 
-    // http://localhost:8080/RestPDFtest_war_exploded/rest/MakeOrderDownload/Alice?service=TV&pay=300
+    // http://localhost:8080/home/rest/MakeOrderDownload/Alice?service=TV&pay=300
     @GET
     @Path("/{user}")
     @Produces(MediaType.APPLICATION_JSON)

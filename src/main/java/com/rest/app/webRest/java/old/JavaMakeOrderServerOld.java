@@ -21,7 +21,7 @@ public class JavaMakeOrderServerOld {
     }
 
     // добавить Order
-    // http://localhost:8080/RestPDFtest_war_exploded/rest/JavaMakeOrderInternetOnServer/Marcus?pay=500
+    // http://localhost:8080/home/rest/JavaMakeOrderInternetOnServer/Marcus?pay=500
     @GET
     @Path("/{user}")      // @Path("/{user}/{pay}")       /Marcus?pay=500
     public String addNewOrder(@PathParam("user") String loginName, @QueryParam("pay") int pay) throws SQLException, ClassNotFoundException, JRException {

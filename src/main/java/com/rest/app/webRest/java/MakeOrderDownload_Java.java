@@ -13,14 +13,14 @@ import java.util.concurrent.ExecutionException;
 @Path("/JavaMakeOrderDownload")
 public class MakeOrderDownload_Java {
 
-    // http://localhost:8080/RestPDFtest_war_exploded/rest/JavaPayDownload/
+    // http://localhost:8080/home/rest/JavaPayDownload/
     @GET
     @Produces(MediaType.APPLICATION_JSON)   // тип данных отправляемых клиенту (не является обязательной?)
     public String hello() {
         return "JavaPayDownload: Hello " + System.getProperty("user.name") + "!";
     }
 
-    // http://localhost:8080/RestPDFtest_war_exploded/rest/JavaPayDownload/Alice?service=TV&pay=300
+    // http://localhost:8080/home/rest/JavaPayDownload/Alice?service=TV&pay=300
     @GET
     @Path("/{user}")
     public Response javaMakeOrderDownload(@PathParam("user") String loginName, @QueryParam("service") String service, @QueryParam("pay") int pay) throws SQLException, ClassNotFoundException, JRException, ExecutionException, InterruptedException {

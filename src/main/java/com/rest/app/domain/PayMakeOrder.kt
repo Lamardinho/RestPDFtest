@@ -13,8 +13,8 @@ import java.util.concurrent.*
 
 class PayMakeOrder {
 
-    private val executor = ThreadPoolExecutor(4, 6,
-            1, TimeUnit.MILLISECONDS, LinkedBlockingQueue())
+    private val executor = ThreadPoolExecutor(4, 6, 1, TimeUnit.MILLISECONDS,
+            LinkedBlockingQueue())
 
     // метод для сохранения отчета на сервере
     @Throws(Exception::class)
@@ -35,6 +35,7 @@ class PayMakeOrder {
     }
 
     internal class MyCallable(var loginName: String, var service: String, var pay: Int) : Callable<JasperPrint> {
+
         @Throws(Exception::class)
         override fun call(): JasperPrint? {
             return processReport()
@@ -42,15 +43,15 @@ class PayMakeOrder {
 
         @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)
         private fun processReport(): JasperPrint? {
-            Class.forName("org.postgresql.Driver") // указываем для того, чтобы Tomcat подхватил драйвер
-            val timestamp = Timestamp.valueOf(LocalDateTime.now()) // для вставки даты в базу данных
+            Class.forName("org.postgresql.Driver")          // указываем для того, чтобы Tomcat подхватил драйвер
+            val timestamp = Timestamp.valueOf(LocalDateTime.now())   // для вставки даты в базу данных
             DriverManager.getConnection(
                     "jdbc:postgresql://localhost:5432/rtk", "postgres", "post@post23").use { connection ->
                 connection.prepareCall("SELECT * FROM rtk.public.make_order(?,?,?,?)").use { callableStatement ->
-                    callableStatement.setTimestamp(1, timestamp) // 1ый '?' wildCard
-                    callableStatement.setString(2, loginName) // 2ой '?' wildCard
-                    callableStatement.setString(3, service) // 3ий '?' wildCard
-                    callableStatement.setInt(4, pay) // 4ый '?' wildCard
+                    callableStatement.setTimestamp(1, timestamp)    // 1ый '?' wildCard
+                    callableStatement.setString(2, loginName)       // 2ой '?' wildCard
+                    callableStatement.setString(3, service)         // 3ий '?' wildCard
+                    callableStatement.setInt(4, pay)                // 4ый '?' wildCard
                     println("You paid $pay RUB")
                     callableStatement.executeQuery().use { resultSet ->
                         if (resultSet.next()) {
@@ -69,8 +70,10 @@ class PayMakeOrder {
                             parameters["jr_service"] = order.service
                             parameters["jr_pay"] = order.pay
                             // формируем отчёт
-                            return JasperFillManager.fillReport(JasperCompileManager.compileReport(getInternetPayOrderJrxml())
-                                    , parameters, JREmptyDataSource())
+                            return JasperFillManager.fillReport(
+                                    JasperCompileManager.compileReport(getInternetPayOrderJrxml()),
+                                    parameters,
+                                    JREmptyDataSource())
                         }
                     }
                 }

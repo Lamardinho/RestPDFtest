@@ -17,15 +17,15 @@ public class JavaRestPdfDownload {
     private final EmployeeGet employeeGet = new EmployeeGet(); // ссылка на сотрудника
     private final GetMap getMap = new GetMap();
 
-    //  http://localhost:8080/RestPDFtest_war_exploded/rest/JavaRestPDFBuffer
+    //  http://localhost:8080/home/rest/JavaRestPDFBuffer
     @GET
     public String hello() {
         String user = System.getProperty("user.name"); // определяет имя пользователя системы
         return "Hello " + user + "! Enter the filename in the URL line to export to PDF: /filename." +
-                " Eg: http://localhost:8080/RestPDFtest_war_exploded/rest/pdfbuffer/Marcus";
+                " Eg: http://localhost:8080/home/rest/pdfbuffer/Marcus";
     }
 
-    //  http://localhost:8080/RestPDFtest_war_exploded/rest/JavaRestPDFBuffer/anyname
+    //  http://localhost:8080/home/rest/JavaRestPDFBuffer/anyname
     // формирование PDFки в буфер и сохранение на стороне клиента:
     @GET
     @Path("/{pdfname}")

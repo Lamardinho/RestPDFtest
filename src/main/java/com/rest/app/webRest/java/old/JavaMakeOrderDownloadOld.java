@@ -20,8 +20,8 @@ public class JavaMakeOrderDownloadOld {    // класс для сохранен
         return "Hello " + System.getProperty("user.name") + "!";
     }
 
-    // добавить Order: http://localhost:8080/RestPDFtest_war_exploded/rest/JavaMakeOrderInternetDownload/John?pay=500
-    // http://localhost:8080/RestPDFtest_war_exploded/rest/JavaMakeOrderInternetDownload/Alice?pay=500&service=TV
+    // добавить Order: http://localhost:8080/home/rest/JavaMakeOrderInternetDownload/John?pay=500
+    // http://localhost:8080/home/rest/JavaMakeOrderInternetDownload/Alice?pay=500&service=TV
     @GET
     @Path("/{user}")      // @Path("/{user}/{pay}")       /Marcus?pay=500
     public Response addNewOrder(@PathParam("user") String loginName, @QueryParam("pay") int pay, @QueryParam("service") String service) throws SQLException, ClassNotFoundException, JRException {
