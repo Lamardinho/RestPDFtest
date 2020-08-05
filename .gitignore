@@ -6,6 +6,7 @@
 /build/**
 /node_modules/**
 /unversioned/**
+/src/main/java/com/rest/app/dataBase/sqlScripts**
 
 
 # Compiled class file
