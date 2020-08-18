@@ -20,8 +20,9 @@ class PayMakeOrder {
     @Throws(Exception::class)
     fun makeOrderOnServer(loginName: String, service: String, pay: Int): Future<String>? {
         val future = executor.submit(MyCallable(loginName, service, pay))
-        JasperExportManager.exportReportToPdfFile(future.get(),
-                getExportPDF(loginName + "_" + getNowDate()))
+
+        JasperExportManager.exportReportToPdfFile(future.get(), getExportPDF(loginName + "_" + getNowDate()))
+
         println("method makeReport is done! New file created: " + loginName + "_" + getNowDate())
         return null
     }
@@ -45,8 +46,7 @@ class PayMakeOrder {
         private fun processReport(): JasperPrint? {
             Class.forName("org.postgresql.Driver")          // указываем для того, чтобы Tomcat подхватил драйвер
             val timestamp = Timestamp.valueOf(LocalDateTime.now())   // для вставки даты в базу данных
-            DriverManager.getConnection(
-                    "jdbc:postgresql://localhost:5432/rtk", "postgres", "post@post23").use { connection ->
+            DriverManager.getConnection("jdbc:postgresql://localhost:5432/rtk", "postgres", "post@post23").use { connection ->
                 connection.prepareCall("SELECT * FROM rtk.public.make_order(?,?,?,?)").use { callableStatement ->
                     callableStatement.setTimestamp(1, timestamp)    // 1ый '?' wildCard
                     callableStatement.setString(2, loginName)       // 2ой '?' wildCard

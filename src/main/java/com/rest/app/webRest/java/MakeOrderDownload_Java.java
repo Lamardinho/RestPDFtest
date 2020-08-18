@@ -23,7 +23,9 @@ public class MakeOrderDownload_Java {
     // http://localhost:8080/home/rest/JavaPayDownload/Alice?service=TV&pay=300
     @GET
     @Path("/{user}")
-    public Response javaMakeOrderDownload(@PathParam("user") String loginName, @QueryParam("service") String service, @QueryParam("pay") int pay) throws SQLException, ClassNotFoundException, JRException, ExecutionException, InterruptedException {
+    public Response javaMakeOrderDownload(@PathParam("user") String loginName,
+                                          @QueryParam("service") String service,
+                                          @QueryParam("pay") int pay) throws SQLException, ClassNotFoundException, JRException, ExecutionException, InterruptedException {
         System.out.println("Using make DOWNLOAD");
         return Response.ok().entity(new PayMakeOrder().makeOrderDownload(loginName, service, pay)).header(
                 "Content-disposition", "attachment; filename=\"" +

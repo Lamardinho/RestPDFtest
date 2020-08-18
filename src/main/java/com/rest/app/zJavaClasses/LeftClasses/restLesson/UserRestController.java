@@ -31,6 +31,7 @@ curl -H "Content-Type: application/json" -X DELETE http://localhost:8080/home/re
 
 @Path("/user")
 public class UserRestController {
+
     private final static AtomicInteger ID = new AtomicInteger(0);
     private final static Map<Integer, User> USERS = new ConcurrentHashMap<>();
 

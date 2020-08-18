@@ -21,7 +21,9 @@ class MakeOrderOnServer {
     @Path("/{user}")
     @Produces(MediaType.APPLICATION_JSON)
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)
-    fun makeOrderOnServer(@PathParam("user") loginName: String, @QueryParam("service") service: String, @QueryParam("pay") pay: Int): String {
+    fun makeOrderOnServer(@PathParam("user") loginName: String,
+                          @QueryParam("service") service: String,
+                          @QueryParam("pay") pay: Int): String {
         println("Using make on SERVER")
         PayMakeOrder().makeOrderOnServer(loginName, service, pay)
         return "Hello $loginName you paid for $service: $pay RUB"
