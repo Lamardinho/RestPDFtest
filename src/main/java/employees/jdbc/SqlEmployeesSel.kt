@@ -9,8 +9,7 @@ class SqlEmployeesSel {
     // добавить Employee
     @Throws(SQLException::class)
     fun addNewEmployee(name: String, position: String, phone: Long, date: Date) {
-        DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23").use { connection ->
+        DriverManager.getConnection("jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23").use { connection ->
             connection.prepareStatement("INSERT INTO rest_staff.public.staff(employee_name, employee_position, employee_phone, employee_data_birthday) VALUES(?,?,?,?)").use { statement ->
                 statement.setString(1, name)
                 statement.setString(2, position)
@@ -25,8 +24,7 @@ class SqlEmployeesSel {
     // удалить Employee
     @Throws(SQLException::class)
     fun deleteEmployeeById(employeeId: Int) {
-        DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23").use { connection ->
+        DriverManager.getConnection("jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23").use { connection ->
             connection.prepareStatement("DELETE FROM rest_staff.public.staff WHERE employee_id = (?)").use { statement ->
                 statement.setInt(1, employeeId) // employeeId - это (?) из запроса
                 statement.executeUpdate()
@@ -38,8 +36,7 @@ class SqlEmployeesSel {
     // выбрать Employee
     @Throws(SQLException::class)
     fun selectEmployeeById(employeeId: Int) {
-        DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23").use { connection ->
+        DriverManager.getConnection("jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23").use { connection ->
             connection.prepareStatement("SELECT * FROM rest_staff.public.staff WHERE employee_id = (?)").use { statement ->
                 statement.setInt(1, employeeId) // employeeId - это (?) из запроса
                 statement.executeQuery().use { resultSet ->
@@ -59,8 +56,7 @@ class SqlEmployeesSel {
     // выбрать Employee
     @Throws(SQLException::class)
     fun selectEmployeeByName(Name: String) {
-        DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23").use { connection ->
+        DriverManager.getConnection("jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23").use { connection ->
             connection.prepareStatement("SELECT * FROM rest_staff.public.staff WHERE employee_name = (?)").use { statement ->
                 statement.setString(1, Name) // Name - это (?) из запроса
                 statement.executeQuery().use { resultSet ->
@@ -80,8 +76,7 @@ class SqlEmployeesSel {
     // выбрать всех Employees
     @Throws(SQLException::class)
     fun selectAllStaff() {
-        DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23").use { connection ->
+        DriverManager.getConnection("jdbc:postgresql://localhost:5432/rest_staff", "postgres", "post@post23").use { connection ->
             connection.createStatement().use { statement ->
                 statement.executeQuery("SELECT * FROM rest_staff.public.staff").use { resultSet ->
                     while (resultSet.next()) {

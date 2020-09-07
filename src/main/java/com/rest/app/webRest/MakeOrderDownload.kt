@@ -23,10 +23,9 @@ class MakeOrderDownload {
     @Path("/{user}")
     @Produces(MediaType.APPLICATION_JSON)
     @Throws(SQLException::class, ClassNotFoundException::class, JRException::class)
-    fun makeOrderDownload(
-            @PathParam("user") loginName: String,
-            @QueryParam("service") service: String,
-            @QueryParam("pay") pay: Int): Response {
+    fun makeOrderDownload(@PathParam("user") loginName: String,
+                          @QueryParam("service") service: String,
+                          @QueryParam("pay") pay: Int): Response {
         println("Using make DOWNLOAD")
         return Response.ok().entity(PayMakeOrder().makeOrderDownload(loginName, service, pay)).header(
                 "Content-disposition", "attachment; filename=\"" + loginName + "_" + getNowDate() + ".pdf\"").build()

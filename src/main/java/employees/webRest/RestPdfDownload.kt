@@ -18,7 +18,7 @@ open class RestPdfDownload {
 
     //  http://localhost:8080/home/rest/RestPDFBuffer
     @GET
-    open fun hello(): String {
+    fun hello(): String {
         val user = System.getProperty("user.name") // определяет имя пользователя системы
         return "Hello " + user + "! Enter the filename in the URL line to export to PDF: /filename." +
                 " Eg: ..../rest/pdfbuffer/anyNAME"
